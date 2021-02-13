@@ -27,6 +27,7 @@ AsyncAwait = ['AsyncDFunctionDef', 'Await', 'AsyncFor', 'AsyncWith']
 #-- Creamos lista de listas de clases
 SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
           Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
+
 #-- Leemos el fichero y nos devuelve el arbol
 with open("smallsmilhandler.py") as fp:
     my_code = fp.read()
@@ -42,6 +43,7 @@ def iterar_lista():
 
 def asignar_clase(atrib):
     clase = ''
+    #-- Literals
     if atrib == 'Constant':
         clase = ast.Constant
     elif atrib == 'FormattedValue':
@@ -56,6 +58,25 @@ def asignar_clase(atrib):
         clase = ast.Set
     elif atrib == 'Dict':
         clase = ast.Dict
+    #-- Variables
+    elif atrib == 'Name':
+        clase = ast.Name
+    elif atrib == 'Load':
+        clase == ast.Load
+    elif atrib == 'Store':
+        clase == ast.Store
+    elif atrib == 'Del':
+        clase == ast.Del
+    elif atrib == 'Starred':
+        clase = ast.Starred
+    #-- Expressions
+    #-- Subscripting
+    #-- Comprehensions
+    #-- Statements
+    #-- Imports
+    #-- ControlFlow
+    #-- FunctionsClass
+    #-- AsyncAwait
     locali_arbol(clase)
 
 
@@ -72,4 +93,3 @@ def locali_arbol(clase):
 
 if __name__ == "__main__":
     iterar_lista()
-    print ("hola")
