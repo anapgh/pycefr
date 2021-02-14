@@ -13,16 +13,16 @@ Expressions = ['Expr', 'UnaryOp', 'UAdd', 'USub', 'Not', 'Invert', 'BinOp',
                 'Is', 'IsNot', 'In', 'NotIn', 'Call', 'keyword', 'IfExp',
                 'Attribute', 'NamedExpr']
 Subscripting = ['Subscript', 'Slice']
-Comprehensions = ['ListComp', 'SetComp', 'GeneratorExpr', 'DictComp',
+Comprehensions = ['ListComp', 'SetComp', 'GeneratorExp', 'DictComp',
                   'comprehension']
-Statements = ['Assig', 'AnnAsign', 'AugAssign', 'Raise', 'Assert', 'Delete',
+Statements = ['Assig', 'AnnAssign', 'AugAssign', 'Raise', 'Assert', 'Delete',
               'Pass']
 Imports = ['Import', 'ImportFrom', 'alias']
 ControlFlow = ['If', 'For', 'While', 'Break', 'Continue', 'Try',
                'ExceptHandler', 'With', 'Withitem']
 FunctionsClass = ['FunctionDef', 'Lambda', 'arguments', 'arg', 'Return',
                    'Yield', 'YieldFrom', 'Global', 'Nonlocal', 'ClassDef']
-AsyncAwait = ['AsyncDFunctionDef', 'Await', 'AsyncFor', 'AsyncWith']
+AsyncAwait = ['AsyncFunctionDef', 'Await', 'AsyncFor', 'AsyncWith']
 
 #-- Creamos lista de listas de clases
 SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
@@ -70,19 +70,100 @@ def asignar_clase(atrib):
     elif atrib == 'Starred':
         clase = ast.Starred
     #-- Expressions
+    
     #-- Subscripting
+    elif atrib == 'Subscript':
+        clase = ast.Subscript
+    elif atrib == 'Slice':
+        clase = ast.Slice
     #-- Comprehensions
+    elif atrib == 'ListComp':
+        clase = ast.ListComp
+    elif atrib == 'SetComp':
+        clase = ast.SetComp
+    elif atrib == 'GeneratorExp':
+        clase = ast.GeneratorExp
+    elif atrib == 'DictComp':
+        clase = ast.DictComp
+    elif atrib == 'Comprehension':
+        clase = ast.Comprehension
     #-- Statements
+    elif atrib == 'Assign':
+        clase = ast.Assign
+    elif atrib == 'AnnAssign':
+        clase = ast.AnnAssign
+    elif atrib == 'AugAssign':
+        clase = ast.AugAssign
+    elif atrib == 'Raise':
+        clase = ast.Raise
+    elif atrib == 'Assert':
+        clase = ast.Assert
+    elif atrib == 'Delete':
+        clase = ast.Delete
+    elif atrib == 'Pass':
+        clase = ast.Pass
     #-- Imports
+    elif atrib == 'Import':
+        clase = ast.Import
+    elif atrib == 'ImportFrom':
+        clase = ast.ImportFrom
+    #elif atrib == 'alias': #.. NO lineno
+    #    clase = ast.alias
     #-- ControlFlow
+    elif atrib == 'If':
+        clase = ast.If
+    elif atrib == 'For':
+        clase = ast.For
+    elif atrib == 'While':
+        clase == ast.While
+    elif atrib =='Break':
+        clase = ast.Break
+    elif atrib == 'Continue':
+        clase = ast.Continue
+    elif atrib == 'Try':
+        clase = ast.Try
+    elif atrib == 'ExceptHandler':
+        clase = ast.ExceptHandler
+    elif atrib == 'With':
+        clase = ast.With
+    elif atrib == 'withithem':
+        clase = ast.withithem
     #-- FunctionsClass
+    elif atrib == 'FunctionDef':
+        clase = ast.FunctionDef
+    elif atrib == 'Lambda':
+        clase = ast.Lambda
+    #elif atrib == 'arguments': #.. NO lineno
+    #    clase = ast.arguments
+    elif atrib == 'arg':
+        clase = ast.arg
+    elif atrib == 'Return':
+        clase = ast.Return
+    elif atrib == 'Yield':
+        clase = ast.Yield
+    elif atrib == 'YieldFrom':
+        clase = ast.YieldFrom
+    elif atrib == 'Global':
+        clase = ast.Global
+    elif atrib == 'Nonlocal':
+        clase = ast.Nonlocal
+    elif atrib == 'ClassDef':
+        clase = ast.Nonlocal
     #-- AsyncAwait
+    elif atrib == 'AsyncFunctionDef':
+        clase = ast.AsyncFunctionDef
+    elif atrib == 'Await':
+        clase = ast.Await
+    elif atrib == 'AsyncFor':
+        clase == ast.AsyncFor
+    elif atrib == 'AsyncWith':
+        clase = ast.AsyncWith
     locali_arbol(clase)
 
 
 def locali_arbol(clase):
     for node in ast.walk(tree):
-        #-- Buscamos LITERALES
+        #-- Buscamos clases
         if type(node) == clase:
             print (str(clase) + ':')
             print (node.lineno) #-- Primera linea del texto
