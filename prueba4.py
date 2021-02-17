@@ -70,7 +70,89 @@ def asignar_clase(atrib):
     elif atrib == 'Starred':
         clase = ast.Starred
     #-- Expressions
-    
+    elif atrib == 'Expr':
+        clase = ast.Expr
+    elif atrib == 'UnaryOp':
+        clase = ast.UnaryOp
+    elif atrib == 'UAdd':
+        clase = ast.UAdd
+    elif atrib == 'USub':
+        clase = ast.USub
+    elif atrib == 'Not':
+        clase = ast.Not
+    elif atrib == 'Invert':
+        clase = ast.Invert
+    elif atrib == 'BinOp':
+        clase = ast.BinOp
+    elif atrib == 'Add':
+        clase = ast.Add
+    elif atrib == 'Sub':
+        clase = ast.Sub
+    elif atrib == 'Mult':
+        clase = ast.Mult
+    elif atrib == 'Div':
+        clase = ast.Div
+    elif atrib == 'FloorDiv':
+        clase = ast.FloorDiv
+    elif atrib == 'Mod':
+        clase = ast.Mod
+    elif atrib == 'Pow':
+        clase = ast.Pow
+    elif atrib == 'LShift':
+        clase = ast.LShift
+    elif atrib == 'RShift':
+        clase = ast.RShift
+    elif atrib == 'BitOr':
+        clase = ast.BitOr
+    elif atrib == 'BitXor':
+        clase = ast.BitXor
+    elif atrib == 'BitAnd':
+        clase = ast.BitAnd
+    elif atrib =='MatMult':
+        clase = ast.MatMult
+    elif atrib == 'BoolOp':
+        clase = ast.BoolOp
+    elif atrib == 'And':
+        clase = ast.And
+    elif atrib == 'Or':
+        clase = ast.Or
+    elif atrib == 'Compare':
+        clase = ast.Compare
+    elif atrib == 'Eq':
+        clase = ast.Eq
+    elif atrib == 'NotEq':
+        clase = ast.NotEq
+    elif atrib == 'Lt':
+        clase = ast.Lt
+    elif atrib == 'LtE':
+        clase = ast.LtE
+    elif atrib == 'Gt':
+        clase = ast.Gt
+    elif atrib == 'GtE':
+        clase = ast.GtE
+    elif atrib =='Is':
+        clase = ast.Is
+    elif atrib == 'IsNot':
+        clase = ast.IsNot
+    elif atrib == 'In':
+        clase = ast.In
+    elif atrib == 'NotIn':
+        clase = ast.NotIn
+    elif atrib == 'Call':
+        clase = ast.Call
+    elif atrib == 'keyword':
+        clase = ast.keyword
+    elif atrib == 'IfExp':
+        clase = ast.IfExp
+    elif atrib == 'Attribute':
+        clase = ast.Attribute
+    elif atrib == 'NamedExpr':
+        clase = ast.NamedExpr
+
+
+
+
+
     #-- Subscripting
     elif atrib == 'Subscript':
         clase = ast.Subscript
