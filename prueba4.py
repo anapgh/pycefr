@@ -254,6 +254,7 @@ def profundizar(clase):
                 for node1 in ast.walk(node):
                     clase1 = ast.List
                     if type(node1) == clase1:
+                        print('diccionario de listas:')
                         print (str(clase1) + ':')
                         print (node1.lineno) #-- Primera linea del texto
                         print (node1.end_lineno) #-- Ultima linea del texto
@@ -262,6 +263,7 @@ def profundizar(clase):
                         #print (type(node))
                         print('Valores:')
                         print(node1.elts)
+
 
 def locali_arbol(clase):
     for node in ast.walk(tree):
