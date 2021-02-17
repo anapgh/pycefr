@@ -118,8 +118,8 @@ def asignar_clase(atrib):
         clase = ast.Or
     elif atrib == 'Compare':
         clase = ast.Compare
-    elif atrib == 'Eq':
-        clase = ast.Eq
+    #elif atrib == 'Eq':
+    #    clase = ast.Eq
     elif atrib == 'NotEq':
         clase = ast.NotEq
     elif atrib == 'Lt':
@@ -134,8 +134,8 @@ def asignar_clase(atrib):
         clase = ast.Is
     elif atrib == 'IsNot':
         clase = ast.IsNot
-    elif atrib == 'In':
-        clase = ast.In
+    #elif atrib == 'In':
+    #    clase = ast.In
     elif atrib == 'NotIn':
         clase = ast.NotIn
     elif atrib == 'Call':
@@ -148,11 +148,6 @@ def asignar_clase(atrib):
         clase = ast.Attribute
     elif atrib == 'NamedExpr':
         clase = ast.NamedExpr
-
-
-
-
-
     #-- Subscripting
     elif atrib == 'Subscript':
         clase = ast.Subscript
@@ -240,8 +235,33 @@ def asignar_clase(atrib):
         clase == ast.AsyncFor
     elif atrib == 'AsyncWith':
         clase = ast.AsyncWith
-    locali_arbol(clase)
+    profundizar(clase)
+    #locali_arbol(clase)
 
+def profundizar(clase):
+    if clase == ast.Dict:
+        for node in ast.walk(tree):
+            #-- Buscamos clases
+            if type(node) == clase:
+                print (str(clase) + ':')
+                print (node.lineno) #-- Primera linea del texto
+                print (node.end_lineno) #-- Ultima linea del texto
+                #print (node.col_offset) #-- Desplazamiento de bytes UTF-8 (Espacios tab)
+                #print (node)
+                #print (type(node))
+                print('Valores:')
+                print(type(node.values))
+                for node1 in ast.walk(node):
+                    clase1 = ast.List
+                    if type(node1) == clase1:
+                        print (str(clase1) + ':')
+                        print (node1.lineno) #-- Primera linea del texto
+                        print (node1.end_lineno) #-- Ultima linea del texto
+                        #print (node.col_offset) #-- Desplazamiento de bytes UTF-8 (Espacios tab)
+                        #print (node)
+                        #print (type(node))
+                        print('Valores:')
+                        print(node1.elts)
 
 def locali_arbol(clase):
     for node in ast.walk(tree):
