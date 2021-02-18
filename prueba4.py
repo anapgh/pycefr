@@ -1,5 +1,6 @@
 #-- probando el modulo de ast
 import ast
+import string
 
 #-- Creamos listas de cada clase
 Literals = ['Constant', 'FormattedValue', 'JoinedStr', 'List', 'Tuple', 'Set',
@@ -29,7 +30,7 @@ SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
           Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
 
 #-- Leemos el fichero y nos devuelve el arbol
-with open("smallsmilhandler.py") as fp:
+with open("texto.py") as fp:
     my_code = fp.read()
     tree = ast.parse(my_code)
     print (ast.dump(tree))
@@ -238,31 +239,87 @@ def asignar_clase(atrib):
     profundizar(clase)
     #locali_arbol(clase)
 
-def profundizar(clase):
+#-- LISTAS
+def lista(clase):
+    if clase == ast.List:
+        for node in ast.walk(tree):
+            if type(node) == clase:
+                print ('LISTA:')
+                print(ast.literal_eval(node))
+                print(node.elts)
+                for node1 in ast.walk(node):
+                    if type(node1) == clase:
+                        print('LISTA DE LISTAS')
+                        print(ast.literal_eval(node1))
+                        print (node1.lineno) #-- Primera linea del texto
+                        print (node1.end_lineno) #-- Ultima linea del texto
+                        print (node.col_offset) #-- Desplazamiento de bytes UTF-8 (Espacios tab)
+                        print('elementos:')
+                        print(node1.elts)
+                    else:
+                        print ('LISTA NORMAL')
+
+#--
+def list_comprehension(clase):
+    if clase == ast.ListComp:
+        for node in ast.walk(tree):
+            num_comp = 0
+            if type(node) == clase:
+                print('LIST COMPREHENSION:')
+                print(node.lineno)
+                print(node.end_lineno)
+                print(node.elt)
+                print(node.generators)
+                for i in node.generators:
+                    print (i)
+                    num_comp += 1
+                if num_comp > 1:
+                    print('ES UNA LIST COMPREHENSION ANIDADA')
+                else:
+                    print('ES UNA LIST COMPREHENSION NORMAL')
+
+
+#-- DICCIONARIOS
+def diccionario(clase):
     if clase == ast.Dict:
         for node in ast.walk(tree):
             #-- Buscamos clases
             if type(node) == clase:
+                print('DICCIONARIO:')
                 print (str(clase) + ':')
                 print (node.lineno) #-- Primera linea del texto
                 print (node.end_lineno) #-- Ultima linea del texto
-                #print (node.col_offset) #-- Desplazamiento de bytes UTF-8 (Espacios tab)
-                #print (node)
-                #print (type(node))
                 print('Valores:')
                 print(type(node.values))
+                d1 = ast.literal_eval(node)
+                print(d1)
                 for node1 in ast.walk(node):
                     clase1 = ast.List
-                    if type(node1) == clase1:
-                        print('diccionario de listas:')
+                    """
+                    if type(node1) == clase:
+                        print('DICCIONARIO DENTRO DE DICCIONARIO')
+                        print(ast.literal_eval(node1))
                         print (str(clase1) + ':')
                         print (node1.lineno) #-- Primera linea del texto
                         print (node1.end_lineno) #-- Ultima linea del texto
-                        #print (node.col_offset) #-- Desplazamiento de bytes UTF-8 (Espacios tab)
-                        #print (node)
-                        #print (type(node))
-                        print('Valores:')
+                        print('elementos:')
+                        print(node1.values)
+                    """
+                    if type(node1) == clase1:
+                        print('DICCIONARIO DE LISTAS:')
+                        print(ast.literal_eval(node1))
+                        print (str(clase1) + ':')
+                        print (node1.lineno) #-- Primera linea del texto
+                        print (node1.end_lineno) #-- Ultima linea del texto
+                        print('elementos:')
                         print(node1.elts)
+
+
+def profundizar(clase):
+    #lista(clase)
+    list_comprehension(clase)
+    #diccionario(clase)
+
 
 
 def locali_arbol(clase):
