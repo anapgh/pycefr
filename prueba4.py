@@ -38,11 +38,13 @@ def leer_directorio():
         cadena = directorio[i].find('.py')
         if cadena != -1:
             print('fichero python:' + str(directorio[i]))
+            leer_fichero(directorio[i])
 
-with open("texto.py") as fp:
-    my_code = fp.read()
-    tree = ast.parse(my_code)
-    print (ast.dump(tree))
+def leer_fichero(fichero):
+    with open(fichero) as fp:
+        my_code = fp.read()
+        tree = ast.parse(my_code)
+        print (ast.dump(tree))
 
 
 
