@@ -1,6 +1,8 @@
 #-- probando el modulo de ast
 import ast
 import os
+import json
+import csv
 
 #-- Creamos listas de cada atrib
 Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
@@ -40,24 +42,26 @@ def leer_directorio():
             print('fichero python: ' + str(directorio[i]))
             leer_fichero(directorio[i])
 
+
 #-- Leemos el fichero y nos devuelve el arbol
 def leer_fichero(fichero):
     with open(fichero) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
         print (ast.dump(tree))
+        iterar_lista(tree)
 
 
 #-- Iterar lista y asignar atributos
-def iterar_lista():
+def iterar_lista(tree):
     for i in range(0, len(SetClass)):
         for j in range(0, len(SetClass[i])):
             atrib = SetClass[i][j]
-            profundizar(atrib)
+            profundizar(tree, atrib)
 
 
 #-- LISTAS
-def lista(atrib):
+def lista(tree, atrib):
     if atrib == 'ast.List':
         for node in ast.walk(tree):
             if type(node) == eval(atrib):
@@ -77,7 +81,7 @@ def lista(atrib):
                         print ('LISTA NORMAL')
 
 #-- LIST COMPREHENSION
-def list_comprehension(atrib):
+def list_comprehension(tree, atrib):
     if atrib == 'ast.ListComp':
         for node in ast.walk(tree):
             num_comp = 0
@@ -97,7 +101,7 @@ def list_comprehension(atrib):
 
 
 #-- DICCIONARIOS
-def diccionario(atrib):
+def diccionario(tree, atrib):
     if atrib == 'ast.Dict':
         for node in ast.walk(tree):
             #-- Buscamos atribs
@@ -132,14 +136,14 @@ def diccionario(atrib):
                         print(node1.elts)
 
 
-def profundizar(atrib):
-    #lista(atrib)
-    list_comprehension(atrib)
-    #diccionario(atrib)
+def profundizar(tree, atrib):
+    #lista(tree, atrib)
+    list_comprehension(tree, atrib)
+    #diccionario(tree, atrib)
 
 
 
-def locali_arbol(atrib):
+def locali_arbol(tree, atrib):
     for node in ast.walk(tree):
         #-- Buscamos atribs
         if type(node) == eval(atrib):
