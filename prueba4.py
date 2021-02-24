@@ -29,23 +29,23 @@ AsyncAwait = ['ast.AsyncFunctionDef', 'ast.Await', 'ast.AsyncFor', 'ast.AsyncWit
 SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
           Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
 
-#-- Leemos el fichero y nos devuelve el arbol
+
+#-- Extraemos del directorio los archivos .py
 def leer_directorio():
     print('directorio: ')
     directorio = os.listdir("/home/ana/Documentos/TFG/TFG")
     print(directorio)
     for i in range(0, len(directorio)):
-        cadena = directorio[i].find('.py')
-        if cadena != -1:
-            print('fichero python:' + str(directorio[i]))
+        if directorio[i].endswith('.py'):
+            print('fichero python: ' + str(directorio[i]))
             leer_fichero(directorio[i])
 
+#-- Leemos el fichero y nos devuelve el arbol
 def leer_fichero(fichero):
     with open(fichero) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
         print (ast.dump(tree))
-
 
 
 #-- Iterar lista y asignar atributos
