@@ -59,6 +59,15 @@ def iterar_lista(tree):
             atrib = SetClass[i][j]
             profundizar(tree, atrib)
 
+myData =[['Nombre fichero', 'Clase', 'Linea empiece','Linea acabado',
+            'Desplazamiento', 'Nivel'], [1,1,1,1,1,1],[2,2,2,2,2,2],
+            [3,3,3,3,3,3],[4,4,4,4,4,4],[5,5,5,5,5,5],[6,6,6,6,6,6]]
+
+def leer_fichero_csv():
+    myCsv = open('datos.csv', 'w'):
+    with myCsv:
+        writer = csv.writer(myCsv)
+        writer.writerows(myData)
 
 #-- LISTAS
 def lista(tree, atrib):
@@ -136,11 +145,12 @@ def diccionario(tree, atrib):
                         print(node1.elts)
 
 
+
+
 def profundizar(tree, atrib):
     #lista(tree, atrib)
     list_comprehension(tree, atrib)
     #diccionario(tree, atrib)
-
 
 
 def locali_arbol(tree, atrib):
@@ -157,3 +167,4 @@ def locali_arbol(tree, atrib):
 if __name__ == "__main__":
     #iterar_lista()
     leer_directorio()
+    leer_fichero_csv()
