@@ -1,6 +1,6 @@
 #-- probando el modulo de ast
 import ast
-import string
+import os
 
 #-- Creamos listas de cada atrib
 Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
@@ -30,12 +30,23 @@ SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
           Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
 
 #-- Leemos el fichero y nos devuelve el arbol
+def leer_directorio():
+    print('directorio: ')
+    directorio = os.listdir("/home/ana/Documentos/TFG/TFG")
+    print(directorio)
+    for i in range(0, len(directorio)):
+        cadena = directorio[i].find('.py')
+        if cadena != -1:
+            print('fichero python:' + str(directorio[i]))
+
 with open("texto.py") as fp:
     my_code = fp.read()
     tree = ast.parse(my_code)
     print (ast.dump(tree))
 
 
+
+#-- Iterar lista y asignar atributos
 def iterar_lista():
     for i in range(0, len(SetClass)):
         for j in range(0, len(SetClass[i])):
@@ -138,4 +149,5 @@ def locali_arbol(atrib):
             print (type(node))
 
 if __name__ == "__main__":
-    iterar_lista()
+    #iterar_lista()
+    leer_directorio()
