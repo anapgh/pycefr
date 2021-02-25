@@ -34,37 +34,40 @@ SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
 
 #-- Extraemos del directorio los archivos .py
 def leer_directorio():
+    pos = ''
     print('directorio: ')
     directorio = os.listdir("/home/ana/Documentos/TFG/TFG")
     print(directorio)
     for i in range(0, len(directorio)):
         if directorio[i].endswith('.py'):
             print('fichero python: ' + str(directorio[i]))
-            leer_fichero(directorio[i])
+            pos = directorio[i]
+            leer_fichero(directorio[i], pos)
+
 
 
 #-- Leemos el fichero y nos devuelve el arbol
-def leer_fichero(fichero):
+def leer_fichero(fichero, pos):
     with open(fichero) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
         print (ast.dump(tree))
-        iterar_lista(tree)
+        iterar_lista(tree, pos)
 
 
 #-- Iterar lista y asignar atributos
-def iterar_lista(tree):
+def iterar_lista(tree, pos):
     for i in range(0, len(SetClass)):
         for j in range(0, len(SetClass[i])):
             atrib = SetClass[i][j]
-            profundizar(tree, atrib)
+            profundizar(tree, atrib, pos)
 
+#-- Lista del csv
 myData =[['Nombre fichero', 'Clase', 'Linea empiece','Linea acabado',
-            'Desplazamiento', 'Nivel'], [1,1,1,1,1,1],[2,2,2,2,2,2],
-            [3,3,3,3,3,3],[4,4,4,4,4,4],[5,5,5,5,5,5],[6,6,6,6,6,6]]
+            'Desplazamiento', 'Nivel']]
 
 def leer_fichero_csv():
-    myCsv = open('datos.csv', 'w'):
+    myCsv = open('datos.csv', 'w')
     with myCsv:
         writer = csv.writer(myCsv)
         writer.writerows(myData)
@@ -90,23 +93,33 @@ def lista(tree, atrib):
                         print ('LISTA NORMAL')
 
 #-- LIST COMPREHENSION
-def list_comprehension(tree, atrib):
+def list_comprehension(tree, atrib, pos):
+    nivel = ''
     if atrib == 'ast.ListComp':
         for node in ast.walk(tree):
-            num_comp = 0
+            numComp = 0
             if type(node) == eval(atrib):
                 print('LIST COMPREHENSION:')
                 print(node.lineno)
                 print(node.end_lineno)
                 print(node.elt)
                 print(node.generators)
+                print('DICCIONARIO')
                 for i in node.generators:
                     print (i)
-                    num_comp += 1
-                if num_comp > 1:
+                    numComp += 1
+                if numComp > 1:
                     print('ES UNA LIST COMPREHENSION ANIDADA')
+                    nivel = 'Nivel C2'
                 else:
                     print('ES UNA LIST COMPREHENSION NORMAL')
+                    nivel = 'Nivel C1'
+                #-- Añadir datos en listComp:
+                listComp = [pos, type(node),node.lineno, node.end_lineno,
+                            node.col_offset, nivel]
+                #-- Añadir listComp en la lista myData que se convierte en .csv
+                myData.append(listComp)
+
 
 
 #-- DICCIONARIOS
@@ -147,10 +160,13 @@ def diccionario(tree, atrib):
 
 
 
-def profundizar(tree, atrib):
+def profundizar(tree, atrib, pos):
+
     #lista(tree, atrib)
-    list_comprehension(tree, atrib)
+    list_comprehension(tree, atrib, pos)
     #diccionario(tree, atrib)
+    leer_fichero_csv()
+
 
 
 def locali_arbol(tree, atrib):
