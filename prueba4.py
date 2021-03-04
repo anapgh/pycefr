@@ -2,6 +2,7 @@
 import ast
 import os
 import csv
+from ClassTree import ClassTree
 
 #-- Creamos listas de cada atrib
 Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
@@ -99,6 +100,33 @@ def lista(tree, atrib,pos):
 
 
 #-- LIST COMPREHENSION
+def list_comprehension2(tree, atrib, pos):
+    nivel = ''
+    clase = ''
+    if atrib == 'ast.ListComp':
+        for node in ast.walk(tree):
+            numComp = 0
+            if type(node) == eval(atrib):
+                print('LIST COMPREHENSION:')
+                print(node.generators)
+                for i in node.generators:
+                    print (i)
+                    numComp += 1
+                if numComp > 1:
+                    print('ES UNA LIST COMPREHENSION ANIDADA')
+                    nivel = 'C2'
+                    clase = str(numComp) + ' ' + str(type(node))
+                else:
+                    print('ES UNA LIST COMPREHENSION NORMAL')
+                    nivel = 'C1'
+                    clase = type(node)
+                #-- Añadir datos en listComp:
+                listComp = [pos, clase,node.lineno, node.end_lineno,
+                            node.col_offset, nivel]
+                #-- Añadir listComp en la lista myData que se convierte en .csv
+                myData.append(listComp)
+
+#-- USANSO CLASE TREE
 def list_comprehension(tree, atrib, pos):
     nivel = ''
     clase = ''
@@ -113,24 +141,21 @@ def list_comprehension(tree, atrib, pos):
                     numComp += 1
                 if numComp > 1:
                     print('ES UNA LIST COMPREHENSION ANIDADA')
-                    nivel = 'Nivel C2'
+                    nivel = 'C2'
                     clase = str(numComp) + ' ' + str(type(node))
                 else:
                     print('ES UNA LIST COMPREHENSION NORMAL')
-                    nivel = 'Nivel C1'
+                    nivel = 'C1'
                     clase = type(node)
-                #-- Añadir datos en listComp:
-                listComp = [pos, clase,node.lineno, node.end_lineno,
-                            node.col_offset, nivel]
-                #-- Añadir listComp en la lista myData que se convierte en .csv
-                myData.append(listComp)
-
+                #-- Crear instancia de objeto
+                LC = ClassTree(pos, clase, node.lineno, node.end_lineno,node.col_offset, nivel)
+                LC.add_csv()
+                LC.leer_fichero_csv()
 
 
 #-- DICCIONARIOS
 def diccionario(tree, atrib, pos):
     nivel = ''
-
     if atrib == 'ast.Dict':
         for node in ast.walk(tree):
             #-- Buscamos atribs
@@ -139,10 +164,12 @@ def diccionario(tree, atrib, pos):
                 d1 = ast.literal_eval(node)
                 print(d1)
                 nivel = 'A1'
+                clase = type(node)
                 #-- Añadir datos en dicc:
-                dicc = [pos, type(node),node.lineno, node.end_lineno,
-                        node.col_offset, nivel]
-                myData.append(dicc)
+                #-- Crear instancia de objeto
+                D = ClassTree(pos, clase, node.lineno, node.end_lineno,node.col_offset, nivel)
+                D.add_csv()
+                D.leer_fichero_csv()
                 for node1 in ast.walk(node):
                     atrib1 = ast.List
                     """
@@ -159,12 +186,13 @@ def diccionario(tree, atrib, pos):
                         print('DICCIONARIO DE LISTAS:')
                         print(ast.literal_eval(node1))
                         nivel = 'A2'
+                        clase = str(type(node)) + str(type(node1))
                         #-- Añadir datos en dicc:
-                        dicc = [pos, str(type(node)) + str(type(node1)),
-                                node1.lineno, node1.end_lineno, node1.col_offset,
-                                nivel]
+                        D = ClassTree(pos, clase, node1.lineno, node1.end_lineno,
+                                        node1.col_offset, nivel)
                         #-- Añadir dicc en la lista myData que se convierte en .csv
-                        myData.append(dicc)
+                        D.add_csv()
+                        D.leer_fichero_csv()
 
 
 #-- DICT COMPREHENSION
@@ -174,33 +202,41 @@ def dict_comprehension(tree, atrib, pos):
     if atrib == 'ast.DictComp':
         for node in ast.walk(tree):
             numComp = 0
+            numIfs = 0
             if type(node) == eval(atrib):
                 print('DICT COMPREHENSION:')
-                print(node.generators)
                 for i in node.generators:
-                    print (i)
-                    numComp += 1
-                if numComp > 1:
-                    print('ES UN DICT COMPREHENSION ANIDADO')
-                    nivel = 'Nivel C2'
-                    clase = str(numComp) + ' ' + str(type(node))
-                else:
-                    print('ES UN DICT COMPREHENSION')
-                    nivel = 'Nivel C1'
-                    clase = type(node)
-                #-- Añadir datos en dictComp:
-                dictComp = [pos, clase,node.lineno, node.end_lineno,
-                            node.col_offset, nivel]
-                #-- Añadir dictComp en la lista myData que se convierte en .csv
-                myData.append(dictComp)
+                    print(i.ifs)
+                    for j in i.ifs:
+                        numIfs += 1
+                        numComp += 1
+                        if numIfs > 1:
+                            print('ES UN DICT COMPREHENSION CONDICIONAL')
+                            nivel = 'C2'
+                            clase = str(numIfs) + 'IFS +  ' + str(type(node))
+                        if numComp > 1:
+                            print('ES UN DICT COMPREHENSION ANIDADO')
+                            nivel = 'C2'
+                            clase = str(numComp) + ' ' + str(type(node))
+                        else:
+                            print('ES UN DICT COMPREHENSION')
+                            nivel = 'C1'
+                            clase = type(node)
+                        #-- Añadir datos en dictComp:
+                        dictComp = [pos, clase,node.lineno, node.end_lineno,
+                                    node.col_offset, nivel]
+                        #-- Añadir dictComp en la lista myData que se convierte en .csv
+                        myData.append(dictComp)
 
 
 def profundizar(tree, atrib, pos):
     #lista(tree, atrib,pos)
-    #list_comprehension(tree, atrib, pos)
-    #diccionario(tree, atrib, pos)
-    dict_comprehension(tree, atrib, pos)
-    leer_fichero_csv()
+    list_comprehension(tree, atrib, pos)
+    diccionario(tree, atrib, pos)
+    #dict_comprehension(tree, atrib, pos)
+
+
+    #leer_fichero_csv()
 
 
 
