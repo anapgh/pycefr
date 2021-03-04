@@ -3,6 +3,7 @@ import ast
 import os
 import csv
 from ClassTree import ClassTree
+from ClassIterTree import ClassIterTree
 
 #-- Creamos listas de cada atrib
 Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
@@ -51,7 +52,7 @@ def leer_fichero(fichero, pos):
     with open(fichero) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
-        print (ast.dump(tree))
+        #print (ast.dump(tree))
         iterar_lista(tree, pos)
 
 
@@ -61,7 +62,7 @@ def iterar_lista(tree, pos):
         for j in range(0, len(SetClass[i])):
             atrib = SetClass[i][j]
             profundizar(tree, atrib, pos)
-
+"""
 #-- Lista del csv
 myData =[['Nombre fichero', 'Clase', 'Linea empiece','Linea acabado',
             'Desplazamiento', 'Nivel']]
@@ -72,7 +73,8 @@ def leer_fichero_csv():
     with myCsv:
         writer = csv.writer(myCsv)
         writer.writerows(myData)
-
+"""
+"""
 #-- LISTAS
 def lista(tree, atrib,pos):
     nivel = ''
@@ -126,34 +128,8 @@ def list_comprehension2(tree, atrib, pos):
                 #-- Añadir listComp en la lista myData que se convierte en .csv
                 myData.append(listComp)
 
-#-- USANSO CLASE TREE
-def list_comprehension(tree, atrib, pos):
-    nivel = ''
-    clase = ''
-    if atrib == 'ast.ListComp':
-        for node in ast.walk(tree):
-            numComp = 0
-            if type(node) == eval(atrib):
-                print('LIST COMPREHENSION:')
-                print(node.generators)
-                for i in node.generators:
-                    print (i)
-                    numComp += 1
-                if numComp > 1:
-                    print('ES UNA LIST COMPREHENSION ANIDADA')
-                    nivel = 'C2'
-                    clase = str(numComp) + ' ' + str(type(node))
-                else:
-                    print('ES UNA LIST COMPREHENSION NORMAL')
-                    nivel = 'C1'
-                    clase = type(node)
-                #-- Crear instancia de objeto
-                LC = ClassTree(pos, clase, node.lineno, node.end_lineno,node.col_offset, nivel)
-                LC.add_csv()
-                LC.leer_fichero_csv()
 
-
-#-- DICCIONARIOS
+-- DICCIONARIOS
 def diccionario(tree, atrib, pos):
     nivel = ''
     if atrib == 'ast.Dict':
@@ -172,7 +148,7 @@ def diccionario(tree, atrib, pos):
                 D.leer_fichero_csv()
                 for node1 in ast.walk(node):
                     atrib1 = ast.List
-                    """
+                    #NO FUNCIONA BIEN:
                     if type(node1) == atrib:
                         print('DICCIONARIO DENTRO DE DICCIONARIO')
                         print(ast.literal_eval(node1))
@@ -181,7 +157,8 @@ def diccionario(tree, atrib, pos):
                         print (node1.end_lineno) #-- Ultima linea del texto
                         print('elementos:')
                         print(node1.values)
-                    """
+                    ##################
+
                     if type(node1) == atrib1:
                         print('DICCIONARIO DE LISTAS:')
                         print(ast.literal_eval(node1))
@@ -228,28 +205,22 @@ def dict_comprehension(tree, atrib, pos):
                         #-- Añadir dictComp en la lista myData que se convierte en .csv
                         myData.append(dictComp)
 
+"""
+#-- LIST COMPREHENSION
+def list_comprehension(tree, atrib, pos):
+    if atrib == 'ast.ListComp':
+        LC = ClassIterTree(tree, atrib, pos)
+        LC.locali_arbol()
+
+
 
 def profundizar(tree, atrib, pos):
     #lista(tree, atrib,pos)
     list_comprehension(tree, atrib, pos)
-    diccionario(tree, atrib, pos)
+    #diccionario(tree, atrib, pos)
     #dict_comprehension(tree, atrib, pos)
 
 
-    #leer_fichero_csv()
-
-
-
-def locali_arbol(tree, atrib):
-    for node in ast.walk(tree):
-        #-- Buscamos atribs
-        if type(node) == eval(atrib):
-            print (str(atrib) + ':')
-            print (node.lineno) #-- Primera linea del texto
-            print (node.end_lineno) #-- Ultima linea del texto
-            print (node.col_offset) #-- Desplazamiento de bytes UTF-8 (Espacios tab)
-            print (node)
-            print (type(node))
 
 if __name__ == "__main__":
     leer_directorio()
