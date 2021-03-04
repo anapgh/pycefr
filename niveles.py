@@ -1,3 +1,4 @@
+import ast
 #-- NIVELES
 
 #-- NIVEL LIST COMPREHENSION
@@ -12,4 +13,17 @@ def nivel_ListComp(self):
     else:
         print('ES UNA LIST COMPREHENSION NORMAL')
         self.nivel = 'C1'
+        self.clase = type(self.node)
+
+#-- NIVEL DICCIONARIO
+def nivel_dict(self):
+    numList = 0
+    if 'ast.List' in str(self.node.values):
+        print('hay lista')
+        numList = str(self.node.values).count('ast.List')
+        self.nivel = 'B1'
+        self.clase = str(numList) + ' Listas en' + str(type(self.node))
+    else:
+        print('no hay listas')
+        self.nivel = 'A2'
         self.clase = type(self.node)
