@@ -14,14 +14,19 @@ def niveles(self):
 
 #-- NIVEL DE LISTAS
 def nivel_List(self):
-    num_List = 0
-    num_Dict = 0
+    numList = 0
+    numDict = 0
     #-- Comprobamos si hay listas
     if 'ast.List' in str(self.node.elts):
         print('hay lista')
         numList = str(self.node.elts).count('ast.List')
         self.nivel = 'A2'
         self.clase = str(numList) + ' Listas en' + str(type(self.node))
+    elif 'ast.Dict' in str(self.node.elts):
+        print('hay diccionario')
+        numDict = str(self.node.elts).count('ast.Dict')
+        self.nivel = 'B1'
+        self.clase = str(numDict) + ' Diccionarios en' + str(type(self.node))
     else:
         print('no hay nada')
         self.nivel = 'A1'
@@ -74,6 +79,7 @@ def nivel_Dict(self):
         self.nivel = 'A2'
         self.clase = type(self.node)
 
+#-- NIVEL DICT COMPREHENSION
 def nivel_DictComp(self):
     numIfs = 0
     ifExp = 0
