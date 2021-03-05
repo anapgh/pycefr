@@ -19,9 +19,9 @@ class ClassIterTree():
         for self.node in ast.walk(self.tree):
             #-- Buscamos atribs
             if type(self.node) == eval(self.atrib):
-                #-- En el caso de que sea List Comprehension
-                #-- Asignamos la lista de valores
-                niveles.nivel_ListComp(self)
+                self.nivel= ''
+                self.clase = type(self.node)
+                niveles.niveles(self)
                 self.asignar_lista()
 
 
@@ -29,7 +29,7 @@ class ClassIterTree():
     def asignar_lista(self):
         self.list = [self.name, self.clase, self.node.lineno,
                     self.node.end_lineno, self.node.col_offset, self.nivel]
-        print(self.list)
+        #print(self.list)
         self.add_csv()
 
     #-- Cabecera del csv
@@ -39,7 +39,7 @@ class ClassIterTree():
     #-- Añadir la lista del objeto al CSV
     def add_csv(self):
         self.myData.append(self.list)
-        print(self.myData)
+        #print(self.myData)
         self.leer_fichero_csv()
 
 
