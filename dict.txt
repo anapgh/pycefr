@@ -1,0 +1,5 @@
+{'List':{'Normal': 'A1', 'List': 'A2', 'Dict': 'B1'},
+ 'ListComp':{'Normal': 'C1', 'ListComp': 'C2'},
+ 'Dict': {'Normal': 'A2', 'Dict': 'B1', 'Dict y List': 'B2',
+          'List': 'B1'},
+ 'DictComp': {'Normal': 'C1', 'If': 'C2', 'If-Else': 'C2', 'DictComp': 'C2'}}
