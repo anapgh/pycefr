@@ -18,6 +18,8 @@ def niveles(self):
         nivel_Dict(self)
     elif self.atrib == 'ast.DictComp':
         nivel_DictComp(self)
+    elif self.atrib == 'ast.Tuple':
+        nivel_Tuple(self)
 
 
 #-- NIVEL DE LISTAS
@@ -96,3 +98,15 @@ def nivel_DictComp(self):
         numDictComp += str(self.node.value).count('ast.DictComp')
         self.nivel = dictNivel['DictComp']['DictComp']
         self.clase = (str(numDictComp) + str(type(self.node)))
+
+#-- NIVEL TUPLA
+def nivel_Tuple(self):
+    numTuple = 0
+    for i in self.node.elts:
+        numTuple += str(self.node.elts).count('ast.Tuple')
+        if numTuple > 0:
+            self.nivel = dictNivel['Tuple']['Tuple']
+            self.clase = (str(numTuple) + ' Tuple: ' + str(type(self.node)))
+        else:
+            self.nivel = dictNivel['Tuple']['Normal']
+            self.clase = type(self.node)
