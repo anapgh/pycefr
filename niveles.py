@@ -22,7 +22,10 @@ def niveles(self):
         nivel_Tuple(self)
     elif self.atrib == 'ast.Call':
         tipo_Call(self)
-
+    elif self.atrib == 'ast.Assign':
+        nivel_Assign(self)
+    elif self.atrib == 'ast.AugAssign':
+        nivel_Assign(self)
 
 #-- NIVEL DE LISTAS
 def nivel_List(self):
@@ -141,7 +144,24 @@ def nivel_Files(self, valor):
         self.clase = ('Fichero usando ' + valor + ' en ' + str(type(self.node)))
 
 #-- NIVEL ASIGNACIONES
-
+def nivel_Assign(self):
+    op = ''
+    if self.atrib == 'ast.Assign':
+        self.nivel = dictNivel['Assign']['Normal']
+        self.clase = ('Asignación normal ' + str(type(self.node)))
+        #print(self.node.targets)
+        if 'ast.BinOp' in str(self.node.value):
+            self.nivel = dictNivel['Assign']['Assign + suma']
+            self.clase = ('Asignación normal con incremento ' + str(type(self.node)))
+    else:
+        self.nivel = dictNivel['Assign']['AugAssign']
+        if 'ast.Add' in str(self.node.op):
+            op = 'aumento suma'
+        elif 'ast.Sub' in str(self.node.op):
+            op = 'decremento resta'
+        elif 'ast.Mult' in str(self.node.op):
+            op = 'aumento multiplicacion'
+        self.clase = ('Asignación simplificada de ' + op + str(type(self.node)))
 
 #-- NIVEL PRINTS
 def nivel_Print(self, valor):
