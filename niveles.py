@@ -116,6 +116,7 @@ def nivel_Tuple(self):
 #-- Lista de atributos de ficheros
 list_File_Attr = ['write', 'read', 'readline', 'writelines']
 
+#-- Tipos de llamadas
 def tipo_Call(self):
     valor = ''
     if 'ast.Attribute' in str(self.node.func):
@@ -126,12 +127,25 @@ def tipo_Call(self):
         if (self.node.func.id) == 'open':
             valor = 'open'
             nivel_Files(self, valor)
+        elif (self.node.func.id) == 'print':
+            valor = 'print'
+            nivel_Print(self, valor)
 
-
+#-- NIVEL FILES
 def nivel_Files(self, valor):
     if (valor) == 'open':
         self.nivel = dictNivel['File']['Open']
-        self.clase = (str('Fichero Open en ' + str(type(self.node))))
+        self.clase = ('Fichero Open en ' + str(type(self.node)))
     elif valor in list_File_Attr:
         self.nivel = dictNivel['File'][valor]
-        self.clase = (str('Fichero usando ' + valor + ' en ' + str(type(self.node))))
+        self.clase = ('Fichero usando ' + valor + ' en ' + str(type(self.node)))
+
+#-- NIVEL ASIGNACIONES
+
+
+#-- NIVEL PRINTS
+def nivel_Print(self, valor):
+    self.nivel = dictNivel['Print'][valor]
+    self.clase = ('Llamada Print en ' + str(type(self.node)))
+
+#-- NIVEL IF STATEMENTS
