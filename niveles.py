@@ -1,5 +1,5 @@
 #-- PROGRAMA PARA LOS NIVELES DE CADA ATRIBUTO
-
+import ast
 #-- Variable global diccionario de niveles
 dictNivel = ''
 
@@ -20,6 +20,8 @@ def niveles(self):
         nivel_DictComp(self)
     elif self.atrib == 'ast.Tuple':
         nivel_Tuple(self)
+    elif self.atrib == 'ast.Call':
+        tipo_Call(self)
 
 
 #-- NIVEL DE LISTAS
@@ -110,3 +112,14 @@ def nivel_Tuple(self):
         else:
             self.nivel = dictNivel['Tuple']['Normal']
             self.clase = type(self.node)
+
+def tipo_Call(self):
+    if 'ast.Name' in str(self.node.func):
+        if (self.node.func.id) == 'open':
+            nivel_Files(self)
+
+
+def nivel_Files(self):
+    if (self.node.func.id) == 'open':
+        self.nivel = dictNivel['File']['Open']
+        self.clase = (str('Fichero Open en ' + str(type(self.node))))
