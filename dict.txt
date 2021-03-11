@@ -5,4 +5,5 @@
  'DictComp': {'Normal': 'C1', 'If': 'C2', 'If-Else': 'C2', 'DictComp': 'C2'},
  'Tuple': {'Normal': 'A1', 'Tuple': 'A2'},
  'File': {'Open': 'A2', 'write': 'A2', 'writelines': 'A2', 'read': 'A2',
-          'readline': 'A2'}}
+          'readline': 'A2'},
+ 'Print': {'print': 'A1'}}
