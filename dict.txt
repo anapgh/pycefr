@@ -6,4 +6,5 @@
  'Tuple': {'Normal': 'A1', 'Tuple': 'A2'},
  'File': {'Open': 'A2', 'write': 'A2', 'writelines': 'A2', 'read': 'A2',
           'readline': 'A2'},
- 'Print': {'print': 'A1'}}
+ 'Print': {'print': 'A1'},
+ 'Assign': {'Normal': 'A1', 'Assign + suma': 'A1', 'AugAssign': 'A2'}}
