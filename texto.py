@@ -177,3 +177,32 @@ values= struct.unpack('>i4sh', data)
 F = open('datafile.pkl', 'rb')
 import pickle
 E = pickle.load( F)
+
+#-- ASIGNACIONES
+spam = 'Spam'
+#-- Asiganciones con aumentos, etc.
+spam = spam + 42
+spam += 42
+spam -= 42
+spam *= 42
+#--Tuple assigment
+spam, ham = 'yum', 'YUM'
+#-- List assigment
+[spam, ham] = ['yum', 'YUM'] 
+#-- Multiple-target assigment
+spam = ham = 'lunch'  
+#-- Nested sequences
+((a, b), c) = ('SP', 'AM')  
+#-- Extended sequence unpacking 
+a, *b = 'spam'
+
+
+
+#-- IF STATEMENTS
+#-- general format
+if test1:
+    print('hola')
+elif test2:
+    print('jeje')
+else:
+    print('adios')
