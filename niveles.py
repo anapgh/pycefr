@@ -113,13 +113,25 @@ def nivel_Tuple(self):
             self.nivel = dictNivel['Tuple']['Normal']
             self.clase = type(self.node)
 
+#-- Lista de atributos de ficheros
+list_File_Attr = ['write', 'read', 'readline', 'writelines']
+
 def tipo_Call(self):
-    if 'ast.Name' in str(self.node.func):
+    valor = ''
+    if 'ast.Attribute' in str(self.node.func):
+        if (self.node.func.attr) in list_File_Attr:
+            valor = self.node.func.attr
+            nivel_Files(self, valor)
+    elif 'ast.Name' in str(self.node.func):
         if (self.node.func.id) == 'open':
-            nivel_Files(self)
+            valor = 'open'
+            nivel_Files(self, valor)
 
 
-def nivel_Files(self):
-    if (self.node.func.id) == 'open':
+def nivel_Files(self, valor):
+    if (valor) == 'open':
         self.nivel = dictNivel['File']['Open']
         self.clase = (str('Fichero Open en ' + str(type(self.node))))
+    elif valor in list_File_Attr:
+        self.nivel = dictNivel['File'][valor]
+        self.clase = (str('Fichero usando ' + valor + ' en ' + str(type(self.node))))
