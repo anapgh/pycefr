@@ -76,6 +76,7 @@ T1 = ()
 #-- Tuplas aninadadas
 T2 = ('Bob', ('dev', 'mgr'))
 
+#--------------------------NO DETECTA--------------------------
 #-- Conversión de tupla
 T = tuple('spam')
 
@@ -100,12 +101,12 @@ print (valores.index(5))
 #-- Modulo 'namedtuple':
 #-- Modulo que permite que los componentes sean accesibles por posicion y por atributo(key).
 from collections import namedtuple
-Rec = namedtuple('rec', ['name', 'age', 'jobs'])
+Rec = namedtuple('rec', ['name', 'age', 'jobs']) #-- namedtuple: ast.Call
+#---------------------------------------------------------------------------------
 
-"""
 #-- STRINGS
 #-- Crear un string NORMAL
-S = 'spam'
+S = 'spam' #-- Name y Constant
 
 #-- Concatenacion y repeticion
 S = S + 'xyz'
@@ -121,14 +122,58 @@ s = S[0]
 for x in S:
     print(x)
 #-- Otra forma
-'spam' in S:
+if 'spam' in S:
+    print('si')
 
 #-- Strings comprehension
 S = 'spam'
-s = [c * 2 for c in S]
+s = [c * 2 for c in S] #-- dict comprehension
 
 #-- Con 'map':
 ord = 'hola'
 S = 'spam'
-s = map(ord, S)
-"""
+s = map(ord, S) #-- map: ast.Call
+
+
+#-- FILES
+#-- Abrir y crear fichero
+#-- Write:
+output = open(' fichero ', 'w') #-- ast.Call
+#-- Read
+open(' fichero ', 'r')
+input = open('fichero') #-- 'r' por defecto
+
+#--Leer un fichero
+lectura = input.read()
+lectura = input.readline()
+
+#-- Escribir un fichero
+output.write()
+output.writelines()
+
+#-- Cerrar un fichero
+output.close()
+
+#-- JSON file:
+#-- Devuelve estructura JSON
+json.dump(rec, fp= open('testjson.txt', 'w'), indent = 4)
+print(open('testjson.text').read())
+#-- Devuelve diccionario de Listas
+P = json.load(open('testjson'))
+
+#-- EVAL
+line = F.readline()
+parts = line.split('$')
+eval(parts[0])
+objects = [eval(P) for P in parts]
+
+#-- Modulo Binary Data: Struct
+F = open('data.bin', 'rb')
+data = F.read()
+import struct
+values= struct.unpack('>i4sh', data)
+
+#-- Modulo pickle
+F = open('datafile.pkl', 'rb')
+import pickle
+E = pickle.load( F)
