@@ -3,6 +3,9 @@ import ast
 #-- Variable global diccionario de niveles
 dictNivel = ''
 
+#-- Lista de elemtnos break, continue, pass y loop ELSE
+
+
 #-- LEER FICHERO CON NIVELES
 with open('/home/ana/Documentos/TFG/TFG/dict.txt', 'r') as dict_file:
     dict_text = dict_file.read()
@@ -26,6 +29,12 @@ def niveles(self):
         nivel_Assign(self)
     elif self.atrib == 'ast.AugAssign':
         nivel_Assign(self)
+    elif self.atrib == 'ast.If':
+        nivel_If(self)
+    elif self.atrib == 'ast.IfExp':
+        nivel_If(self)
+    elif self.atrib == 'ast.While':
+        nivel_While(self)
 
 #-- NIVEL DE LISTAS
 def nivel_List(self):
@@ -169,3 +178,22 @@ def nivel_Print(self, valor):
     self.clase = ('Llamada Print en ' + str(type(self.node)))
 
 #-- NIVEL IF STATEMENTS
+def nivel_If(self):
+    orelse = 0
+    if self.atrib == 'ast.If':
+        #print(self.node.lineno)
+        #print(self.node.col_offset)
+        #print(self.node.orelse)
+        self.nivel = dictNivel['If']['Normal']
+        self.clase = ('If statements ' + str(type(self.node)))
+    elif self.atrib == 'ast.IfExp':
+        self.nivel = dictNivel['If']['Expresion']
+        self.clase = ('If expresion ' + str(type(self.node)))
+
+#-- NIVEL WHILE
+def nivel_While(self):
+    self.nivel = dictNivel['While']['Normal']
+    if self.node.orelse == []:
+        self.clase = ('Bucle while-else en: ' + str(type(self.node)))
+    else:
+        self.clase = ('Bucle while en :' + str(type(self.node)))
