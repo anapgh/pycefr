@@ -9,4 +9,7 @@
  'Print': {'print': 'A1'},
  'Assign': {'Normal': 'A1', 'Assign + suma': 'A1', 'AugAssign': 'A2'},
  'If': {'Normal': 'A1', 'Expresion': 'B1'},
- 'While': {'Normal': 'A1'}}
+ 'While': {'Normal': 'A1'},
+ 'Break': 'B1', 'Continue': 'B1', 'Pass': 'B1',
+ 'For': {'Normal': 'A1', 'For': 'A2'},
+ 'LoopCoding': {'range': 'A2', 'zip': 'C2', 'map': 'C2', 'enumerate': 'C2'}}
