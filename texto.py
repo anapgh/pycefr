@@ -188,12 +188,12 @@ spam *= 42
 #--Tuple assigment
 spam, ham = 'yum', 'YUM'
 #-- List assigment
-[spam, ham] = ['yum', 'YUM'] 
+[spam, ham] = ['yum', 'YUM']
 #-- Multiple-target assigment
-spam = ham = 'lunch'  
+spam = ham = 'lunch'
 #-- Nested sequences
-((a, b), c) = ('SP', 'AM')  
-#-- Extended sequence unpacking 
+((a, b), c) = ('SP', 'AM')
+#-- Extended sequence unpacking
 a, *b = 'spam'
 
 
@@ -206,3 +206,52 @@ elif test2:
     print('jeje')
 else:
     print('adios')
+#-- Multiway branching --> equivalente a if statements
+if choice == 'spam':
+    print(1.25)
+elif choice == 'ham':
+    print(1.99)
+elif choice == 'eggs':
+    print(0.99)
+elif choice == 'bacon':
+    print(1.10)
+else:
+    print('Bad choice')
+#-- Multiway branching --> como no hay switch y cases
+#-- usamos indexacion de dict o list
+choice = 'ham'
+print({'spam': 1.25, 'ham': 1.99, 'eggs': 0.99, 'bacon': 1.10}[choice])
+#-- hay que poner el default
+branch = {'spam': 1.25, 'ham': 1.99, 'eggs': 0.99}
+print(branch.get('spam', 'Bad choice'))
+print(branch.get('bacon', 'Bad choice'))
+#-- Try. Tambien se puede poner como una excepción
+try:
+    print(branch[choice])
+except KeyError:
+    print('Bad choice')
+#-- IF-ELSE Expressions
+#-- General
+if X:
+    A = Y
+else:
+    A = Z
+#-- En 1 linea.
+A = Y if X else Z
+#En 1 linea con operadores
+A = ((X and Y) or Z)
+#--Con listas
+A = [Z, Y][bool(X)]
+
+#-- WHILE LOOPS
+#-- General format con else
+while test:
+    print('si')
+else:
+    print('no')
+#-- Sin else
+while test:
+    print('si')
+
+
+#-- Break, continue, pass and the Lopp else.
