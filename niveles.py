@@ -231,5 +231,22 @@ def nivel_Pass(self):
 
 #-- NIVEL FOR
 def nivel_For(self):
+    numFor = 0
+    numList = 0
+    numTupleI = 0
+    numTupleT = 0
     self.nivel = dictNivel['For']['Normal']
     self.clase = ('Bucle for en : ' + str(type(self.node)))
+    if 'ast.For' in str(self.node.body):
+        numFor += (str(self.node.body)).count('ast.For')
+        self.nivel = dictNivel['For']['For']
+        self.clase += (' Con ' + str(numFor) + ' For anidados')
+    if 'ast.Tuple' in str(self.node.target):
+        numTupleT += (str(self.node.target)).count('ast.Tuple')
+        self.clase += (' Con ' + str(numTupleT) + ' Tuplas como nombre')
+    if 'ast.List' in str(self.node.iter):
+        numList += (str(self.node.iter)).count('ast.List')
+        self.clase += (' Con ' + str(numList) + ' Listas para iterar')
+    elif 'ast.Tuple' in str(self.node.iter):
+        numTupleI += (str(self.node.iter)).count('ast.Tuple')
+        self.clase += (' Con ' + str(numTupleI) + ' Tuplas para iterar')
