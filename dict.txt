@@ -7,4 +7,6 @@
  'File': {'Open': 'A2', 'write': 'A2', 'writelines': 'A2', 'read': 'A2',
           'readline': 'A2'},
  'Print': {'print': 'A1'},
- 'Assign': {'Normal': 'A1', 'Assign + suma': 'A1', 'AugAssign': 'A2'}}
+ 'Assign': {'Normal': 'A1', 'Assign + suma': 'A1', 'AugAssign': 'A2'},
+ 'If': {'Normal': 'A1', 'Expresion': 'B1'},
+ 'While': {'Normal': 'A1'}}
