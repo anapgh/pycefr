@@ -60,14 +60,23 @@ def nivel_List(self):
 #-- NIVEL LIST COMPREHENSION
 def nivel_ListComp(self):
     numComp = 0
+    ifExp = 0
+    self.nivel = dictNivel['ListComp']['Normal']
+    self.clase = str(type(self.node))
     for i in range(0, len(self.node.generators)):
         numComp += 1
-    if numComp > 1:
-        self.nivel = dictNivel['ListComp']['ListComp']
-        self.clase = str(numComp) + ' ' + str(type(self.node))
-    else:
-        self.nivel = dictNivel['ListComp']['Normal']
-        self.clase = type(self.node)
+        ifExp += 1
+        print(self.node.generators[i].ifs)
+        if (self.node.generators[i].ifs) != []:
+            self.nivel = dictNivel['ListComp']['If']
+            self.clase += (' Con sentencias de ' + str(ifExp) + ' IF')
+        if numComp > 1:
+            self.nivel = dictNivel['ListComp']['ListComp']
+            self.clase += (' Con ' + str(numComp) + ' ListComp mas')
+
+
+
+
 
 #-- NIVEL DICCIONARIO
 def nivel_Dict(self):
