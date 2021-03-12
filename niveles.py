@@ -130,6 +130,7 @@ def nivel_Tuple(self):
 
 #-- Lista de atributos de ficheros
 list_File_Attr = ['write', 'read', 'readline', 'writelines']
+list_LoopCoding = ['range', 'zip', 'map', 'enumerate']
 
 #-- Tipos de llamadas
 def tipo_Call(self):
@@ -145,6 +146,9 @@ def tipo_Call(self):
         elif (self.node.func.id) == 'print':
             valor = 'print'
             nivel_Print(self, valor)
+        elif (self.node.func.id) in list_LoopCoding:
+            valor = self.node.func.id
+            nivel_LoopCoding(self, valor)
 
 #-- NIVEL FILES
 def nivel_Files(self, valor):
@@ -154,6 +158,12 @@ def nivel_Files(self, valor):
     elif valor in list_File_Attr:
         self.nivel = dictNivel['File'][valor]
         self.clase = ('Fichero usando ' + valor + ' en ' + str(type(self.node)))
+
+#-- NIVEL PRINTS
+def nivel_Print(self, valor):
+    self.nivel = dictNivel['Print'][valor]
+    self.clase = ('Llamada Print en ' + str(type(self.node)))
+
 
 #-- NIVEL ASIGNACIONES
 def nivel_Assign(self):
@@ -175,10 +185,6 @@ def nivel_Assign(self):
             op = 'aumento multiplicacion'
         self.clase = ('Asignación simplificada de ' + op + str(type(self.node)))
 
-#-- NIVEL PRINTS
-def nivel_Print(self, valor):
-    self.nivel = dictNivel['Print'][valor]
-    self.clase = ('Llamada Print en ' + str(type(self.node)))
 
 #-- NIVEL IF STATEMENTS
 def nivel_If(self):
@@ -250,3 +256,15 @@ def nivel_For(self):
     elif 'ast.Tuple' in str(self.node.iter):
         numTupleI += (str(self.node.iter)).count('ast.Tuple')
         self.clase += (' Con ' + str(numTupleI) + ' Tuplas para iterar')
+
+#-- NIVEL LOOP CODING TECNIQUES
+def nivel_LoopCoding(self, valor):
+    if valor == 'range':
+        self.nivel = dictNivel['LoopCoding']['range']
+    elif valor == 'zip':
+        self.nivel = dictNivel['LoopCoding']['zip']
+    elif valor == 'map':
+        self.nivel = dictNivel['LoopCoding']['map']
+    elif valor == 'enumerate':
+        self.nivel = dictNivel['LoopCoding']['enumerate']
+    self.clase = ('Llamada a ' + valor.upper() + ' ' + str(type(self.node)))
