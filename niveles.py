@@ -3,8 +3,8 @@ import ast
 #-- Variable global diccionario de niveles
 dictNivel = ''
 
-#-- Lista de elemtnos break, continue, pass y loop ELSE
-
+#-- lista elementos de bucle: break, continue, pass,for, while
+listElemLoop = ['ast.Break', 'ast.Continue', 'ast.Pass', 'ast.While', 'ast.For']
 
 #-- LEER FICHERO CON NIVELES
 with open('/home/ana/Documentos/TFG/TFG/dict.txt', 'r') as dict_file:
@@ -33,8 +33,11 @@ def niveles(self):
         nivel_If(self)
     elif self.atrib == 'ast.IfExp':
         nivel_If(self)
-    elif self.atrib == 'ast.While':
-        nivel_While(self)
+    elif self.atrib in listElemLoop:
+        tipo_ElemLoop(self)
+    #elif self.atrib == 'ast.While':
+        #nivel_While(self)
+
 
 #-- NIVEL DE LISTAS
 def nivel_List(self):
@@ -190,10 +193,43 @@ def nivel_If(self):
         self.nivel = dictNivel['If']['Expresion']
         self.clase = ('If expresion ' + str(type(self.node)))
 
+#-- TIPO ELEMENTO LOOP
+def tipo_ElemLoop(self):
+    if self.atrib == 'ast.While':
+        nivel_While(self)
+    elif self.atrib == 'ast.Break':
+        nivel_Break(self)
+    elif self.atrib == 'ast.Continue':
+        nivel_Continue(self)
+    elif self.atrib == 'ast.Pass':
+        nivel_Pass(self)
+    elif self.atrib == 'ast.For':
+        nivel_For(self)
+
 #-- NIVEL WHILE
 def nivel_While(self):
     self.nivel = dictNivel['While']['Normal']
     if self.node.orelse == []:
-        self.clase = ('Bucle while-else en: ' + str(type(self.node)))
+        self.clase = ('Bucle while-else en :' + str(type(self.node)))
     else:
         self.clase = ('Bucle while en :' + str(type(self.node)))
+
+#-- NIVEL BREAK
+def nivel_Break(self):
+    self.nivel = dictNivel['Break']
+    self.clase = ('Sentencia Break en : ' + str(type(self.node)))
+
+#-- NIVEL CONTINUE
+def nivel_Continue(self):
+    self.nivel = dictNivel['Continue']
+    self.clase = ('Sentencia Continue en : ' + str(type(self.node)))
+
+#-- NIVEL PASS
+def nivel_Pass(self):
+    self.nivel = dictNivel['Pass']
+    self.clase = ('Sentencia Pass en : ' + str(type(self.node)))
+
+#-- NIVEL FOR
+def nivel_For(self):
+    self.nivel = dictNivel['For']['Normal']
+    self.clase = ('Bucle for en : ' + str(type(self.node)))
