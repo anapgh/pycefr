@@ -255,3 +255,80 @@ while test:
 
 
 #-- Break, continue, pass and the Lopp else.
+#-- pass
+def func1():
+    pass
+
+#-- Continue
+x = 10
+while x:
+    x = x-1
+    if x % 2 != 0:
+        continue
+        print(x, end= ' ' )
+
+#--Break
+while True:
+    name = input('Enter name: ')
+    if name == 'stop':
+        break
+        age = input('Enter age:  ')
+        print('Hello', name, '=>', int(age) ** 2)
+
+#-- Loop else
+x = y // 2
+while x > 1 :
+    if y % x == 0:
+        print(y, 'has factor', x)
+        break
+        x -= 1
+    else:
+        print(y, 'is aprime')
+
+#-- BUCLE FOR
+#-- For ANIDADO
+tems = ["aaa", 111, (4, 5), 2.01]
+tests = [(4, 5), 3.14]
+
+for key in tests:
+    for item in items:
+        if item == key:
+            print(key, "was found")
+            break
+        else:
+            print(key, "not found!")
+#-- Lista
+for x in ["spam", "eggs", "ham"]:
+    print(x, end = '   ')
+#-- Strings Es una herramienta más generica
+S = "lumberjack"
+for x in S:
+    print(x, end = '   ')
+#-- Tuplas.
+T = ("and", "I'am", "okay")
+for x in T:
+    print(x, end = '   ')
+#-- Tuplas anidadas
+for ((a,b), c) in [((1, 2), 3), ((4, 5), 6)]:
+    print(a, b, c)
+#-- Extended sequence assigment in for loops
+for (a, *b, c) in [(1, 2, 3, 4), (5, 6, 7, 8)]:
+    print(a, b, c)
+
+#-- LOOP CODING TECNIQUES
+#-- range
+list(range(5))
+list(range(2, 5))
+list(range(0, 10, 2))
+#-- zip
+dict(zip(['name', 'job', 'age'], ['Bob', 'dev', 40]))
+#-- map
+list(map(ord, 'spam'))
+#-- enumerate
+S = 'spam'
+for (offset, item) in enumerate(S):
+    print(item, 'appears at offset', offset)
+#-- enumerate + Comprehension
+[c * i for (i, c) in enumerate(S)]
+for (i, l) in enumerate(open('test.txt')):
+    print('%s) %s' % (i, l.rstrip()))
