@@ -12,4 +12,8 @@
  'While': {'Normal': 'A1'},
  'Break': 'B1', 'Continue': 'B1', 'Pass': 'B1',
  'For': {'Normal': 'A1', 'For': 'A2'},
- 'LoopCoding': {'range': 'A2', 'zip': 'C2', 'map': 'C2', 'enumerate': 'C2'}}
+ 'LoopCoding': {'range': 'A2', 'zip': 'C2', 'map': 'C2', 'enumerate': 'C2'},
+ 'FunctionDef': {'Normal': 'A1'},
+ 'Return': 'A1',
+ 'Yield': 'A2',
+ 'Lambda': 'B1' }
