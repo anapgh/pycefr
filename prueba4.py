@@ -1,9 +1,7 @@
 #-- probando el modulo de ast
 import ast
 import os
-import csv
 from ClassIterTree import ClassIterTree
-import ClassElement as ClassE
 
 #-- Creamos listas de cada atrib
 Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
@@ -11,10 +9,9 @@ Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', '
 
 Variables = ['ast.Name', 'ast.Del', 'ast.Starred']
 Expressions = ['ast.Expr', 'ast.UnaryOp', 'ast.UAdd', 'ast.USub', 'ast.Invert', 'ast.BinOp',
-                'ast.Sub','ast.Div', 'ast.FloorDiv', 'ast.LShift',
-                'ast.RShift', 'ast.BitOr', 'ast.BitXor', 'ast.BitAnd', 'ast.MatMult', 'ast.BoolOp',
-                'ast.And', 'ast.Compare', 'ast.LtE', 'ast.GtE',
-                'ast.Is', 'ast.IsNot', 'ast.NotIn', 'ast.Call', 'ast.keyword', 'ast.IfExp',
+                'ast.Div', 'ast.LShift', 'ast.RShift', 'ast.BitOr', 'ast.BitXor',
+                'ast.BitAnd', 'ast.MatMult', 'ast.BoolOp', 'ast.Compare', 'ast.LtE',
+                'ast.GtE', 'ast.Is', 'ast.IsNot', 'ast.NotIn', 'ast.Call', 'ast.IfExp',
                 'ast.Attribute', 'ast.NamedExpr']
 Subscripting = ['ast.Subscript']
 Comprehensions = ['ast.ListComp', 'ast.SetComp', 'ast.GeneratorExp', 'ast.DictComp']
