@@ -39,11 +39,12 @@ def niveles(self):
         nivel_FunctionDef(self)
     elif self.atrib == 'ast.Return':
         nivel_Return(self)
-    elif self.atrib == 'ast.Yield':
-        nivel_Yield(self)
     elif self.atrib == 'ast.Lambda':
         nivel_Lambda(self)
-
+    elif self.atrib == 'ast.Yield':
+        nivel_GeneratorFunct(self)
+    elif self.atrib == 'ast.GeneratorExp':
+        nivel_GeneratorExpr(self)
 
 
 #-- NIVEL DE LISTAS
@@ -161,8 +162,6 @@ def tipo_Call(self):
         elif (self.node.func.id) in list_LoopCoding:
             valor = self.node.func.id
             nivel_LoopCoding(self, valor)
-
-
 
 
 #-- NIVEL FILES
@@ -317,11 +316,6 @@ def nivel_Return(self):
     self.nivel = dictNivel['Return']
     self.clase = ('Usando un RETURN en una funcion ' + str(type(self.node)))
 
-#-- NIVEL YIELD
-def nivel_Yield(self):
-    self.nivel = dictNivel['Yield']
-    self.clase = ('Usando un YIELD en una funcion ' + str(type(self.node)))
-
 #-- NIVEL LAMBDA
 def nivel_Lambda(self):
     self.nivel = dictNivel['Lambda']
@@ -339,6 +333,13 @@ def nivel_RecursiveFunction(self):
             except:
                 pass
 
-#-- GENERATOR FUNCTION
+#-- NIVEL GENERATOR FUNCTION
+#-- nivel Yield
+def nivel_GeneratorFunct(self):
+    self.nivel = dictNivel['GeneratorFunct']
+    self.clase = ('GENERATOR FUNTION (YIELD) ' + str(type(self.node)))
 
 #-- GENERATOR EXPRESION
+def nivel_GeneratorExpr(self):
+    self.nivel = dictNivel['GeneratorExpr']
+    self.clase = ('GENERATOR EXPRESSION ' + str(type(self.node)))
