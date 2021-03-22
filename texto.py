@@ -332,3 +332,22 @@ for (offset, item) in enumerate(S):
 [c * i for (i, c) in enumerate(S)]
 for (i, l) in enumerate(open('test.txt')):
     print('%s) %s' % (i, l.rstrip()))
+
+#-- FUNCTIONS
+#-- Con print
+def printer(message):
+    print('Hello' + mssage)
+#-- Con return
+def adder(a, b=1, *c):
+    return a + b + c[0]
+#-- Con yield
+def squares(x):
+    for i in range(x):
+        yield i ** 2
+#-- Con Lambda
+Funcs = [lambda x: x **2, lambda x: x **3]
+#-- lambda en listas
+L = [lambda x: x ** 2, lambda x: x ** 3,lambda x: x ** 4]
+for f in L:
+    print(f(2)) # Prints 4, 8, 16
+    print(L[0](3)) # Prints 9
