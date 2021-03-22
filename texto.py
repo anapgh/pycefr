@@ -387,3 +387,11 @@ def mysum(L):
 #-- con if-else
 def mysum(L):
     return 0 if not L else L[0] + mysum(L[1:])
+
+#-- GENERATOR FUNCTION
+def gensquares(N):
+    for i in range(N):
+        yield i ** 2
+
+#-- GENERATOR EXPRESSION
+(x ** 2 for x in range(4)) 
