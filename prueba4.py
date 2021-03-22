@@ -28,7 +28,6 @@ AsyncAwait = ['ast.AsyncFunctionDef', 'ast.Await', 'ast.AsyncFor', 'ast.AsyncWit
 SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
             Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
 
-
 #-- Extraemos del directorio los archivos .py
 def leer_directorio():
     pos = ''
