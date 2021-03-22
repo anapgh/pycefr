@@ -351,3 +351,29 @@ L = [lambda x: x ** 2, lambda x: x ** 3,lambda x: x ** 4]
 for f in L:
     print(f(2)) # Prints 4, 8, 16
     print(L[0](3)) # Prints 9
+
+#-- ARGUMENTOS
+#-- Normal argument: Pasar argumentos por posicion.
+def func(name):
+    print(name)
+#-- Keyword argument: Pasar arguemnto por el nombre (valor)
+func(name=value)
+#-- Defaults: especifica valores para los argumentos opcionales que no se pasan.
+def func(name=value):
+    print(name)
+#-- Varargs collecting or unpacking:
+def func(*name):
+    print(name)
+def func(**name):
+    print(name)
+#-- Keyword-only arguments:
+def func(*other, name):
+    print('hola')
+def func(*, name=value):
+    print('hola')
+#-- Con todo
+def f(a: 'annotation', b=1, c=2, *d, e, f=3, **g):
+    print('toodo')
+#-- Sin argumentos
+def func():
+    print('pepe')
