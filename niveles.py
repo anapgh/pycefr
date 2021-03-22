@@ -339,7 +339,6 @@ def nivel_RecursiveFunction(self):
             except:
                 pass
 
-
 #-- GENERATOR FUNCTION
 
 #-- GENERATOR EXPRESION
