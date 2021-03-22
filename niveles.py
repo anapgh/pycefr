@@ -35,8 +35,14 @@ def niveles(self):
         nivel_If(self)
     elif self.atrib in listElemLoop:
         tipo_ElemLoop(self)
-    #elif self.atrib == 'ast.While':
-        #nivel_While(self)
+    elif self.atrib == 'ast.FunctionDef':
+        nivel_FunctionDef(self)
+    elif self.atrib == 'ast.Return':
+        nivel_Return(self)
+    elif self.atrib == 'ast.Yield':
+        nivel_Yield(self)
+    elif self.atrib == 'ast.Lambda':
+        nivel_Lambda(self)
 
 
 #-- NIVEL DE LISTAS
@@ -66,16 +72,12 @@ def nivel_ListComp(self):
     for i in range(0, len(self.node.generators)):
         numComp += 1
         ifExp += 1
-        print(self.node.generators[i].ifs)
         if (self.node.generators[i].ifs) != []:
             self.nivel = dictNivel['ListComp']['If']
             self.clase += (' Con sentencias de ' + str(ifExp) + ' IF')
         if numComp > 1:
             self.nivel = dictNivel['ListComp']['ListComp']
             self.clase += (' Con ' + str(numComp) + ' ListComp mas')
-
-
-
 
 
 #-- NIVEL DICCIONARIO
@@ -173,7 +175,6 @@ def nivel_Print(self, valor):
     self.nivel = dictNivel['Print'][valor]
     self.clase = ('Llamada Print en ' + str(type(self.node)))
 
-
 #-- NIVEL ASIGNACIONES
 def nivel_Assign(self):
     op = ''
@@ -199,9 +200,6 @@ def nivel_Assign(self):
 def nivel_If(self):
     orelse = 0
     if self.atrib == 'ast.If':
-        #print(self.node.lineno)
-        #print(self.node.col_offset)
-        #print(self.node.orelse)
         self.nivel = dictNivel['If']['Normal']
         self.clase = ('If statements ' + str(type(self.node)))
     elif self.atrib == 'ast.IfExp':
@@ -277,3 +275,31 @@ def nivel_LoopCoding(self, valor):
     elif valor == 'enumerate':
         self.nivel = dictNivel['LoopCoding']['enumerate']
     self.clase = ('Llamada a ' + valor.upper() + ' ' + str(type(self.node)))
+
+#-- NIVEL FUNCIONES
+def nivel_FunctionDef(self):
+    self.nivel = dictNivel['FunctionDef']['Normal']
+    self.clase = ('Usando una funcion def en ' + str(type(self.node)))
+
+#-- NIVEL RETURN
+def nivel_Return(self):
+    self.nivel = dictNivel['Return']
+    self.clase = ('Usando un RETURN en una funcion ' + str(type(self.node)))
+
+#-- NIVEL YIELD
+def nivel_Yield(self):
+    self.nivel = dictNivel['Yield']
+    self.clase = ('Usando un YIELD en una funcion ' + str(type(self.node)))
+
+#-- NIVEL LAMBDA
+def nivel_Lambda(self):
+    self.nivel = dictNivel['Lambda']
+    self.clase = ('Usando LAMBDA ' + str(type(self.node)))
+
+#-- NIVEL ARGUMENTOS
+
+#-- NIVEL FUNCIONES RECURSIVAS
+
+#-- GENERATOR FUNCTION
+
+#-- GENERATOR EXPRESION
