@@ -162,6 +162,9 @@ def tipo_Call(self):
             valor = self.node.func.id
             nivel_LoopCoding(self, valor)
 
+
+
+
 #-- NIVEL FILES
 def nivel_Files(self, valor):
     if (valor) == 'open':
@@ -283,6 +286,9 @@ def nivel_FunctionDef(self):
     self.clase = ('FUNCION DEF en ' + str(type(self.node)))
     #-- Clasificamos segun se pasan los argumentos
     nivel_DefArguments(self)
+    #-- Comprobamos si hay funcion recursiva
+    nivel_RecursiveFunction(self)
+
 
 #-- NIVEL DE ARGUMENTOS PASADOS A FUNCIONES
 def nivel_DefArguments(self):
@@ -323,6 +329,16 @@ def nivel_Lambda(self):
 
 
 #-- NIVEL FUNCIONES RECURSIVAS
+def nivel_RecursiveFunction(self):
+    for i in ast.walk(self.node):
+        if 'ast.Call' in str(i):
+            try:
+                if i.func.id == self.node.name:
+                    self.nivel = dictNivel['FunctionDef']['Recursive']
+                    self.clase += (' con funcion RECURSIVA')
+            except:
+                pass
+
 
 #-- GENERATOR FUNCTION
 
