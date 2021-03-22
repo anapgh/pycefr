@@ -45,6 +45,7 @@ def niveles(self):
         nivel_Lambda(self)
 
 
+
 #-- NIVEL DE LISTAS
 def nivel_List(self):
     numList = 0
@@ -279,7 +280,31 @@ def nivel_LoopCoding(self, valor):
 #-- NIVEL FUNCIONES
 def nivel_FunctionDef(self):
     self.nivel = dictNivel['FunctionDef']['Normal']
-    self.clase = ('Usando una funcion def en ' + str(type(self.node)))
+    self.clase = ('FUNCION DEF en ' + str(type(self.node)))
+    #-- Clasificamos segun se pasan los argumentos
+    nivel_DefArguments(self)
+
+#-- NIVEL DE ARGUMENTOS PASADOS A FUNCIONES
+def nivel_DefArguments(self):
+    #-- Argumento normal
+    if self.node.args.args != []:
+        self.clase += (' con argumento normal')
+    #-- Argumentos por defecto
+    if self.node.args.defaults != []:
+        self.nivel = dictNivel['FunctionDef']['Default']
+        self.clase += (' con argumento por defecto')
+    #-- Argumentos con *
+    if self.node.args.vararg != None:
+        self.nivel = dictNivel['FunctionDef']['*']
+        self.clase += (' con argumento de *')
+    #-- Argumentos keyword-only
+    if self.node.args.kwonlyargs != []:
+        self.nivel = dictNivel['FunctionDef']['Keyword-Only']
+        self.clase += (' con argumento de Keyword-Only')
+    #-- Argumentos con **
+    if self.node.args.kwarg != None:
+        self.nivel = dictNivel['FunctionDef']['**']
+        self.clase += (' con argumento de **')
 
 #-- NIVEL RETURN
 def nivel_Return(self):
@@ -296,7 +321,6 @@ def nivel_Lambda(self):
     self.nivel = dictNivel['Lambda']
     self.clase = ('Usando LAMBDA ' + str(type(self.node)))
 
-#-- NIVEL ARGUMENTOS
 
 #-- NIVEL FUNCIONES RECURSIVAS
 
