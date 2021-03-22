@@ -16,5 +16,5 @@
  'FunctionDef': {'Normal': 'A1', '*': 'B1', 'Keyword-Only': 'B1', '**': 'B1',
                  'Default': 'A2', 'Recursive': 'B1'},
  'Return': 'A1',
- 'Yield': 'A2',
- 'Lambda': 'B1' }
+ 'Lambda': 'B1',
+ 'GeneratorFunct': 'C1', 'GeneratorExpr': 'C1'}
