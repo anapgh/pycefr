@@ -377,3 +377,13 @@ def f(a: 'annotation', b=1, c=2, *d, e, f=3, **g):
 #-- Sin argumentos
 def func():
     print('pepe')
+
+#-- FUNCIONES RECURSIVAS
+def mysum(L):
+    if not L:
+        return 0
+    else:
+        return L[0] + mysum(L[1:])
+#-- con if-else
+def mysum(L):
+    return 0 if not L else L[0] + mysum(L[1:])
