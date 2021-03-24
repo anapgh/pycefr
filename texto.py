@@ -394,4 +394,53 @@ def gensquares(N):
         yield i ** 2
 
 #-- GENERATOR EXPRESSION
-(x ** 2 for x in range(4)) 
+(x ** 2 for x in range(4))
+
+#-- MODULOS
+#-- Formas de importar:
+#-- The import statements
+import b.py
+b.printer('hello')
+#-- The from statements
+from module1 import printer
+module1.printer('hello')
+#-- The from *statements: obtenemos copias de todos los nombres
+from module1 import *
+printer('hello')
+
+#-- Namespace Nesting
+X = 1
+import mod2
+print(X, end=' ')
+print(mod2.X, end=' ')
+print(mod2.mod3.X)
+
+#-- Relative import
+#-- Imports mypkg.string(Searches this package only):
+from . import string
+# Imports names from mypkg.string:
+from .string import name1, name2
+#-- Imports string sibling of mypkg :
+from .. import string
+
+#-- Declaraciones
+#-- __future__
+from __future__ import featurename
+#-- __name__
+def tester():
+    print("It's Christmas in Heaven...")
+if __name__ == '__main__':
+    tester()
+
+#-- The 'as' extension for import and from
+import modulename as name
+from modulename import attrname as name
+
+#-- Importing modules by name string
+#-- Usando __import__
+modname = 'string'
+string = __import__(modname)
+#-- Usando la llamada importlib.import_module’
+import importlib
+modname = 'string'
+string = importlib.import_module(modname)
