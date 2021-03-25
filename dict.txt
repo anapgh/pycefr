@@ -23,4 +23,5 @@
  'Class': {'Normal': 'B1', 'Heredada': 'B1', 'Private': 'C2', 'Descriptor': 'C1',
            'Properties': 'C1'},
  'Attribute': {'Normal': 'A2', 'SpecClass': 'B2'},
- 'StaticClass': 'C1'}
+ 'StaticClass': 'C1',
+ 'Decorator': 'C2'}
