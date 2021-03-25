@@ -616,3 +616,60 @@ class D(C):
     def act(self):
         super().act()
         print('eggs')
+
+#-- EXCEPCIONES
+#-- try/except
+try:
+    fetcher(x, 4)
+except IndexError:
+    print('got exception')
+#-- try/else/except
+try:
+    print('hola')
+except IndexError:
+    pass
+else:
+    print('adios')
+#-- try/finally
+try:
+    fetcher(x, 3)
+finally:
+    print('after fetch')
+#-- try/except/finally
+try:
+    print('main')
+except Exception1:
+    print('handler1')
+except Exception2:
+    print('handler2')
+else:
+    print('else')
+finally:
+    print('finally')
+#-- try/try
+try:
+    try:
+        print('main-action')
+    except Exception1:
+        print('handler1')
+except Exception2:
+    print('handler2')
+else:
+    print('no-error')
+finally:
+    print('cleanup')
+#-- raise
+try:
+    raise IndexError
+except IndexError:
+    print('got exception')
+
+#-- Assert
+def f(x):
+    assert x < 0, 'x must be negative'
+    return x ** 2
+
+#-- with
+with open(r'C:\misc\data') as myfile:
+    for line in myfile:
+        print(line)
