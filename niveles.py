@@ -152,6 +152,7 @@ def nivel_Tuple(self):
 #-- Lista de atributos de ficheros
 list_File_Attr = ['write', 'read', 'readline', 'writelines']
 list_LoopCoding = ['range', 'zip', 'map', 'enumerate']
+listStaticClass = ['staticmethod', 'classmethod']
 
 #-- Tipos de llamadas
 def tipo_Call(self):
@@ -170,7 +171,9 @@ def tipo_Call(self):
         elif (self.node.func.id) in list_LoopCoding:
             valor = self.node.func.id
             nivel_LoopCoding(self, valor)
-
+        elif (self.node.func.id) in listStaticClass:
+            valor = self.node.func.id
+            nivel_StaticClass(self, valor)
 
 
 #-- NIVEL FILES
@@ -399,6 +402,7 @@ def nivel_Module(self):
     nivel_AsExtension(self)
     nameModules(self, nameModule)
 
+
 #-- FUNCION PRIVADA DE CLASE
 def PrivateClass(self):
     for funct in self.node.body:
@@ -419,14 +423,27 @@ def constrMethod(self):
         if i.name == '__init__':
             self.clase += (' metodo CONSTRUCTOR ' + str(i.name))
 
+#-- lista de descriptores
+listDescriptors = ['__get__', '__set__', '__delete__']
+
+#-- DESCRIPTORES
+def Descriptors(self):
+    for elem in self.node.body:
+        if elem.name in listDescriptors:
+            self.nivel += dictNivel['Class']['Descriptor']
+            self.clase += (' con DESCRIPTOR ' + str(elem.name))
+
 #-- PROPERTIES
 def nivel_Properties(self):
-    if node in self.node.body:
+    for node in self.node.body:
         for elem in ast.walk(node):
             if 'ast.Call' in str(elem):
-                if elem.func.id == 'property':
-                    self.nivel = dictNivel['Properties']
-                    self.clase = (' PROPERTIES ' + str(type(self.node)))
+                try:
+                    if elem.func.id == 'property':
+                        self.nivel = dictNivel['Class']['Properties']
+                        self.clase += (' con PROPERTIES ')
+                except:
+                    pass
 
 
 #-- NIVEL CLASE
@@ -446,17 +463,20 @@ def nivel_Class(self):
         if i.arg == 'metaclass':
             print('metaclase: ')
             print(i.value.id)
+    #-- Comprobamos si tiene propiedades
+    nivel_Properties(self)
     #-- Comprobamos el nombre de las funciones
     if 'ast.FunctionDef' in str(self.node.body):
         try:
             #-- Comprobamos si hay metodo constructor
             constrMethod(self)
+            #-- Comprobamos si hay descriptores
+            Descriptors(self)
             #-- Comprobamos si hay funciones y atributos privados
             PrivateClass(self)
         except:
             pass
-    #-- Comprobamos si tiene propiedades
-    nivel_Properties(self)
+
     #-- Comprobamos si tiene decoradores de clase
     for i in self.node.decorator_list:
         print(i.id)
@@ -471,3 +491,8 @@ def specialClassAttributes(self):
         self.nivel = dictNivel['Attribute']['SpecClass']
         self.clase = (' Atributo especial de clases ' + str(self.node.attr) +
                        ' ' + str(type(self.node)))
+
+#-- NIVEL STATIC AND CLASS METHOD
+def nivel_StaticClass(self, valor):
+    self.nivel = dictNivel['StaticClass']
+    self.clase = (valor.upper() + ' en ' + str(type(self.node)))
