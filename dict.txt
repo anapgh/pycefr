@@ -26,4 +26,6 @@
  'StaticClass': 'C1',
  'Decorator': 'C2',
  'Metaclass': 'C2',
- 'SuperFunction': 'C2'}
+ 'SuperFunction': 'C2',
+ 'Exception': {'Try': 'B1','Assert': 'B2', 'Raise': 'B1'},
+ 'With': 'B1'}
