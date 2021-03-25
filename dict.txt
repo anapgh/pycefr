@@ -19,4 +19,6 @@
  'Lambda': 'B1',
  'GeneratorFunct': 'C1', 'GeneratorExpr': 'C1',
  'Module': {'Import': 'A2', 'From': {'Normal': 'A2', 'Relative': 'B1', '*': 'B1'},
-            'As': 'B1', 'Names': 'C1'}}
+            'As': 'B1', 'Names': 'C1'},
+ 'Class': {'Normal': 'B1', 'Heredada': 'B1', 'Private': 'C2'},
+ 'Attribute': {'Normal': 'A2', 'SpecClass': 'B2'}}
