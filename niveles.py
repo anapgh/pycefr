@@ -353,17 +353,10 @@ listModules = ['struct', 'pickle', 'shelve', 'dbm', 're', 'importlib']
 
 #-- MODULOS IMPORTANTES
 def nameModules(self, name):
-    #-- Si el modulo es de import
-    if 'ast.alias' in str(name):
-        for i in self.node.names:
-            if i.name in listModules:
-                self.nivel = dictNivel['Module']['Names']
-                self.clase += (' modulo ' + i.name)
-    #-- Si es de from
-    else:
-        if name in listModules:
+    for i in range(0, len(name)):
+        if name[i] in listModules:
             self.nivel = dictNivel['Module']['Names']
-            self.clase += (' modulo ' + str(name))
+            self.clase += (' modulo ' + name[i])
 
 
 #-- NIVEL 'AS' EXTENSION
@@ -387,15 +380,16 @@ def nivel_From(self):
 
 #-- NIVEL MODULOS
 def nivel_Module(self):
-    nameModule = ''
+    nameModule = []
     if self.atrib == 'ast.Import':
         self.nivel = dictNivel['Module']['Import']
         self.clase = ('Importado con IMPORT ' + str(type(self.node)))
-        nameModule = self.node.names
+        for i in self.node.names:
+            nameModule.append(i.name)
     else:
         self.nivel = dictNivel['Module']['From']['Normal']
         self.clase = ('Importado con FROM IMPORT' + str(type(self.node)))
         nivel_From(self)
-        nameModule = self.node.module
+        nameModule.append(self.node.module)
     nivel_AsExtension(self)
     nameModules(self, nameModule)
