@@ -444,3 +444,13 @@ string = __import__(modname)
 import importlib
 modname = 'string'
 string = importlib.import_module(modname)
+
+#-- Modulos importantes
+import struct
+import pickle
+import shelve
+import dbm
+import re
+import importlib
+import struct, pickle
+from struct import *
