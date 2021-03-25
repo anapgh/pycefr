@@ -351,6 +351,9 @@ def nivel_GeneratorExpr(self):
 #-- Lista de modulos importantes
 listModules = ['struct', 'pickle', 'shelve', 'dbm', 're']
 
+#-- MODULOS IMPORTANTES
+
+
 #-- NIVEL 'AS' EXTENSION
 def nivel_AsExtension(self):
     for i in self.node.names:
@@ -364,7 +367,11 @@ def nivel_From(self):
     if (self.node.level == 1) or (self.node.level == 2):
         self.nivel = dictNivel['Module']['From']['Relative']
         self.clase += (' Importacion RELATIVA de nivel ' + str(self.node.level))
-
+    #-- Comprobamos si es from *statements
+    for i in self.node.names:
+        if i.name == '*':
+            self.nivel = dictNivel['Module']['From']['*']
+            self.clase += (' importacion con * ')
 
 #-- NIVEL MODULOS
 def nivel_Module(self):
