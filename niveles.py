@@ -55,6 +55,15 @@ def niveles(self):
         specialClassAttributes(self)
     elif self.atrib == 'ast.Name':
         typeName(self)
+    elif self.atrib == 'ast.Try':
+        nivel_Try(self)
+    elif self.atrib == 'ast.Raise':
+        nivel_Raise(self)
+    elif self.atrib == 'ast.Assert':
+        nivel_Assert(self)
+    elif self.atrib == 'ast.With':
+        nivel_With(self)
+
 
 
 #-- NIVEL DE LISTAS
@@ -522,3 +531,32 @@ def nivel_Metaclass(self, pos):
 def nivel_SuperFunction(self):
     self.nivel = dictNivel['SuperFunction']
     self.clase = ('function SUPER ' + str(type(self.node)))
+
+#-- NIVEL EXCEPCIONES
+#-- TRY
+def nivel_Try(self):
+    self.nivel = dictNivel['Exception']['Try']
+    self.clase = (str(type(self.node))+ ' Excepcion TRY')
+    if 'ast.Try' in str(self.node.body):
+        self.clase += ('/TRY')
+    if (self.node.handlers) != []:
+        self.clase += ('/EXCEPT')
+    if (self.node.orelse) != []:
+        self.clase += ('/ELSE')
+    if (self.node.finalbody) != []:
+        self.clase += ('/FINALLY')
+
+#-- RAISE
+def nivel_Raise(self):
+    self.nivel = dictNivel['Exception']['Raise']
+    self.clase = ('Excepcion RAISE ' + str(type(self.node)))
+
+#-- ASSERT
+def nivel_Assert(self):
+    self.nivel = dictNivel['Exception']['Assert']
+    self.clase = ('Excepcion ASSERT ' + str(type(self.node)))
+
+#-- WITH
+def nivel_With(self):
+    self.nivel = dictNivel['With']
+    self.clase = ('uso de WITH ' + str(type(self.node)))
