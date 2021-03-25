@@ -504,11 +504,12 @@ class Demo:
 class Child(Demo):
     def __secret(self):
         print('No puedo contarte!')
-        
+
 #-- Slots: attribute declarations
 class limiter(object):
     __slots__ = ['age', 'name', 'job']
 x = limiter()
+
 #-- Properties: Attribute Accesors
 class properties(object):
     def getage(self):
@@ -524,6 +525,9 @@ class AgeDesc(object):
         return 40
     def __set__(self, instance, value):
         instance._age = value
+    def __delete__(self, instance, value):
+        print('hola')
+
 class descriptors(object):
     age = AgeDesc()
 x = descriptors()
@@ -545,3 +549,48 @@ class Methods:
         cmeth = classmethod(cmeth)
         # Make smeth a static method (or @: ahead)
         # Make cmeth a class method (or @: ahead)
+
+#-- DECORATORS
+#-- FUNCTION DECORATOR(funcion evuelve otra funcion)
+def decorator(func):
+  print("Decorator")
+  return func
+
+@decorator
+def Hello():
+  print("Hello World")
+
+#-- CLASS DECORATOR (Clase envolviendo una funcion)
+class Decorator(object):
+  """Clase de decorador simple."""
+  def __init__(self, func):
+    self.func = func
+
+  def __call__(self, *args, **kwargs):
+    print('Antes de ser llamada la función.')
+    retorno = self.func(*args, **kwargs)
+    print('Despues de ser llamada la función.')
+    print(retorno)
+    return retorno
+
+@Decorator
+def function():
+  print('Dentro de la función.')
+  return "Retorno"
+
+
+#-- CLASS DECORATOR (clase envuelve otra clase)
+class Decorator(object):
+    def __init__(self, func):
+        self.func = func
+    def __call__(self, *args, **kwargs):
+        print('Dentro del decorador.')
+        return self.func(*args, **kwargs)
+    def __get__(self, instance, cls):
+        # Retorna un método si se llama en una instancia
+        return self if instance is None else MethodType(self, instance)
+
+@Decorator
+class Test(object):
+  def __init__(self):
+    print("Dentro de la función decorada")
