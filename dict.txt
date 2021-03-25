@@ -24,4 +24,6 @@
            'Properties': 'C1'},
  'Attribute': {'Normal': 'A2', 'SpecClass': 'B2'},
  'StaticClass': 'C1',
- 'Decorator': 'C2'}
+ 'Decorator': 'C2',
+ 'Metaclass': 'C2',
+ 'SuperFunction': 'C2'}
