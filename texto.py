@@ -594,3 +594,25 @@ class Decorator(object):
 class Test(object):
   def __init__(self):
     print("Dentro de la función decorada")
+
+
+#-- METACLASES
+#-- Se crea on la palabra clave 'meta'
+class Meta(type):
+    def __new__(meta, classname, supers, classdict):
+        pass
+#-- Enumerada en la cabecera 'metaclass'
+class C(metaclass=Meta):
+    pass
+#-- En 2.X se usa el atributo '__metaclass__'
+class C:
+    __metaclass__ = Meta
+
+#-- SUPER BUILT-IN FUNCTION
+class C:
+    def act(self):
+        print('spam')
+class D(C):
+    def act(self):
+        super().act()
+        print('eggs')
