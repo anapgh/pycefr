@@ -3,8 +3,10 @@ import ast
 #-- Variable global diccionario de niveles
 dictNivel = ''
 
-#-- lista elementos de bucle: break, continue, pass,for, while
+#-- Lista elementos de bucle: break, continue, pass,for, while
 listElemLoop = ['ast.Break', 'ast.Continue', 'ast.Pass', 'ast.While', 'ast.For']
+#-- Lista de importaciones
+listImport = ['ast.Import', 'ast.ImportFrom']
 
 #-- LEER FICHERO CON NIVELES
 with open('/home/ana/Documentos/TFG/TFG/dict.txt', 'r') as dict_file:
@@ -45,6 +47,8 @@ def niveles(self):
         nivel_GeneratorFunct(self)
     elif self.atrib == 'ast.GeneratorExp':
         nivel_GeneratorExpr(self)
+    elif self.atrib in listImport:
+        nivel_Module(self)
 
 
 #-- NIVEL DE LISTAS
@@ -343,3 +347,33 @@ def nivel_GeneratorFunct(self):
 def nivel_GeneratorExpr(self):
     self.nivel = dictNivel['GeneratorExpr']
     self.clase = ('GENERATOR EXPRESSION ' + str(type(self.node)))
+
+#-- Lista de modulos importantes
+listModules = ['struct', 'pickle', 'shelve', 'dbm', 're']
+
+#-- NIVEL 'AS' EXTENSION
+def nivel_AsExtension(self):
+    for i in self.node.names:
+        if i.asname != None:
+            self.nivel = dictNivel['Module']['As']
+            self.clase += (' con Extension AS ')
+
+#-- NIVEL FROM
+def nivel_From(self):
+    #-- Comprobamos si es importacion relativa o absoluta
+    if (self.node.level == 1) or (self.node.level == 2):
+        self.nivel = dictNivel['Module']['From']['Relative']
+        self.clase += (' Importacion RELATIVA de nivel ' + str(self.node.level))
+
+
+#-- NIVEL MODULOS
+def nivel_Module(self):
+    if self.atrib == 'ast.Import':
+        self.nivel = dictNivel['Module']['Import']
+        self.clase = ('Importado con IMPORT ' + str(type(self.node)))
+        nivel_AsExtension(self)
+    else:
+        self.nivel = dictNivel['Module']['From']['Normal']
+        self.clase = ('Importado con FROM IMPORT' + str(type(self.node)))
+        nivel_AsExtension(self)
+        nivel_From(self)
