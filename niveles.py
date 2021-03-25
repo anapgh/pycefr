@@ -49,6 +49,10 @@ def niveles(self):
         nivel_GeneratorExpr(self)
     elif self.atrib in listImport:
         nivel_Module(self)
+    elif self.atrib == 'ast.ClassDef':
+        nivel_Class(self)
+    elif self.atrib == 'ast.Attribute':
+        specialClassAttributes(self)
 
 
 #-- NIVEL DE LISTAS
@@ -393,3 +397,64 @@ def nivel_Module(self):
         nameModule.append(self.node.module)
     nivel_AsExtension(self)
     nameModules(self, nameModule)
+
+#-- FUNCION PRIVADA DE CLASE
+def PrivateClass(self):
+    for funct in self.node.body:
+        #-- Comprobamos si la funcion es privada
+        if(funct.name.startswith('__')) and (not funct.name.endswith('__')):
+            self.nivel = dictNivel['Class']['Private']
+            self.clase += (' funcion PRIVADA ' + str(funct.name))
+    #-- Comprobamos si hay atributos/metodos privados
+        for i in ast.walk(funct):
+            if 'ast.Attribute' in str(i):
+                if (i.attr.startswith('__')) and (not i.attr.endswith('__')):
+                    self.nivel = dictNivel['Class']['Private']
+                    self.clase += (' atributo PRIVADO ' + str(i.attr))
+
+#-- METODO CONSTRUCTOR
+def constrMethod(self):
+    for i in self.node.body:
+        if i.name == '__init__':
+            self.clase += (' metodo CONSTRUCTOR ' + str(i.name))
+
+#-- NIVEL CLASE
+def nivel_Class(self):
+    self.nivel = dictNivel['Class']['Normal']
+    self.clase = ('CLASE ' + str(type(self.node)))
+    #-- Comprobamos si tiene clase heredada
+    for i in self.node.bases:
+        try:
+            self.nivel = dictNivel['Class']['Heredada']
+            self.clase += (' hereda de la clase ' + str(i.id))
+        except:
+            pass
+    #-- Comprobamos si tiene metaclases
+    for i in self.node.keywords:
+        print(i.arg)
+        if i.arg == 'metaclass':
+            print('metaclase: ')
+            print(i.value.id)
+    #-- Comprobamos el nombre de las funciones
+    if 'ast.FunctionDef' in str(self.node.body):
+        try:
+            #-- Comprobamos si hay metodo constructor
+            constrMethod(self)
+            #-- Comprobamos si hay funciones y atributos privados
+            PrivateClass(self)
+        except:
+            pass
+    #-- Comprobamos si tiene decoradores de clase
+    for i in self.node.decorator_list:
+        print(i.id)
+        print('decorator')
+
+#-- Lista de atributos especiales de CLASES
+listClassAttr = ['__class__', '__dict__']
+
+#-- Special Class Attributes
+def specialClassAttributes(self):
+    if self.node.attr in listClassAttr:
+        self.nivel = dictNivel['Attribute']['SpecClass']
+        self.clase = (' Atributo especial de clases ' + str(self.node.attr) +
+                       ' ' + str(type(self.node)))
