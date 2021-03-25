@@ -18,4 +18,5 @@
  'Return': 'A1',
  'Lambda': 'B1',
  'GeneratorFunct': 'C1', 'GeneratorExpr': 'C1',
- 'Module': {'Import': 'A2', 'From': {'Normal': 'A2', 'Relative': 'B1', '*': 'B1'}, 'As': 'B1'}}
+ 'Module': {'Import': 'A2', 'From': {'Normal': 'A2', 'Relative': 'B1', '*': 'B1'},
+            'As': 'B1', 'Names': 'C1'}}
