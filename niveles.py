@@ -349,9 +349,21 @@ def nivel_GeneratorExpr(self):
     self.clase = ('GENERATOR EXPRESSION ' + str(type(self.node)))
 
 #-- Lista de modulos importantes
-listModules = ['struct', 'pickle', 'shelve', 'dbm', 're']
+listModules = ['struct', 'pickle', 'shelve', 'dbm', 're', 'importlib']
 
 #-- MODULOS IMPORTANTES
+def nameModules(self, name):
+    #-- Si el modulo es de import
+    if 'ast.alias' in str(name):
+        for i in self.node.names:
+            if i.name in listModules:
+                self.nivel = dictNivel['Module']['Names']
+                self.clase += (' modulo ' + i.name)
+    #-- Si es de from
+    else:
+        if name in listModules:
+            self.nivel = dictNivel['Module']['Names']
+            self.clase += (' modulo ' + str(name))
 
 
 #-- NIVEL 'AS' EXTENSION
@@ -375,12 +387,15 @@ def nivel_From(self):
 
 #-- NIVEL MODULOS
 def nivel_Module(self):
+    nameModule = ''
     if self.atrib == 'ast.Import':
         self.nivel = dictNivel['Module']['Import']
         self.clase = ('Importado con IMPORT ' + str(type(self.node)))
-        nivel_AsExtension(self)
+        nameModule = self.node.names
     else:
         self.nivel = dictNivel['Module']['From']['Normal']
         self.clase = ('Importado con FROM IMPORT' + str(type(self.node)))
-        nivel_AsExtension(self)
         nivel_From(self)
+        nameModule = self.node.module
+    nivel_AsExtension(self)
+    nameModules(self, nameModule)
