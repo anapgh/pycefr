@@ -53,6 +53,8 @@ def niveles(self):
         nivel_Class(self)
     elif self.atrib == 'ast.Attribute':
         specialClassAttributes(self)
+    elif self.atrib == 'ast.Name':
+        typeName(self)
 
 
 #-- NIVEL DE LISTAS
@@ -174,6 +176,8 @@ def tipo_Call(self):
         elif (self.node.func.id) in listStaticClass:
             valor = self.node.func.id
             nivel_StaticClass(self, valor)
+        elif (self.node.func.id) == 'super':
+            nivel_SuperFunction(self)
 
 
 #-- NIVEL FILES
@@ -459,12 +463,6 @@ def nivel_Class(self):
             self.clase += (' hereda de la clase ' + str(i.id))
         except:
             pass
-    #-- Comprobamos si tiene metaclases
-    for i in self.node.keywords:
-        print(i.arg)
-        if i.arg == 'metaclass':
-            print('metaclase: ')
-            print(i.value.id)
     #-- Comprobamos si tiene propiedades
     nivel_Properties(self)
     #-- Comprobamos el nombre de las funciones
@@ -480,6 +478,8 @@ def nivel_Class(self):
             pass
     #-- Comprobamos si tiene decoradores de clase
     nivel_Decorators(self, 'class')
+    #-- Comprobamos si tiene metaclases
+    nivel_Metaclass(self, 'cabecera')
 
 #-- Lista de atributos especiales de CLASES
 listClassAttr = ['__class__', '__dict__']
@@ -501,3 +501,24 @@ def nivel_Decorators(self, type):
     for i in self.node.decorator_list:
         self.nivel = dictNivel['Decorator']
         self.clase += (' con ' + type.upper() + ' DECORATOR ')
+
+#-- Tipo de ast.Name
+def typeName(self):
+    if self.node.id == '__metaclass__':
+        nivel_Metaclass(self, 'atrib')
+
+#-- METACLASS
+def nivel_Metaclass(self, pos):
+    if pos == 'cabecera':
+        for i in self.node.keywords:
+            if i.arg == 'metaclass':
+                self.nivel = dictNivel['Metaclass']
+                self.clase += (' cabecera METACLASE ' + i.value.id)
+    elif pos == 'atrib':
+        self.nivel = dictNivel['Metaclass']
+        self.clase = ('atrib METACLASE ' + self.node.id + str(type(self.node)))
+
+#-- SUPER BUILT-IN FUNCTION
+def nivel_SuperFunction(self):
+    self.nivel = dictNivel['SuperFunction']
+    self.clase = ('function SUPER ' + str(type(self.node)))
