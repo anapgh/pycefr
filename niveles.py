@@ -299,6 +299,8 @@ def nivel_FunctionDef(self):
     nivel_DefArguments(self)
     #-- Comprobamos si hay funcion recursiva
     nivel_RecursiveFunction(self)
+    #-- Comprobamos si tiene decoradores
+    nivel_Decorators(self, 'function')
 
 
 #-- NIVEL DE ARGUMENTOS PASADOS A FUNCIONES
@@ -476,11 +478,8 @@ def nivel_Class(self):
             PrivateClass(self)
         except:
             pass
-
     #-- Comprobamos si tiene decoradores de clase
-    for i in self.node.decorator_list:
-        print(i.id)
-        print('decorator')
+    nivel_Decorators(self, 'class')
 
 #-- Lista de atributos especiales de CLASES
 listClassAttr = ['__class__', '__dict__']
@@ -496,3 +495,9 @@ def specialClassAttributes(self):
 def nivel_StaticClass(self, valor):
     self.nivel = dictNivel['StaticClass']
     self.clase = (valor.upper() + ' en ' + str(type(self.node)))
+
+#-- FUNCTIONS AND CLASSES DECORATORS
+def nivel_Decorators(self, type):
+    for i in self.node.decorator_list:
+        self.nivel = dictNivel['Decorator']
+        self.clase += (' con ' + type.upper() + ' DECORATOR ')
