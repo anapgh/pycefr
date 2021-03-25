@@ -172,6 +172,7 @@ def tipo_Call(self):
             nivel_LoopCoding(self, valor)
 
 
+
 #-- NIVEL FILES
 def nivel_Files(self, valor):
     if (valor) == 'open':
@@ -418,6 +419,16 @@ def constrMethod(self):
         if i.name == '__init__':
             self.clase += (' metodo CONSTRUCTOR ' + str(i.name))
 
+#-- PROPERTIES
+def nivel_Properties(self):
+    if node in self.node.body:
+        for elem in ast.walk(node):
+            if 'ast.Call' in str(elem):
+                if elem.func.id == 'property':
+                    self.nivel = dictNivel['Properties']
+                    self.clase = (' PROPERTIES ' + str(type(self.node)))
+
+
 #-- NIVEL CLASE
 def nivel_Class(self):
     self.nivel = dictNivel['Class']['Normal']
@@ -444,6 +455,8 @@ def nivel_Class(self):
             PrivateClass(self)
         except:
             pass
+    #-- Comprobamos si tiene propiedades
+    nivel_Properties(self)
     #-- Comprobamos si tiene decoradores de clase
     for i in self.node.decorator_list:
         print(i.id)
