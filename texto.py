@@ -454,3 +454,94 @@ import re
 import importlib
 import struct, pickle
 from struct import *
+
+#-- CLASES
+#-- Crear clase
+class FirstClass:
+    def setdata(self, value):
+        self.data = value
+    def display(self):
+        print(self.data)
+#-- Instancias de objetos
+x = FirstClass()
+y = FirstClass()
+#-- Llamar a metodos, haciendo ref a atributos
+x.setdata("King Arthur")
+y.setdata(3.14159)
+#-- Clase heredada
+class SecondClass(FirstClass):
+    def display(self):
+        print('Current value = "%s"' % self.data)
+#-- Funciones de sobrecarga
+#-- Metodo constructor __init__, __add__, __str__
+class ThirdClass(SecondClass):
+    def __init__(self, value):
+        self.data = value
+    def __add__(self, other):
+        return ThirdClass(self.data + other)
+    def __str__(self):
+        return '[ThirdClass: %s]' % self.data
+#-- Special class Attributes
+#-- Atributo incorporado .__class__
+from person import Person
+bob = Person('Bob Smith')
+print(bob)
+bob.__class__
+bob.__class__.__name__
+#-- Atributo incorporado .__dict__
+list(bob.__dict__.keys())
+for key in bob.__dict__:
+    print(key, '=>', bob.__dict__[key])
+
+#-- Pseudoprivate class attributes:
+class Demo:
+    def __secret(self):
+        print('Nadie puede saber!')
+
+    def public(self):
+        self.__secret()
+
+class Child(Demo):
+    def __secret(self):
+        print('No puedo contarte!')
+        
+#-- Slots: attribute declarations
+class limiter(object):
+    __slots__ = ['age', 'name', 'job']
+x = limiter()
+#-- Properties: Attribute Accesors
+class properties(object):
+    def getage(self):
+        return 40
+    age = property(getage, None, None, None)
+x = properties()
+x.age
+x.name
+
+#-- Descriptores
+class AgeDesc(object):
+    def __get__(self, instance, owner):
+        return 40
+    def __set__(self, instance, value):
+        instance._age = value
+class descriptors(object):
+    age = AgeDesc()
+x = descriptors()
+x.age
+x.age = 42
+x._age
+
+#-- Static and Class Method
+class Methods:
+    def imeth(self, x): print([self, x])
+    # Normal instance method: passed a self
+    def smeth(x):
+        print([x])
+    # Static: no instance passed
+    def cmeth(cls, x):
+        print([cls, x])
+        # Class: gets class, not instance
+        smeth = staticmethod(smeth)
+        cmeth = classmethod(cmeth)
+        # Make smeth a static method (or @: ahead)
+        # Make cmeth a class method (or @: ahead)
