@@ -224,12 +224,35 @@ def nivel_Assign(self):
         self.clase = ('Asignación simplificada de ' + op + str(type(self.node)))
 
 
+#-- EXPRESION if __name __ == '__main__'
+def nivel_NameMain(self):
+    name = False
+    eq = False
+    constant = False
+    if 'ast.Compare' in str(self.node.test):
+        if 'ast.Name' in str(self.node.test.left):
+            if self.node.test.left.id == '__name__':
+                name = True
+        if 'ast.Eq' in str(self.node.test.ops):
+            eq = True
+        for i in self.node.test.comparators:
+            if 'ast.Constant' in str(i):
+                if i.value == '__main__':
+                    constant = True
+        if (name and eq and constant) == True:
+            return True
+
 #-- NIVEL IF STATEMENTS
 def nivel_If(self):
     orelse = 0
     if self.atrib == 'ast.If':
         self.nivel = dictNivel['If']['Normal']
         self.clase = ('If statements ' + str(type(self.node)))
+        #-- Comprobamos la expresion if
+        name = nivel_NameMain(self)
+        if name == True:
+            self.nivel = dictNivel['If']['Name']
+            self.clase += (" usando __name__ == '__main__' ")
     elif self.atrib == 'ast.IfExp':
         self.nivel = dictNivel['If']['Expresion']
         self.clase = ('If expresion ' + str(type(self.node)))
