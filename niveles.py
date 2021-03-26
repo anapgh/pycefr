@@ -460,7 +460,6 @@ def nivel_Properties(self):
                 except:
                     pass
 
-
 #-- NIVEL CLASE
 def nivel_Class(self):
     self.nivel = dictNivel['Class']['Normal']
@@ -483,6 +482,8 @@ def nivel_Class(self):
             Descriptors(self)
             #-- Comprobamos si hay funciones y atributos privados
             PrivateClass(self)
+            #-- Comprobamos si hay metaclases en funciones
+            nivel_Metaclass(self, 'function')
         except:
             pass
     #-- Comprobamos si tiene decoradores de clase
@@ -515,17 +516,34 @@ def nivel_Decorators(self, type):
 def typeName(self):
     if self.node.id == '__metaclass__':
         nivel_Metaclass(self, 'atrib')
+    elif self.node.id == '__slots__':
+        nivel_Slots(self)
 
 #-- METACLASS
 def nivel_Metaclass(self, pos):
-    if pos == 'cabecera':
+    #-- Metodo creacion __new__
+    if pos == 'function':
+        for i in self.node.body:
+            if i.name == '__new__':
+                for argum in i.args.args:
+                    if (argum.arg) == 'meta':
+                        self.nivel = dictNivel['Metaclass']
+                        self.clase += (' metodo metaclase __new__')
+    #-- Cabecera de las clase
+    elif pos == 'cabecera':
         for i in self.node.keywords:
             if i.arg == 'metaclass':
                 self.nivel = dictNivel['Metaclass']
                 self.clase += (' cabecera METACLASE ' + i.value.id)
+    #-- Como atributo, 2.X
     elif pos == 'atrib':
         self.nivel = dictNivel['Metaclass']
         self.clase = ('atrib METACLASE ' + self.node.id + str(type(self.node)))
+
+#-- NIVEL __SLOTS__
+def nivel_Slots(self):
+    self.nivel = dictNivel['Slots']
+    self.clase = (' Attribute declarations __slots__' + str(type(self.node)))
 
 #-- SUPER BUILT-IN FUNCTION
 def nivel_SuperFunction(self):
