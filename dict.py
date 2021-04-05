@@ -16,3 +16,8 @@ for seccion in configuracion.sections():
         levels[seccion].append({opcion : valor})
 
 print(levels)
+
+#-- Creamos archivo.txt con el diccionario
+with open('dicc.txt', 'w') as file:
+    file.write(str(levels))
+    file.close()
