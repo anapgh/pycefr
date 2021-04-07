@@ -1,7 +1,9 @@
-#-- probando el modulo de ast
+#-- PROGRAMA PRINCIPAL
+
 import ast
 import os
 from ClassIterTree import ClassIterTree
+from extraerjson import leer_json
 
 #-- Creamos listas de cada atrib
 Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
@@ -11,7 +13,7 @@ Variables = ['ast.Name', 'ast.Del', 'ast.Starred']
 Expressions = ['ast.Expr', 'ast.UnaryOp', 'ast.UAdd', 'ast.USub', 'ast.Invert', 'ast.BinOp',
                 'ast.Div', 'ast.LShift', 'ast.RShift', 'ast.BitOr', 'ast.BitXor',
                 'ast.BitAnd', 'ast.MatMult', 'ast.BoolOp', 'ast.Compare', 'ast.LtE',
-                'ast.GtE', 'ast.Is', 'ast.IsNot', 'ast.NotIn', 'ast.Call', 'ast.IfExp',
+                'ast.GtE', 'ast.IsNot', 'ast.NotIn', 'ast.Call', 'ast.IfExp',
                 'ast.Attribute', 'ast.NamedExpr']
 Subscripting = ['ast.Subscript']
 Comprehensions = ['ast.ListComp', 'ast.SetComp', 'ast.GeneratorExp', 'ast.DictComp']
@@ -61,6 +63,9 @@ def iterar_lista(tree, pos):
 def profundizar(tree, atrib, pos):
     objeto = ClassIterTree(tree, atrib, pos)
 
+def resumen_niveles():
+    leer_json()
 
 if __name__ == "__main__":
     leer_directorio()
+    resumen_niveles()
