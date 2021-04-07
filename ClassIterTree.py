@@ -64,17 +64,17 @@ class ClassIterTree():
     def asignar_dict(self):
         if not self.name in self.myDataJson:
             self.myDataJson[self.name] = []
-            
+
         self.myDataJson[self.name].append({
             'Clase'         : str(self.clase),
             'Linea empiece' : str(self.node.lineno),
             'Linea acabado' : str(self.node.end_lineno),
             'Desplazamiento': str(self.node.col_offset),
             'Nivel'         : str(self.nivel)})
-        #print(self.listJson)
+        #print(self.myDataJson)
 
 
     #-- Crear y añadir datos en el fichero.json
     def leer_fichero_json(self):
-        with open('data.json', 'a') as file:
+        with open('data.json', 'w') as file:
             json.dump(self.myDataJson, file, indent=4)
