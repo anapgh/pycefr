@@ -1,3 +1,5 @@
+#-- PROGRAMA PARA CREAR DICCIONARIO DE LA CONFIGURACION
+
 import configparser
 configuracion = configparser.ConfigParser()
 
