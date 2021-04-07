@@ -1,4 +1,5 @@
 #-- PROGRAMA PARA LOS NIVELES DE CADA ATRIBUTO
+
 import ast
 #-- Variable global diccionario de niveles
 dictNivel = ''
