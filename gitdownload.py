@@ -8,14 +8,23 @@ def request_url():
     print("Enter the Github url: ")
     url = input()
     values = url.split("/")
-    protocol = values[0].split(':')[0]
-    type_git = values[2]
-    user = values[3]
-    repo = values[4][0:-4]
+    try:
+        protocol = values[0].split(':')[0]
+        type_git = values[2]
+        user = values[3]
+        repo = values[4][0:-4]
+    except:
+        sys.exit('ERROR --> Usage: http://TYPEGIT/USER/NAMEREPO.git')
     #-- Check url
-
+    check_url(protocol, type_git, user, repo)
     #-- Check languaje
     check_lenguage(url, protocol, type_git, user, repo)
+
+def check_url(protocol, type_git, user, repo):
+    if protocol != 'https':
+        sys.exit('Usage: https protocol')
+    elif type_git != 'github.com':
+        sys.exit('Usage: github.com')
 
 
 def check_lenguage(url, protocol, type_git, user, repo):
