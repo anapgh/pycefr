@@ -1,19 +1,19 @@
-#-- PROGRAMA PRINCIPAL
+#-- MAIN PROGRAMME
 
 import ast
 import os
 from ClassIterTree import ClassIterTree
-from extraerjson import leer_json
+from extraerjson import read_Json
 
-#-- Creamos listas de cada atrib
+#-- Create lists of each attribute
 Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
             'ast.Dict']
 
-Variables = ['ast.Name', 'ast.Del', 'ast.Starred']
-Expressions = ['ast.Expr', 'ast.UnaryOp', 'ast.UAdd', 'ast.USub', 'ast.Invert', 'ast.BinOp',
-                'ast.Div', 'ast.LShift', 'ast.RShift', 'ast.BitOr', 'ast.BitXor',
+Variables = ['ast.Name', 'ast.Starred']
+Expressions = ['ast.Expr', 'ast.UnaryOp', 'ast.UAdd','ast.Invert', 'ast.BinOp',
+                'ast.LShift', 'ast.RShift', 'ast.BitOr', 'ast.BitXor',
                 'ast.BitAnd', 'ast.MatMult', 'ast.BoolOp', 'ast.Compare', 'ast.LtE',
-                'ast.GtE', 'ast.IsNot', 'ast.NotIn', 'ast.Call', 'ast.IfExp',
+                'ast.IsNot', 'ast.Call', 'ast.IfExp',
                 'ast.Attribute', 'ast.NamedExpr']
 Subscripting = ['ast.Subscript']
 Comprehensions = ['ast.ListComp', 'ast.SetComp', 'ast.GeneratorExp', 'ast.DictComp']
@@ -26,46 +26,48 @@ FunctionsClass = ['ast.FunctionDef', 'ast.Lambda', 'ast.arg', 'ast.Return',
                    'ast.Yield', 'ast.YieldFrom', 'ast.Global', 'ast.Nonlocal', 'ast.ClassDef']
 AsyncAwait = ['ast.AsyncFunctionDef', 'ast.Await', 'ast.AsyncFor', 'ast.AsyncWith']
 
-#-- Creamos lista de listas de atribs
+#-- Create list of attribute lists
 SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
             Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
 
-#-- Extraemos del directorio los archivos .py
-def leer_directorio():
+#-- Extract the .py files from the directory
+def read_Directory():
     pos = ''
-    print('directorio: ')
-    directorio = os.listdir("/home/ana/Documentos/TFG/TFG")
-    print(directorio)
-    for i in range(0, len(directorio)):
-        if directorio[i].endswith('.py'):
-            print('fichero python: ' + str(directorio[i]))
-            pos = directorio[i]
-            leer_fichero(directorio[i], pos)
+    print('Directory: ')
+    path = "/home/ana/Documentos/TFG/TFG"
+    directory = os.listdir(path)
+    print(directory)
+    for i in range(0, len(directory)):
+        if directory[i].endswith('.py'):
+            print('Python File: ' + str(directory[i]))
+            pos = path + "/" + directory[i]
+            read_File(pos)
 
 
-#-- Leemos el fichero y nos devuelve el arbol
-def leer_fichero(fichero, pos):
-    with open(fichero) as fp:
+#-- Read the file and return the tree
+def read_File(pos):
+    with open(pos) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
         #print (ast.dump(tree))
-        iterar_lista(tree, pos)
+        iterate_List(tree, pos)
 
 
-#-- Iterar lista y asignar atributos
-def iterar_lista(tree, pos):
+#-- Iterate list and assign attributes
+def iterate_List(tree, pos):
     for i in range(0, len(SetClass)):
         for j in range(0, len(SetClass[i])):
-            atrib = SetClass[i][j]
-            profundizar(tree, atrib, pos)
+            attrib = SetClass[i][j]
+            deepen(tree, attrib, pos)
 
+#-- Create class object
+def deepen(tree, attrib, pos):
+    object = ClassIterTree(tree, attrib, pos)
 
-def profundizar(tree, atrib, pos):
-    objeto = ClassIterTree(tree, atrib, pos)
-
-def resumen_niveles():
-    leer_json()
+#-- Summary of directory levels
+def summary_Levels():
+    read_Json()
 
 if __name__ == "__main__":
-    leer_directorio()
-    resumen_niveles()
+    read_Directory()
+    summary_Levels()
