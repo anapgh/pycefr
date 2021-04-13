@@ -1,82 +1,82 @@
-#-- PROGRAMA DE CLASE PARA ITERAR EN EL ARBOL
+#-- CLASS PROGRAM TO ITERATE ON THE TREE
 
 import ast
 import csv
 import json
 import niveles
 
-#-- clase para iterar el arbol
+#-- Class to iterate tree
 class ClassIterTree():
 
-    #-- Constructor de clase
-    def __init__(self, tree, atrib, pos):
+    #-- Class constructor
+    def __init__(self, tree, attrib, pos):
         self.tree = tree
-        self.atrib = atrib
+        self.attrib = attrib
         self.name = pos
-        self.locali_arbol()
+        self.locate_Tree()
 
 
-    #-- Método que itera sobre el árbol
-    def locali_arbol(self):
+    #-- Method iterating on the tree
+    def locate_Tree(self):
         for self.node in ast.walk(self.tree):
-            #-- Buscamos atribs
-            if type(self.node) == eval(self.atrib):
-                self.nivel= ''
+            #-- Find attributes
+            if type(self.node) == eval(self.attrib):
+                self.level= ''
                 self.clase = type(self.node)
-                niveles.niveles(self)
-                self.asignar_lista()
-                self.asignar_dict()
-                self.leer_fichero_json()
+                niveles.levels(self)
+                self.assign_List()
+                self.assign_Dict()
+                self.read_FileJson()
 
 
-    #-- Crear lista del objeto
-    def asignar_lista(self):
+    #-- Create object list
+    def assign_List(self):
         self.list = [self.name, self.clase, self.node.lineno,
-                    self.node.end_lineno, self.node.col_offset, self.nivel]
+                    self.node.end_lineno, self.node.col_offset, self.level]
         #print(self.list)
-        self.add_csv()
+        self.add_Csv()
 
-    #-- Cabecera del csv
-    myDataCsv =[['Nombre fichero', 'Clase', 'Linea empiece','Linea acabado',
-                'Desplazamiento', 'Nivel']]
+    #-- Csv header
+    myDataCsv =[['File Name', 'Class', 'Start Line','End Line',
+                'Displacement', 'Level']]
 
-    #-- Añadir la lista del objeto al CSV
-    def add_csv(self):
+    #-- Add object list to CSV
+    def add_Csv(self):
         self.myDataCsv.append(self.list)
         #print(self.myDataList)
-        self.leer_fichero_csv()
+        self.read_FileCsv()
 
 
-    #-- Crear y añadir datos en el fichero.csv
-    def leer_fichero_csv(self, fichero_csv = ""):
-        if not fichero_csv:
-            fichero_csv = open('datos.csv', 'w')
-            with fichero_csv:
-                writer = csv.writer(fichero_csv)
+    #-- Create and add data in the .csv file
+    def read_FileCsv(self, file_csv = ""):
+        if not file_csv:
+            file_csv = open('data.csv', 'w')
+            with file_csv:
+                writer = csv.writer(file_csv)
                 writer.writerows(self.myDataCsv)
         else:
-            with open(r'datos.csv', 'a') as f:
+            with open(r'data.csv', 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow(self.myDataCsv)
 
-    #-- Crear diccionario de json
+    #-- Create json dictionary
     myDataJson = {}
 
-    #-- Crear diccionario del objeto
-    def asignar_dict(self):
+    #-- Create object dictionary
+    def assign_Dict(self):
         if not self.name in self.myDataJson:
             self.myDataJson[self.name] = []
 
         self.myDataJson[self.name].append({
-            'Clase'         : str(self.clase),
-            'Linea empiece' : str(self.node.lineno),
-            'Linea acabado' : str(self.node.end_lineno),
-            'Desplazamiento': str(self.node.col_offset),
-            'Nivel'         : str(self.nivel)})
+            'Class'       : str(self.clase),
+            'Start Line'  : str(self.node.lineno),
+            'End Line'    : str(self.node.end_lineno),
+            'Displacement': str(self.node.col_offset),
+            'Level'       : str(self.level)})
         #print(self.myDataJson)
 
 
-    #-- Crear y añadir datos en el fichero.json
-    def leer_fichero_json(self):
+    #-- Create and add data in the .json file
+    def read_FileJson(self):
         with open('data.json', 'w') as file:
             json.dump(self.myDataJson, file, indent=4)
