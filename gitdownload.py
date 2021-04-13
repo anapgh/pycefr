@@ -4,6 +4,22 @@ import os
 import json
 import requests
 
+def show_menu():
+    print('Choose the option to analyze:')
+    print('Por defecto, directorio actual: 0')
+    print('Url repository: 1')
+    print('User: 2')
+    option = input()
+    if (option == '0'):
+        file = 'gitdownload.py'
+        get_path(file)
+    elif(option == '1'):
+        request_url()
+    elif(option == '2'):
+        request_user()
+        pass
+
+
 def request_url():
     print("Enter the Github url: ")
     url = input()
@@ -68,13 +84,45 @@ def run_url(url):
     subprocess.call(args)
     get_directory(url)
 
+def request_user():
+    print("Enter the Github User: ")
+    user = input()
+    print(user)
+    #-- Check USER
+    #-- Run USER
+    run_user(user)
+
+def run_user(user):
+    #-- Create the url of the api
+    user_url = ("https://api.github.com/users/"  + user)
+    print(user_url)
+    print("Analyzing user...\n")
+    #-- Extract headers
+    headers = requests.get(user_url)
+    #-- Decode JSON response into a Python dict:
+    content = headers.json()
+    #-- Get repository url
+    repo_url = content["repos_url"]
+    print("Analyzing repositories...\n")
+    #-- Extract repository names
+    names = requests.get(repo_url)
+    #-- Decode JSON response into a Python dict:
+    content = names.json()
+    #-- Show repository names
+    for repository in content:
+        print('\nRepository: ' + str(repository["name"]))
+        url = ("https://github.com/" + user + "/" + repository["name"])
+        check_lenguage(url, 'https', 'github.com', user, repository["name"])
+
+
 def get_directory(url):
     #-- Get values rom the url
     values = url.split('/')
     #-- Last item in the list
-    name_item = values[-1]
+    name_directory = values[-1]
     #-- Remove extension .git
-    name_directory = name_item[0:-4]
+    if ('.git' in str(name_directory)):
+        name_directory = name_directory[0:-4]
     print("The directory is: " + name_directory)
     get_path(name_directory)
 
@@ -89,4 +137,4 @@ def get_path(name_directory):
     return (absFilePath)
 
 if __name__ == '__main__':
-    request_url()
+    show_menu()
