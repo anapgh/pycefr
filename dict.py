@@ -1,25 +1,25 @@
-#-- PROGRAMA PARA CREAR DICCIONARIO DE LA CONFIGURACION
+#-- PROGRAMME TO CREATE A DICTIONARY OF THE CONFIGURATION
 
 import configparser
-configuracion = configparser.ConfigParser()
+configuration = configparser.ConfigParser()
 
-#-- Leer el archivo de configuracion
-configuracion.read('Configuracion.cfg')
+#-- Read the configuration file
+configuration.read('Configuracion.cfg')
 
-#-- Diccionario de NIVELES
+#-- Dictionary of LEVELS
 levels = {}
 
-#-- Mostrar lista con las secciones leidas en el archivo
-configuracion.sections()
-for seccion in configuracion.sections():
-    levels[seccion] = []
-    # Listar opciones y valores de una sección:
-    for opcion, valor in configuracion[seccion].items():
-        levels[seccion].append({opcion : valor})
+#-- Show list of read sections in the archive
+configuration.sections()
+for section in configuration.sections():
+    levels[section] = []
+    #-- List options and values of a section:
+    for option, value in configuration[section].items():
+        levels[section].append({option : value})
 
 print(levels)
 
-#-- Creamos archivo.txt con el diccionario
+#-- Create .txt file with dictionary
 with open('dicc.txt', 'w') as file:
     file.write(str(levels))
     file.close()
