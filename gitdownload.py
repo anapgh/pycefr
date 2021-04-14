@@ -6,13 +6,13 @@ import requests
 
 def show_menu():
     print('Choose the option to analyze:')
-    print('Por defecto, directorio actual: 0')
+    print('By default, current directory: 0')
     print('Url repository: 1')
     print('User: 2')
     option = input()
     if (option == '0'):
         file = 'gitdownload.py'
-        get_path(file)
+        return get_path(file)
     elif(option == '1'):
         request_url()
     elif(option == '2'):
@@ -97,12 +97,15 @@ def run_user(user):
     user_url = ("https://api.github.com/users/"  + user)
     print(user_url)
     print("Analyzing user...\n")
-    #-- Extract headers
-    headers = requests.get(user_url)
-    #-- Decode JSON response into a Python dict:
-    content = headers.json()
-    #-- Get repository url
-    repo_url = content["repos_url"]
+    try:
+        #-- Extract headers
+        headers = requests.get(user_url)
+        #-- Decode JSON response into a Python dict:
+        content = headers.json()
+        #-- Get repository url
+        repo_url = content["repos_url"]
+    except KeyError:
+        sys.exit('An unavailable user has been entered')
     print("Analyzing repositories...\n")
     #-- Extract repository names
     names = requests.get(repo_url)
@@ -128,6 +131,7 @@ def get_directory(url):
 
 
 def get_path(name_directory):
+
     #wd = os.getcwd()
     #print("working directory is ", wd)
     absFilePath = os.path.abspath(name_directory)
