@@ -34,27 +34,21 @@ AsyncAwait = ['ast.AsyncFunctionDef', 'ast.Await', 'ast.AsyncFor', 'ast.AsyncWit
 SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
             Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
 
-#-- Display menu to choose what to analyze
-def show_menu():
-    print('Choose the option to analyze:')
-    print('By default, current directory: 0')
-    print('Url repository: 1')
-    print('User: 2')
-    option = input()
-    if (option == '0'):
-        file = 'prueba5.py'
-        get_path(file)
-    elif(option == '1'):
+#-- Choose opction
+def choose_option():
+    if type_option == 'directory':
+        read_Directory(option)
+    elif type_option == 'repo-url':
         request_url()
-    elif(option == '2'):
-        request_user()
-        pass
+    elif type_option == 'user':
+        run_user()
+    else:
+        sys.exit('Incorrect Option')
+
 
 #-- Request url by shell
 def request_url():
-    print("Enter the Github url: ")
-    url = input()
-    values = url.split("/")
+    values = option.split("/")
     try:
         protocol = values[0].split(':')[0]
         type_git = values[2]
@@ -63,12 +57,12 @@ def request_url():
     except:
         sys.exit('ERROR --> Usage: http://TYPEGIT/USER/NAMEREPO.git')
     #-- Check url
-    check_url(protocol, type_git, user, repo)
+    check_url(protocol, type_git)
     #-- Check languaje
-    check_lenguage(url, protocol, type_git, user, repo)
+    check_lenguage(option, protocol, type_git, user, repo)
 
 #-- Check url sintax
-def check_url(protocol, type_git, user, repo):
+def check_url(protocol, type_git):
     if protocol != 'https':
         sys.exit('Usage: https protocol')
     elif type_git != 'github.com':
@@ -116,19 +110,11 @@ def run_url(url):
     subprocess.call(args)
     get_directory(url)
 
-#-- Request user by shell
-def request_user():
-    print("Enter the Github User: ")
-    user = input()
-    print(user)
-    #-- Check USER
-    #-- Run USER
-    run_user(user)
 
 #-- Run user
-def run_user(user):
+def run_user():
     #-- Create the url of the api
-    user_url = ("https://api.github.com/users/"  + user)
+    user_url = ("https://api.github.com/users/"  + option)
     print(user_url)
     print("Analyzing user...\n")
     try:
@@ -148,8 +134,8 @@ def run_user(user):
     #-- Show repository names
     for repository in content:
         print('\nRepository: ' + str(repository["name"]))
-        url = ("https://github.com/" + user + "/" + repository["name"])
-        check_lenguage(url, 'https', 'github.com', user, repository["name"])
+        url = ("https://github.com/" + option + "/" + repository["name"])
+        check_lenguage(url, 'https', 'github.com', option, repository["name"])
 
 
 #-- Get the name of the downloaded repository directory
@@ -214,5 +200,10 @@ def summary_Levels():
     read_Json()
 
 if __name__ == "__main__":
-    show_menu()
+    try:
+        type_option = sys.argv[1]
+        option = sys.argv[2]
+    except:
+        sys.exit("Usage: python3 file.py type-option('directory', 'repo-url', 'user') option(directory, url, user)")
+    choose_option()
     summary_Levels()
