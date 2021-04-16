@@ -9,10 +9,11 @@ import niveles
 class ClassIterTree():
 
     #-- Class constructor
-    def __init__(self, tree, attrib, pos):
+    def __init__(self, tree, attrib, file, repo):
         self.tree = tree
         self.attrib = attrib
-        self.name = pos
+        self.name = file
+        self.repo = repo
         self.locate_Tree()
 
 
@@ -31,13 +32,13 @@ class ClassIterTree():
 
     #-- Create object list
     def assign_List(self):
-        self.list = [self.name, self.clase, self.node.lineno,
+        self.list = [self.repo, self.name, self.clase, self.node.lineno,
                     self.node.end_lineno, self.node.col_offset, self.level]
         #print(self.list)
         self.add_Csv()
 
     #-- Csv header
-    myDataCsv =[['File Name', 'Class', 'Start Line','End Line',
+    myDataCsv =[['Repository', 'File Name', 'Class', 'Start Line','End Line',
                 'Displacement', 'Level']]
 
     #-- Add object list to CSV
@@ -62,6 +63,7 @@ class ClassIterTree():
     #-- Create json dictionary
     myDataJson = {}
 
+    """
     #-- Create object dictionary
     def assign_Dict(self):
         if not self.name in self.myDataJson:
@@ -74,7 +76,22 @@ class ClassIterTree():
             'Displacement': str(self.node.col_offset),
             'Level'       : str(self.level)})
         #print(self.myDataJson)
+    """
+    #-- Create object dictionary
+    def assign_Dict(self):
+        if not self.repo in self.myDataJson:
+            self.myDataJson[self.repo] = {}
 
+        if not self.name in self.myDataJson[self.repo]:
+            self.myDataJson[self.repo][self.name] = []
+
+        self.myDataJson[self.repo][self.name].append({
+            'Class'       : str(self.clase),
+            'Start Line'  : str(self.node.lineno),
+            'End Line'    : str(self.node.end_lineno),
+            'Displacement': str(self.node.col_offset),
+            'Level'       : str(self.level)})
+        #print(self.myDataJson)
 
     #-- Create and add data in the .json file
     def read_FileJson(self):
