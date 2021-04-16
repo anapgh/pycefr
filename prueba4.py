@@ -37,7 +37,8 @@ SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
 #-- Choose opction
 def choose_option():
     if type_option == 'directory':
-        read_Directory(option)
+        repo = option.split('/')[-1]
+        read_Directory(option, repo)
     elif type_option == 'repo-url':
         request_url()
     elif type_option == 'user':
@@ -158,11 +159,11 @@ def get_path(name_directory):
     if fichero.endswith('.py'):
         absFilePath = absFilePath.replace("/" + fichero,"" )
     print("This script absolute path is ", absFilePath)
-    read_Directory(absFilePath)
+    read_Directory(absFilePath, name_directory)
 
 
 #-- Extract the .py files from the directory
-def read_Directory(absFilePath):
+def read_Directory(absFilePath, repo):
     pos = ''
     print('Directory: ')
     path = absFilePath
@@ -172,28 +173,29 @@ def read_Directory(absFilePath):
         if directory[i].endswith('.py'):
             print('Python File: ' + str(directory[i]))
             pos = path + "/" + directory[i]
-            read_File(pos)
+            read_File(pos, repo)
 
 
 #-- Read the file and return the tree
-def read_File(pos):
+def read_File(pos, repo):
     with open(pos) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
         #print (ast.dump(tree))
-        iterate_List(tree, pos)
+        iterate_List(tree, pos, repo)
 
 
 #-- Iterate list and assign attributes
-def iterate_List(tree, pos):
+def iterate_List(tree, pos, repo):
     for i in range(0, len(SetClass)):
         for j in range(0, len(SetClass[i])):
             attrib = SetClass[i][j]
-            deepen(tree, attrib, pos)
+            deepen(tree, attrib, pos,repo)
 
 #-- Create class object
-def deepen(tree, attrib, pos):
-    object = ClassIterTree(tree, attrib, pos)
+def deepen(tree, attrib, pos, repo):
+    file = pos.split('/')[-1]
+    object = ClassIterTree(tree, attrib, file, repo)
 
 #-- Summary of directory levels
 def summary_Levels():
