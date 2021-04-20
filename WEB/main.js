@@ -21,8 +21,8 @@ repository = Object.keys(data)
 //-- Create a button for each repository
 for (i=0; i<repository.length; i++){
   button += "<button role='link'onclick=window.location='" +
-            repository[i] + ".html'>Repository" + repository[i]+
-            "</button><br>" + '\n'
+            repository[i] + ".html'>Repository " + repository[i]+
+            "</button><br><br>" + '\n'
 }
 INDEX = INDEX.replace('BUTTON', button)
 //-- Write total in new html file
@@ -43,12 +43,12 @@ for (repo=0; repo<repository.length; repo++){
   for (file=0; file<files.length; file++){
     //-- Get name
     name_file = files[file]
-    total += '<h3>NAME FILE : ' + name_file + '<h3>' + '\n'
+    total += '<h3>NAME FILE : ' + name_file + '<h3>'
     let content_file = data[repository[repo]][name_file]
 
     //-- Get levels
     let levels = content_file["Levels"]
-    total += '<h4>LEVELS: <h4>'
+    total += '<h4>LEVELS: <h4>' + '\n'
     for (i=0; i<Object.keys(levels).length; i++){
       keys = Object.keys(levels);
       values = Object.values(levels);
@@ -56,7 +56,7 @@ for (repo=0; repo<repository.length; repo++){
     }
     //-- Get classes
     let clase = content_file["Class"]
-    total += '<h4>CLASSES: <h4>'
+    total += '<h4>CLASSES: <h4> ' + '\n'
     for (i=0; i<Object.keys(clase).length; i++){
       keys = Object.keys(clase)
       values = Object.values(clase)
