@@ -8,12 +8,16 @@ let INDEX = fs.readFileSync('main.html', 'utf-8')
 
 //-- Name of the Json file to read
 const JSON_FILE = fs.readFileSync("/home/ana/Documentos/TFG/TFG/DATA_JSON/total_data.json")
+const JSON_FILESUM = fs.readFileSync("/home/ana/Documentos/TFG/TFG/DATA_JSON/summary_data.json")
 
 //-- Create the store structure from the contents of the file
 //-- Return us the json structure
 var data = JSON.parse(JSON_FILE);
+var summary = JSON.parse(JSON_FILESUM)
 
+//-- Variable that is going to have all the buttons available
 let button = ''
+
 //-- Get information
 //-- Get Repository name
 repository = Object.keys(data)
@@ -28,6 +32,7 @@ INDEX = INDEX.replace('BUTTON', button)
 //-- Write total in new html file
 fs.writeFileSync('index.html', INDEX);
 
+//-- Obtain information from each repository
 for (repo=0; repo<repository.length; repo++){
   //-- Assign the value of REPO
   let content = REPO
@@ -52,7 +57,7 @@ for (repo=0; repo<repository.length; repo++){
     for (i=0; i<Object.keys(levels).length; i++){
       keys = Object.keys(levels);
       values = Object.values(levels);
-      total += ('<p>Nivel ' + keys[i] + ': ' + values[i] + '</p>' + '\n');
+      total += ('<p>Levels ' + keys[i] + ': ' + values[i] + '</p>' + '\n');
     }
     //-- Get classes
     let clase = content_file["Class"]
@@ -69,3 +74,22 @@ for (repo=0; repo<repository.length; repo++){
   //-- Write total in new html file
   fs.writeFileSync(name_html, content);
 }
+
+//-- Obtain summary information
+let total_summary = ''
+type = Object.keys(summary)
+for (i=0; i<type.length; i++){
+  key = type[i] //-- Levels or Class
+  total_summary += '<h4>' + key.toUpperCase() + ':<h4> ' + '\n'
+  content = summary[key]
+  for(elem=0; elem<Object.keys(content).length; elem++){
+    keys = Object.keys(content)
+    values = Object.values(content)
+    total_summary += ('<p>' + key + ' ' + keys[elem] + ': ' + values[elem] +
+                      '</p>' + '\n')
+  }
+}
+//console.log(total_summary)
+INDEX = INDEX.replace('SUMMARY', total_summary)
+//-- Write total in new html file
+fs.writeFileSync('index.html', INDEX);
