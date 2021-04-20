@@ -1,0 +1,18 @@
+.a {
+  display:inline;
+  border:0;
+  padding:0;
+  margin:0;
+  text-decoration:underline;
+  background:none;
+  color:#000088;
+  font-family: arial, sans-serif;
+  font-size: 1em;
+  line-height:1em;
+}
+
+.a:hover {
+  text-decoration:none;
+  color:#0000cc;
+  cursor:pointer;
+}
