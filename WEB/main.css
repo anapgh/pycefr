@@ -27,6 +27,24 @@ h3{
 h4{
   color: rgb(255, 20, 147);
 }
+
 p{
   color: black;
+}
+
+
+button:hover {
+    border:rgb(123, 173, 230) 5px solid;
+    background: #8cc7e9;
+    border-radius: 10px;
+}
+
+
+#summary{
+  background-color: rgba(255, 255, 255, 0.8);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: 200px;
+  margin-right: 200px;
+  border-radius: 20px;
 }
