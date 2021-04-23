@@ -53,6 +53,7 @@ def levels(self):
     elif self.attrib == 'ast.ClassDef':
         level_Class(self)
     elif self.attrib == 'ast.Attribute':
+        level_atributte(self)
         specialClassAttributes(self)
     elif self.attrib == 'ast.Name':
         typeName(self)
@@ -390,7 +391,7 @@ def level_RecursiveFunction(self):
             try:
                 if i.func.id == self.node.name:
                     self.level= dictLevel['FunctionDef'][5]['recursive']
-                    self.clase += (' with Recursive Functions')
+                    self.clase = ('Recursive Functions')
             except:
                 pass
 
@@ -502,7 +503,7 @@ def level_Properties(self):
 
 #-- CLASS LEVEL
 def level_Class(self):
-    self.level= dictLevel['Class'][0]['simple']
+    self.level = dictLevel['Class'][0]['simple']
     self.clase = ('Simple Class ')
     #-- Check for inherited class
     for i in self.node.bases:
@@ -534,6 +535,12 @@ def level_Class(self):
 #-- List of special attributes of CLASSES
 listClassAttr = ['__class__', '__dict__']
 
+#-- Simple atributte
+def level_atributte(self):
+    self.level= dictLevel['Attributes'][0]['simple']
+    self.clase = ('Simple Atributte')
+
+
 #-- Special Class Attributes
 def specialClassAttributes(self):
     if self.node.attr in listClassAttr:
@@ -564,7 +571,7 @@ def level_Decorators(self, type):
             for k in keys:
                 if k == type:
                     self.level= dictLevel['Decorators'][j][k]
-                    self.clase += (' with Decorator ' + type )
+                    self.clase = ('Decorator ' + type )
 
 #-- Type of ast.Name
 def typeName(self):
