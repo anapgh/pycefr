@@ -3,36 +3,27 @@
 import ast
 import os
 from ClassIterTree import ClassIterTree
-from extraerjson import read_Json
+from getjson import read_Json
 import sys
 import shlex, subprocess
 import json
 import requests
 
 #-- Create lists of each attribute
-Literals = ['ast.Constant', 'ast.FormattedValue', 'ast.JoinedStr', 'ast.List', 'ast.Tuple', 'ast.Set',
-            'ast.Dict']
-
-Variables = ['ast.Name', 'ast.Starred']
-Expressions = ['ast.Expr', 'ast.UnaryOp', 'ast.UAdd','ast.Invert', 'ast.BinOp',
-                'ast.LShift', 'ast.RShift', 'ast.BitOr', 'ast.BitXor',
-                'ast.BitAnd', 'ast.MatMult', 'ast.BoolOp', 'ast.Compare', 'ast.LtE',
-                'ast.IsNot', 'ast.Call', 'ast.IfExp',
-                'ast.Attribute', 'ast.NamedExpr']
-Subscripting = ['ast.Subscript']
-Comprehensions = ['ast.ListComp', 'ast.SetComp', 'ast.GeneratorExp', 'ast.DictComp']
-Statements = ['ast.Assign', 'ast.AnnAssign', 'ast.AugAssign', 'ast.Raise', 'ast.Assert', 'ast.Delete',
-              'ast.Pass']
+Literals = ['ast.List', 'ast.Tuple', 'ast.Dict']
+Variables = ['ast.Name']
+Expressions = ['ast.Call', 'ast.IfExp', 'ast.Attribute']
+Comprehensions = ['ast.ListComp','ast.GeneratorExp', 'ast.DictComp']
+Statements = ['ast.Assign', 'ast.AugAssign', 'ast.Raise', 'ast.Assert','ast.Pass']
 Imports = ['ast.Import', 'ast.ImportFrom']
-ControlFlow = ['ast.If', 'ast.For', 'ast.While', 'ast.Break', 'ast.Continue', 'ast.Try',
-               'ast.ExceptHandler', 'ast.With']
-FunctionsClass = ['ast.FunctionDef', 'ast.Lambda', 'ast.arg', 'ast.Return',
-                   'ast.Yield', 'ast.YieldFrom', 'ast.Global', 'ast.Nonlocal', 'ast.ClassDef']
-AsyncAwait = ['ast.AsyncFunctionDef', 'ast.Await', 'ast.AsyncFor', 'ast.AsyncWith']
+ControlFlow = ['ast.If', 'ast.For', 'ast.While', 'ast.Break', 'ast.Continue',
+                'ast.Try', 'ast.With']
+FunctionsClass = ['ast.FunctionDef', 'ast.Lambda', 'ast.Return', 'ast.Yield',
+                  'ast.ClassDef']
 
 #-- Create list of attribute lists
-SetClass = [Literals, Variables, Expressions, Subscripting, Comprehensions,
-            Statements, Imports, ControlFlow, FunctionsClass, AsyncAwait]
+SetClass = [Literals, Variables, Expressions, Comprehensions, Statements,
+            Imports, ControlFlow, FunctionsClass]
 
 #-- Choose opction
 def choose_option():
