@@ -47,6 +47,7 @@ def extract_Levels(data):
                 ini_values(repo, file, 'Class', clase)
 
         write_Results(repo)
+        print(dict_summary)
 
 
 #-- Initialize or increment values
@@ -94,7 +95,7 @@ def write_Results(repo):
         json.dump(dict_total, file, indent=4)
     #-- Create a summary data
     name_file =  wd + "/DATA_JSON/summary_data.json"
-    with open(name_file, 'w') as file:
+    with open(name_file, 'a') as file:
         json.dump(dict_summary, file, indent=4)
     #-- Create a repo data
     name_file =  wd + "/DATA_JSON/repo_data.json"
