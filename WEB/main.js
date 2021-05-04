@@ -126,7 +126,6 @@ for (i=0; i<type.length; i++){
                       '</p>' + '\n')
   }
 }
-//console.log(total_summary)
 INDEX = INDEX.replace('SUMMARY', total_summary)
 //-- Write total in new html file
 fs.writeFileSync('index.html', INDEX);
