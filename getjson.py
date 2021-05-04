@@ -47,7 +47,7 @@ def extract_Levels(data):
                 ini_values(repo, file, 'Class', clase)
 
         write_Results(repo)
-    print(dict_repo)
+    #print(dict_repo)
 
 
 #-- Initialize or increment values
