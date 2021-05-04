@@ -129,3 +129,5 @@ for (i=0; i<type.length; i++){
 INDEX = INDEX.replace('SUMMARY', total_summary)
 //-- Write total in new html file
 fs.writeFileSync('index.html', INDEX);
+
+console.log("Website created.");
