@@ -1,3 +1,6 @@
+//-- PROGRAM TO CREATE A WEB PAGE
+
+//-- Import external module
 const fs = require('fs')
 
 //-- Read html file
@@ -70,7 +73,7 @@ for (repo=0; repo<repository.length; repo++){
       total += ('<p>Class ' + keys[i] + ': ' + values[i] + '</p>' + '\n')
     }
   }
-  total_repo = repo_summary()
+  total_repo = repo_summary();
   content = content.replace('REPO', name_repo)
   content = content.replace('TOTAL', total)
   content = content.replace('SUMMARY', total_repo)
@@ -82,33 +85,31 @@ for (repo=0; repo<repository.length; repo++){
   fs.writeFileSync(name_html, content);
 }
 
+//-- Obtain repository summary information
 function repo_summary(){
-  //-- Obtain repository summary information
-  repos = Object.keys(data_repo)
-  //console.log(repo)
-  for(i=0; i<repos.length;i++){
-    let total_repo = '';
-    repo_name = repos[i]
-    content = data_repo[repo_name]
-
-
-    for(elem=0; elem<Object.keys(content).length; elem++){
-      keys = Object.keys(content);
-      values = Object.values(content);
-      if (elem==0){
-        total_repo += ('<h4>LEVELS: <h4>' + '\n');
-      }else{
-        total_repo += ('<h4>CLASSES: <h4>' + '\n');
-      }
-      for (value=0; value<Object.keys(values[elem]).length; value++){
-        key = Object.keys(values[elem])[value];
-        val =Object.values(values[elem])[value];
-        total_repo += ('<p>' + keys[elem] + ' ' + key + ': ' + val +
-                       '</p>' + '\n');
-      }
+  //-- Variable with the summary of each repository
+  let total_repo ='';
+  repos = Object.keys(data_repo);
+  //-- Get repository name
+  repo_name = repos[repo]
+  //-- Get content of each repository
+  content = data_repo[repo_name];
+  for(elem=0; elem<Object.keys(content).length; elem++){
+    keys = Object.keys(content);
+    values = Object.values(content);
+    if (elem==0){
+      total_repo += ('<h4>LEVELS: <h4>' + '\n');
+    }else{
+      total_repo += ('<h4>CLASSES: <h4>' + '\n');
     }
-    return(total_repo)
+    for (value=0; value<Object.keys(values[elem]).length; value++){
+      key = Object.keys(values[elem])[value];
+      val =Object.values(values[elem])[value];
+      total_repo += ('<p>' + keys[elem] + ' ' + key + ': ' + val +
+                     '</p>' + '\n');
+    }
   }
+  return(total_repo);
 }
 
 //-- Obtain summary information
