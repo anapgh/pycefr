@@ -117,7 +117,7 @@ def level_Dict(self):
                 numList += str(self.node.values[i].values).count('ast.List')
                 self.level= dictLevel['Dict'][3]['with-dict-list']
                 self.clase = (str(numList) + ' List in ' + str(numDict) +
-                            ' Dictionary in Dictionary')
+                            'Dictionary of Dictionary')
     #-- Check for lists
     elif 'ast.List' in str(self.node.values):
         numList = str(self.node.values).count('ast.List')
@@ -196,7 +196,7 @@ def type_Call(self):
 def level_Files(self, value):
     if (value) == 'open':
         self.level= dictLevel['File'][0]['open']
-        self.clase = ("Files --> call 'open'")
+        self.clase = ("Files --> 'open' call function")
     elif value in list_File_Attr:
         level= dictLevel['File']
         for i in range(1, len(level)):
@@ -204,7 +204,7 @@ def level_Files(self, value):
             for k in keys:
                 if k == value:
                     self.level= dictLevel['File'][i][k]
-                    self.clase = ("Files --> call '" + value + "'")
+                    self.clase = ("Files --> '" + value + "' call function")
 
 #-- PRINTS LEVEL
 def level_Print(self, value):
@@ -290,17 +290,17 @@ def level_While(self):
 #-- BREAK LEVEL
 def level_Break(self):
     self.level= dictLevel['Loop'][0]['break']
-    self.clase = ("Sentence 'break'")
+    self.clase = ("'break' statement")
 
 #-- CONTINUE LEVEL
 def level_Continue(self):
     self.level = dictLevel['Loop'][1]['continue']
-    self.clase = ("Sentence 'continue'")
+    self.clase = ("'continue' statement")
 
 #-- PASS LEVEL
 def level_Pass(self):
     self.level= dictLevel['Loop'][2]['pass']
-    self.clase = ("Sentence 'pass'")
+    self.clase = ("'pass' statement")
 
 #-- FOR LEVEL
 def level_For(self):
@@ -337,7 +337,7 @@ def level_LoopCoding(self, value):
         self.level= dictLevel['Loop'][12]['map']
     elif value == 'enumerate':
         self.level= dictLevel['Loop'][13]['enumerate']
-    self.clase = ("Call '" + value + "'" )
+    self.clase = ("'" + value + "' call function")
 
 #-- LEVEL FUNCTIONS
 def level_FunctionDef(self):
@@ -464,13 +464,15 @@ def PrivateClass(self):
         #-- Check if the function is private
         if(funct.name.startswith('__')) and (not funct.name.endswith('__')):
             self.level= dictLevel['Class'][5]['private']
-            self.clase += (' PRIVATE function ' + str(funct.name))
+            self.clase += (' Private Methods ' + str(funct.name) +
+                           ' of the class')
     #-- Check for private attributes/methods
         for i in ast.walk(funct):
             if 'ast.Attribute' in str(i):
                 if (i.attr.startswith('__')) and (not i.attr.endswith('__')):
                     self.level= dictLevel['Class'][5]['private']
-                    self.clase += (' Private Class Function ' + str(i.attr))
+                    self.clase += (' Private Attributes ' + str(i.attr) +
+                                   ' of the class')
 
 #-- LEVEL OF THE CONSTRUCTOR METHOD
 def constrMethod(self):
@@ -497,7 +499,7 @@ def level_Properties(self):
                 try:
                     if elem.func.id == 'property':
                         self.level= dictLevel['Class'][4]['properties']
-                        self.clase += (' with Properties ')
+                        self.clase += (' with Class Properties ')
                 except:
                     pass
 
@@ -632,12 +634,12 @@ def level_Try(self):
 #-- RAISE LEVEL
 def level_Raise(self):
     self.level= dictLevel['Exception'][6]['raise']
-    self.clase = ("Exception 'raise'")
+    self.clase = ("'raise' exception")
 
 #-- ASSERT LEVEL
 def level_Assert(self):
     self.level= dictLevel['Exception'][7]['assert']
-    self.clase = ("Exception 'assert'")
+    self.clase = ("'assert' exception")
 
 #-- WITH LEVEL
 def level_With(self):
