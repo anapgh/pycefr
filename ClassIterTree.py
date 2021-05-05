@@ -3,7 +3,7 @@
 import ast
 import csv
 import json
-import niveles
+import levels
 
 #-- Class to iterate tree
 class IterTree():
@@ -24,7 +24,7 @@ class IterTree():
             if type(self.node) == eval(self.attrib):
                 self.level = ''
                 self.clase = ''
-                niveles.levels(self)
+                levels.levels(self)
                 self.assign_List()
                 self.assign_Dict()
                 self.read_FileJson()
