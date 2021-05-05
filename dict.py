@@ -4,7 +4,7 @@ import configparser
 configuration = configparser.ConfigParser()
 
 #-- Read the configuration file
-configuration.read('Configuracion.cfg')
+configuration.read('configuration.cfg')
 
 #-- Dictionary of LEVELS
 levels = {}
