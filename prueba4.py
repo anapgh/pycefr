@@ -2,7 +2,7 @@
 
 import ast
 import os
-from ClassIterTree import ClassIterTree
+from ClassIterTree import IterTree
 from getjson import read_Json
 import sys
 import shlex, subprocess
@@ -186,7 +186,7 @@ def iterate_List(tree, pos, repo):
 #-- Create class object
 def deepen(tree, attrib, pos, repo):
     file = pos.split('/')[-1]
-    object = ClassIterTree(tree, attrib, file, repo)
+    object = IterTree(tree, attrib, file, repo)
 
 #-- Summary of directory levels
 def summary_Levels():
