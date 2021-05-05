@@ -6,7 +6,7 @@ import json
 import niveles
 
 #-- Class to iterate tree
-class ClassIterTree():
+class IterTree():
 
     #-- Class constructor
     def __init__(self, tree, attrib, file, repo):
@@ -22,8 +22,8 @@ class ClassIterTree():
         for self.node in ast.walk(self.tree):
             #-- Find attributes
             if type(self.node) == eval(self.attrib):
-                self.level= ''
-                self.clase = type(self.node)
+                self.level = ''
+                self.clase = ''
                 niveles.levels(self)
                 self.assign_List()
                 self.assign_Dict()
@@ -32,10 +32,11 @@ class ClassIterTree():
 
     #-- Create object list
     def assign_List(self):
-        self.list = [self.repo, self.name, self.clase, self.node.lineno,
-                    self.node.end_lineno, self.node.col_offset, self.level]
-        #print(self.list)
-        self.add_Csv()
+        if (self.clase != '') and (self.level != ''):
+            self.list = [self.repo, self.name, self.clase, self.node.lineno,
+                        self.node.end_lineno, self.node.col_offset, self.level]
+            #print(self.list)
+            self.add_Csv()
 
     #-- Csv header
     myDataCsv =[['Repository', 'File Name', 'Class', 'Start Line','End Line',
@@ -63,35 +64,22 @@ class ClassIterTree():
     #-- Create json dictionary
     myDataJson = {}
 
-    """
     #-- Create object dictionary
     def assign_Dict(self):
-        if not self.name in self.myDataJson:
-            self.myDataJson[self.name] = []
+        if (self.clase != '') and (self.level != ''):
+            if not self.repo in self.myDataJson:
+                self.myDataJson[self.repo] = {}
 
-        self.myDataJson[self.name].append({
-            'Class'       : str(self.clase),
-            'Start Line'  : str(self.node.lineno),
-            'End Line'    : str(self.node.end_lineno),
-            'Displacement': str(self.node.col_offset),
-            'Level'       : str(self.level)})
-        #print(self.myDataJson)
-    """
-    #-- Create object dictionary
-    def assign_Dict(self):
-        if not self.repo in self.myDataJson:
-            self.myDataJson[self.repo] = {}
+            if not self.name in self.myDataJson[self.repo]:
+                self.myDataJson[self.repo][self.name] = []
 
-        if not self.name in self.myDataJson[self.repo]:
-            self.myDataJson[self.repo][self.name] = []
-
-        self.myDataJson[self.repo][self.name].append({
-            'Class'       : str(self.clase),
-            'Start Line'  : str(self.node.lineno),
-            'End Line'    : str(self.node.end_lineno),
-            'Displacement': str(self.node.col_offset),
-            'Level'       : str(self.level)})
-        #print(self.myDataJson)
+            self.myDataJson[self.repo][self.name].append({
+                'Class'       : str(self.clase),
+                'Start Line'  : str(self.node.lineno),
+                'End Line'    : str(self.node.end_lineno),
+                'Displacement': str(self.node.col_offset),
+                'Level'       : str(self.level)})
+            #print(self.myDataJson)
 
     #-- Create and add data in the .json file
     def read_FileJson(self):
