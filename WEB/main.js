@@ -16,8 +16,8 @@ const JSON_FILEREPO = fs.readFileSync("/home/ana/Documentos/TFG/TFG/DATA_JSON/re
 
 //-- Create the store structure from the contents of the file
 //-- Return us the json structure
-var data = JSON.parse(JSON_FILE);
-var summary = JSON.parse(JSON_FILESUM)
+var data_total = JSON.parse(JSON_FILE);
+var data_summary = JSON.parse(JSON_FILESUM)
 var data_repo = JSON.parse(JSON_FILEREPO)
 
 //-- Variable that is going to have all the buttons available
@@ -25,7 +25,7 @@ let button = ''
 
 //-- Get information
 //-- Get Repository name
-repository = Object.keys(data)
+repository = Object.keys(data_total)
 
 //-- Create a button for each repository
 for (i=0; i<repository.length; i++){
@@ -45,7 +45,7 @@ for (repo=0; repo<repository.length; repo++){
   let total = ''
   let name_repo = "<h2> REPOSITORY: " + repository[repo] + "</h2>" + '\n'
   //-- Get total content
-  content_total = data[repository[repo]]
+  content_total = data_total[repository[repo]]
 
   //-- Get Files names
   files = Object.keys(content_total)
@@ -54,7 +54,7 @@ for (repo=0; repo<repository.length; repo++){
     //-- Get name
     name_file = files[file]
     total += '<h3>NAME FILE : ' + name_file + '<h3>'
-    let content_file = data[repository[repo]][name_file]
+    let content_file = data_total[repository[repo]][name_file]
 
     //-- Get levels
     let levels = content_file["Levels"]
@@ -114,11 +114,11 @@ function repo_summary(){
 
 //-- Obtain summary information
 let total_summary = ''
-type = Object.keys(summary)
+type = Object.keys(data_summary)
 for (i=0; i<type.length; i++){
   key = type[i] //-- Levels or Class
   total_summary += '<h4>' + key.toUpperCase() + ':<h4> ' + '\n'
-  content = summary[key]
+  content = data_summary[key]
   for(elem=0; elem<Object.keys(content).length; elem++){
     keys = Object.keys(content)
     values = Object.values(content)
