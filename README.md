@@ -23,13 +23,13 @@ To put it into operation you have to follow the steps below:
       python3 main.py directory name_path
       ```
     * Analyze a Github repository
-     ```
-     python3 main.py repo name_urlclone
-     ```
+      ```
+      python3 main.py repo name_urlclone
+      ```
     * Analyze a Github user
-     ```
-     python3 main.py user name_user
-     ```
+      ```
+      python3 main.py user name_user
+      ```
 4. After that, this program will generate two types of formats to view the results:
     * **json**
     * **csv**
