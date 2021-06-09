@@ -5,10 +5,10 @@ import csv
 import json
 import levels
 
-#-- Class to iterate tree
+""" Class to iterate tree. """
 class IterTree():
 
-    #-- Class constructor
+    """ Class constructor. """
     def __init__(self, tree, attrib, file, repo):
         self.tree = tree
         self.attrib = attrib
@@ -17,7 +17,7 @@ class IterTree():
         self.locate_Tree()
 
 
-    #-- Method iterating on the tree
+    """ Method iterating on the tree. """
     def locate_Tree(self):
         for self.node in ast.walk(self.tree):
             #-- Find attributes
@@ -30,7 +30,7 @@ class IterTree():
                 self.read_FileJson()
 
 
-    #-- Create object list
+   """ Create object list. """
     def assign_List(self):
         if (self.clase != '') and (self.level != ''):
             self.list = [self.repo, self.name, self.clase, self.node.lineno,
@@ -38,18 +38,20 @@ class IterTree():
             #print(self.list)
             self.add_Csv()
 
+
     #-- Csv header
     myDataCsv =[['Repository', 'File Name', 'Class', 'Start Line','End Line',
                 'Displacement', 'Level']]
 
-    #-- Add object list to CSV
+
+    """ Add object list to CSV. """
     def add_Csv(self):
         self.myDataCsv.append(self.list)
         #print(self.myDataList)
         self.read_FileCsv()
 
 
-    #-- Create and add data in the .csv file
+    """ Create and add data in the .csv file. """
     def read_FileCsv(self, file_csv = ""):
         if not file_csv:
             file_csv = open('data.csv', 'w')
@@ -61,10 +63,12 @@ class IterTree():
                 writer = csv.writer(f)
                 writer.writerow(self.myDataCsv)
 
+
     #-- Create json dictionary
     myDataJson = {}
 
-    #-- Create object dictionary
+
+    """ Create object dictionary. """
     def assign_Dict(self):
         if (self.clase != '') and (self.level != ''):
             if not self.repo in self.myDataJson:
@@ -79,9 +83,9 @@ class IterTree():
                 'End Line'    : str(self.node.end_lineno),
                 'Displacement': str(self.node.col_offset),
                 'Level'       : str(self.level)})
-            #print(self.myDataJson)
 
-    #-- Create and add data in the .json file
+
+    """ Create and add data in the .json file. """
     def read_FileJson(self):
         with open('data.json', 'w') as file:
             json.dump(self.myDataJson, file, indent=4)
