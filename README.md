@@ -31,8 +31,8 @@ To put it into operation you have to follow the steps below:
      python3 main.py user name_user
      ```
 4. After that, this program will generate two types of formats to view the results:
-  * **json**
-  * **csv**
+    * **json**
+    * **csv**
 
   Both indicating:
   * Repository name
@@ -46,8 +46,8 @@ To put it into operation you have to follow the steps below:
 
 5. If you want to visualize the results on a web page:
 
-  1. Go to the WEB folder and execute the file 'getjson.py' to get summaries of the previously created .json file.
-  2. Then, run the file 'main.js' to create the page 'index.html'. You will get one web page for each repository.
+    * Go to the WEB folder and execute the file 'getjson.py' to get summaries of the previously created .json file.
+    * Then, run the file 'main.js' to create the page 'index.html'. You will get one web page for each repository.
 
 
 ## Of interest
