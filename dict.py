@@ -17,7 +17,6 @@ for section in configuration.sections():
     for option, value in configuration[section].items():
         levels[section].append({option : value})
 
-print(levels)
 
 #-- Create .txt file with dictionary
 with open('dicc.txt', 'w') as file:
