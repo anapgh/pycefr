@@ -1,3 +1,4 @@
+#-- PROGRAM TO OBTAIN SUMMARIES FROM JSON
 
 import json
 import os
@@ -10,7 +11,8 @@ dict_summary = {}
 #-- Dictionary of all files
 dict_repo = {}
 
-#-- Extract repository levels
+
+""" Extract repository levels. """
 def extract_Levels(data):
     #-- Take out the repositories
     for repo in data.keys():
@@ -47,10 +49,9 @@ def extract_Levels(data):
                 ini_values(repo, file, 'Class', clase)
 
         write_Results(repo)
-    #print(dict_repo)
 
 
-#-- Initialize or increment values
+""" Initialize or increment values. """
 def ini_total(type, key):
     if not key in dict_summary[type]:
         if key != "":
@@ -58,6 +59,7 @@ def ini_total(type, key):
     else:
         dict_summary[type][key] += 1
 
+""" Initialize or increment values. """
 def ini_repo(repo, type, key):
     if not key in dict_repo[repo][type]:
         if key != "":
@@ -65,6 +67,7 @@ def ini_repo(repo, type, key):
     else:
         dict_repo[repo][type][key] += 1
 
+""" Initialize or increment values. """
 def ini_values(repo, file, type, key):
     if not key in dict_total[repo][file][type]:
         if key != "":
@@ -73,7 +76,7 @@ def ini_values(repo, file, type, key):
         dict_total[repo][file][type][key] += 1
 
 
-#-- Create a .txt file with a summary of results
+ """ Create a .txt file with a summary of results. """
 def write_Results(repo):
     #-- get current path
     wd = os.getcwd()
@@ -103,6 +106,7 @@ def write_Results(repo):
         json.dump(dict_repo, file, indent=4)
 
 
+""" Read json file. """
 def read_Json():
     with open('data.json') as file:
         data = json.load(file)
