@@ -46,8 +46,7 @@ To put it into operation you have to follow the steps below:
 
 5. If you want to visualize the results on a web page:
 
-    * Go to the WEB folder and execute the file 'getjson.py' to get summaries of the previously created .json file.
-    * Then, run the file 'main.js' to create the page 'index.html'. You will get one web page for each repository.
+    * Run the file 'main.js' to create the page 'index.html'. You will get one web page for each repository.
 
 
 ## Of interest
