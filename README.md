@@ -17,15 +17,16 @@ To put it into operation you have to follow the steps below:
    python3 dict.py
    ```
 3. Execute the main program 'main.py' in three different ways:
-  1. Analyze a directory
+
+  a. Analyze a directory
      ```
      python3 main.py directory name_path
      ```
-  2. Analyze a Github repository
+  b. Analyze a Github repository
     ```
     python3 main.py repo name_urlclone
     ```
-  3. Analyze a Github user
+  c. Analyze a Github user
     ```
     python3 main.py user name_user
     ```
