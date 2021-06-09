@@ -18,18 +18,18 @@ To put it into operation you have to follow the steps below:
    ```
 3. Execute the main program 'main.py' in three different ways:
 
-  * Analyze a directory
+    * Analyze a directory
+      ```
+      python3 main.py directory name_path
+      ```
+    * Analyze a Github repository
      ```
-     python3 main.py directory name_path
+     python3 main.py repo name_urlclone
      ```
-  * Analyze a Github repository
-    ```
-    python3 main.py repo name_urlclone
-    ```
-  * Analyze a Github user
-    ```
-    python3 main.py user name_user
-    ```
+    * Analyze a Github user
+     ```
+     python3 main.py user name_user
+     ```
 4. After that, this program will generate two types of formats to view the results:
   * **json**
   * **csv**
