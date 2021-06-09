@@ -27,6 +27,7 @@ let button = ''
 //-- Get Repository name
 repository = Object.keys(data_total)
 
+
 //-- Create a button for each repository
 for (i=0; i<repository.length; i++){
   button += "<button role='link'onclick=window.location='" +
@@ -36,6 +37,7 @@ for (i=0; i<repository.length; i++){
 INDEX = INDEX.replace('BUTTON', button)
 //-- Write total in new html file
 fs.writeFileSync('index.html', INDEX);
+
 
 //-- Obtain information from each repository
 for (repo=0; repo<repository.length; repo++){
@@ -85,6 +87,8 @@ for (repo=0; repo<repository.length; repo++){
   fs.writeFileSync(name_html, content);
 }
 
+
+
 //-- Obtain repository summary information
 function repo_summary(){
   //-- Variable with the summary of each repository
@@ -112,6 +116,8 @@ function repo_summary(){
   return(total_repo);
 }
 
+
+
 //-- Obtain summary information
 let total_summary = ''
 type = Object.keys(data_summary)
@@ -129,5 +135,6 @@ for (i=0; i<type.length; i++){
 INDEX = INDEX.replace('SUMMARY', total_summary)
 //-- Write total in new html file
 fs.writeFileSync('index.html', INDEX);
+
 
 console.log("Website created.");
