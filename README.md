@@ -8,5 +8,5 @@ To put it into operation you have to follow the steps below:
 2. Execute the file 'dict.py' to generate a level dictionary.
    ```
    python3 dict.py
-   ``
+   ```
 4. 
