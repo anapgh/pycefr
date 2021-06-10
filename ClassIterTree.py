@@ -30,7 +30,7 @@ class IterTree():
                 self.read_FileJson()
 
 
-   """ Create object list. """
+    """ Create object list. """
     def assign_List(self):
         if (self.clase != '') and (self.level != ''):
             self.list = [self.repo, self.name, self.clase, self.node.lineno,
