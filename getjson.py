@@ -91,7 +91,7 @@ def write_Results(repo):
     repository[repo] = dict_total[repo]
     with open(name_file, 'w') as file:
         json.dump(repository, file, indent=4)
-        print('Fichero creado...')
+        print('File', name_file, 'has been created...')
     #-- Create a total file
     name_file =  wd + "/DATA_JSON/total_data.json"
     with open(name_file, 'w') as file:
