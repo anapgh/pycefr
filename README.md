@@ -18,15 +18,15 @@ To put it into operation you have to follow the steps below:
    ```
 3. Execute the main program 'main.py' in three different ways:
 
-    * Analyze a directory
+    * Analyze a directory.
       ```
       python3 main.py directory name_path
       ```
-    * Analyze a Github repository
+    * Analyze a Github repository.
       ```
       python3 main.py repo name_urlclone
       ```
-    * Analyze a Github user
+    * Analyze a Github user.
       ```
       python3 main.py user name_user
       ```
@@ -47,6 +47,9 @@ To put it into operation you have to follow the steps below:
 5. If you want to visualize the results on a web page:
 
     * Run the file 'main.js' to create the page 'index.html'. You will get one web page for each repository.
+      ```
+      node main.js
+      ```
 
 
 ## Of interest
