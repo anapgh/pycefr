@@ -76,7 +76,7 @@ def ini_values(repo, file, type, key):
         dict_total[repo][file][type][key] += 1
 
 
- """ Create a .txt file with a summary of results. """
+""" Create a .txt file with a summary of results. """
 def write_Results(repo):
     #-- get current path
     wd = os.getcwd()
