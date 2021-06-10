@@ -1,38 +1,38 @@
-# **PYCEFRL**
-## *IDENTIFYING THE PYTHON CODE LEVEL USING THE CERFL FRAMEWORK AS INSPIRATION*
+# **pycefrl**
+## *Identifying Python3 Code Level Using the CERFL Framework as Inspiration*
 
 ### What is this project about?
-The objective of this Final Degree Project is to create a tool capable of obtaining an evaluation inspired by the [''Common European Framework of Reference for Languages''](https://en.wikipedia.org/wiki/Common_European_Framework_of_Reference_for_Languages) for code written in the Python programming language, version 3.
+The goal of pycefrl is to create a tool capable of obtaining an evaluation inspired by the [''Common European Framework of Reference for Languages''](https://en.wikipedia.org/wiki/Common_European_Framework_of_Reference_for_Languages) for code written in the Python programming language, version 3.
 
-Through this tool, it will be possible to analyze the level of GitHub repositories (and their developers) or code snippets in this language.
+With this tool it is possible to analyze the level of GitHub repositories (and their developers) or code snippets in Python3.
 
 
 
 ### How does it work?
 
 To put it into operation you have to follow the steps below:
-1. Configure the 'configuration.cfg' file with the level assignment of your choice.
+1. Configure the 'configuration.cfg' file with the level assignment of your choice. If you want to use the default ones, go to step 3.
 2. Execute the file 'dict.py' to generate a level dictionary.
    ```
    python3 dict.py
    ```
-3. Execute the main program 'main.py' in three different ways:
+3. Execute the main program 'pycerfl.py' in three different ways:
 
     * Analyze a directory.
       ```
-      python3 main.py directory name_path
+      python3 pycerfl.py directory name_path
       ```
-    * Analyze a Github repository.
+    * Analyze a GitHub repository.
       ```
-      python3 main.py repo name_urlclone
+      python3 pycerfl.py repo name_urlclone
       ```
-    * Analyze a Github user.
+    * Analyze a GitHub user.
       ```
-      python3 main.py user name_user
+      python3 pycerfl.py user name_user
       ```
 4. After that, this program will generate two types of formats to view the results:
-    * **json**
-    * **csv**
+    * **JSON**
+    * **CSV**
 
   Both indicating:
   * Repository name
@@ -52,7 +52,8 @@ To put it into operation you have to follow the steps below:
       ```
 
 
-## Of interest
+## Of Interest
+
 We are trying to obtain a consolidated version of Python levels, for this purpose, we propose this survey is to ask you how you would assign those levels to Python structures.
 
 This is the long version of the survey. The time to fill out the survey is approx. 15 minutes. https://forms.gle/pA71ajFx1HVaZMYq9
