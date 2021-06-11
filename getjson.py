@@ -107,7 +107,9 @@ def write_Results(repo):
     with open(name_file, 'w') as file:
         json.dump(dict_repo, file, indent=4)
 
+
 def show_Results():
+    """ Returns the result of the analysis. """
     repos = dict_total.keys()
     num_files = 0
     result = '====================================='
