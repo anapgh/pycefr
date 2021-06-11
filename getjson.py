@@ -12,8 +12,8 @@ dict_summary = {}
 dict_repo = {}
 
 
-""" Extract repository levels. """
 def extract_Levels(data):
+    """ Extract repository levels. """
     #-- Take out the repositories
     for repo in data.keys():
         dict_total[repo] = {}
@@ -51,24 +51,27 @@ def extract_Levels(data):
         write_Results(repo)
 
 
-""" Initialize or increment values. """
+
 def ini_total(type, key):
+    """ Initialize or increment values. """
     if not key in dict_summary[type]:
         if key != "":
             dict_summary[type][key] = 1
     else:
         dict_summary[type][key] += 1
 
-""" Initialize or increment values. """
+
 def ini_repo(repo, type, key):
+    """ Initialize or increment values. """
     if not key in dict_repo[repo][type]:
         if key != "":
             dict_repo[repo][type][key] = 1
     else:
         dict_repo[repo][type][key] += 1
 
-""" Initialize or increment values. """
+
 def ini_values(repo, file, type, key):
+    """ Initialize or increment values. """
     if not key in dict_total[repo][file][type]:
         if key != "":
             dict_total[repo][file][type][key] = 1
@@ -76,8 +79,8 @@ def ini_values(repo, file, type, key):
         dict_total[repo][file][type][key] += 1
 
 
-""" Create a .txt file with a summary of results. """
 def write_Results(repo):
+    """ Create a .txt file with a summary of results. """
     #-- get current path
     wd = os.getcwd()
     #-- create new folder
@@ -91,7 +94,6 @@ def write_Results(repo):
     repository[repo] = dict_total[repo]
     with open(name_file, 'w') as file:
         json.dump(repository, file, indent=4)
-        print('File', name_file, 'has been created...')
     #-- Create a total file
     name_file =  wd + "/DATA_JSON/total_data.json"
     with open(name_file, 'w') as file:
@@ -106,8 +108,8 @@ def write_Results(repo):
         json.dump(dict_repo, file, indent=4)
 
 
-""" Read json file. """
 def read_Json():
+    """ Read json file. """
     with open('data.json') as file:
         data = json.load(file)
         extract_Levels(data)
