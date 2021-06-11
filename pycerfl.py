@@ -26,8 +26,9 @@ FunctionsClass = ['ast.FunctionDef', 'ast.Lambda', 'ast.Return', 'ast.Yield',
 SetClass = [Literals, Variables, Expressions, Comprehensions, Statements,
             Imports, ControlFlow, FunctionsClass]
 
-""" Choose option. """
+
 def choose_option():
+    """ Choose option. """
     if type_option == 'directory':
         repo = option.split('/')[-1]
         read_Directory(option, repo)
@@ -39,8 +40,8 @@ def choose_option():
         sys.exit('Incorrect Option')
 
 
-""" Request url by shell. """
 def request_url():
+    """ Request url by shell. """
     values = option.split("/")
     try:
         protocol = values[0].split(':')[0]
@@ -54,15 +55,17 @@ def request_url():
     #-- Check languaje
     check_lenguage(option, protocol, type_git, user, repo)
 
-""" Check url sintax. """
+
 def check_url(protocol, type_git):
+    """ Check url sintax. """
     if protocol != 'https':
         sys.exit('Usage: https protocol')
     elif type_git != 'github.com':
         sys.exit('Usage: github.com')
 
-""" Check lenguaje python. """
+
 def check_lenguage(url, protocol, type_git, user, repo):
+    """ Check lenguaje python. """
     total_elem = 0
     python_leng = False
     python_quantity = 0
@@ -91,8 +94,9 @@ def check_lenguage(url, protocol, type_git, user, repo):
         else:
             print('\nThe repository does not contain 50% of the Python.\n')
 
-""" Run url. """
+
 def run_url(url):
+    """ Run url. """
     command_line = "git clone " + url
     print('Run url...')
     #print(command_line)
@@ -103,8 +107,8 @@ def run_url(url):
     get_directory(url)
 
 
-""" Run user. """
 def run_user():
+    """ Run user. """
     #-- Create the url of the api
     user_url = ("https://api.github.com/users/"  + option)
     print(user_url)
@@ -130,8 +134,8 @@ def run_user():
         check_lenguage(url, 'https', 'github.com', option, repository["name"])
 
 
-""" Get the name of the downloaded repository directory. """
 def get_directory(url):
+    """ Get the name of the downloaded repository directory. """
     #-- Get values rom the url
     values = url.split('/')
     #-- Last item in the list
@@ -142,8 +146,9 @@ def get_directory(url):
     print("The directory is: " + name_directory)
     get_path(name_directory)
 
-""" Get the path to the directory. """
+
 def get_path(name_directory):
+    """ Get the path to the directory. """
     absFilePath = os.path.abspath(name_directory)
     #-- Check if the last element is a file.py
     fichero = absFilePath.split('/')[-1]
@@ -153,8 +158,8 @@ def get_path(name_directory):
     read_Directory(absFilePath, name_directory)
 
 
-""" Extract the .py files from the directory. """
 def read_Directory(absFilePath, repo):
+    """ Extract the .py files from the directory. """
     pos = ''
     print('Directory: ')
     path = absFilePath
@@ -167,8 +172,8 @@ def read_Directory(absFilePath, repo):
             read_File(pos, repo)
 
 
-""" Read the file and return the tree. """
 def read_File(pos, repo):
+    """ Read the file and return the tree. """
     with open(pos) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
@@ -176,22 +181,25 @@ def read_File(pos, repo):
         iterate_List(tree, pos, repo)
 
 
-""" Iterate list and assign attributes."""
 def iterate_List(tree, pos, repo):
+    """ Iterate list and assign attributes."""
     for i in range(0, len(SetClass)):
         for j in range(0, len(SetClass[i])):
             attrib = SetClass[i][j]
             deepen(tree, attrib, pos,repo)
 
-""" Create class object. """
+
 def deepen(tree, attrib, pos, repo):
+    """ Create class object. """
     file = pos.split('/')[-1]
     object = IterTree(tree, attrib, file, repo)
 
-""" Summary of directory levels """
+
 def summary_Levels():
+    """ Summary of directory levels """
     read_Json()
     read_FileCsv()
+
 
 if __name__ == "__main__":
     try:
