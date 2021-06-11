@@ -4,6 +4,7 @@ import ast
 import os
 from ClassIterTree import IterTree
 from getjson import read_Json
+from getcsv import read_FileCsv
 import sys
 import shlex, subprocess
 import json
@@ -190,6 +191,7 @@ def deepen(tree, attrib, pos, repo):
 """ Summary of directory levels """
 def summary_Levels():
     read_Json()
+    read_FileCsv()
 
 if __name__ == "__main__":
     try:
