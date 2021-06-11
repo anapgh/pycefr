@@ -201,8 +201,9 @@ def deepen(tree, attrib, pos, repo):
 
 def summary_Levels():
     """ Summary of directory levels """
-    read_Json()
+    result = read_Json()
     read_FileCsv()
+    print(result)
 
 
 if __name__ == "__main__":
