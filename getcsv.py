@@ -4,8 +4,8 @@ import csv
 import os
 
 
-"""Scrolls through the list looking for different .py files. """
 def create_csv(myDataList):
+    """Scrolls through the list looking for different .py files. """
     #-- Remove the header
     list = myDataList[1:]
     myDataCsv = ''
@@ -19,8 +19,8 @@ def create_csv(myDataList):
         write_FileCsv(myDataCsv, file_name)
 
 
-""" Create and add data in the .csv file. """
 def write_FileCsv(myDataCsv, file_name, file_csv = ""):
+    """ Create and add data in the .csv file. """
     #-- Get current path
     wd = os.getcwd()
     #-- Create new folder
@@ -42,8 +42,8 @@ def write_FileCsv(myDataCsv, file_name, file_csv = ""):
             writer.writerow(myDataCsv)
 
 
-""" Read data.csv and create a list to iterate. """
 def read_FileCsv(file_csv = ""):
+    """ Read data.csv and create a list to iterate. """
     with open('data.csv', newline='') as File:
         reader = csv.reader(File)
         myDataList = []
