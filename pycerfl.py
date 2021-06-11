@@ -170,6 +170,10 @@ def read_Directory(absFilePath, repo):
             print('Python File: ' + str(directory[i]))
             pos = path + "/" + directory[i]
             read_File(pos, repo)
+        elif not ('.') in directory[i]:
+            print('\nOpening another directory...\n')
+            path2 =  absFilePath + '/' + directory[i]
+            read_Directory(path2, directory[i])
 
 
 def read_File(pos, repo):
