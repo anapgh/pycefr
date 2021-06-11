@@ -107,12 +107,35 @@ def write_Results(repo):
     with open(name_file, 'w') as file:
         json.dump(dict_repo, file, indent=4)
 
+def show_Results():
+    repos = dict_total.keys()
+    num_files = 0
+    result = '====================================='
+    result += '\nRESULT OF THE ANALYSIS:'
+    for keys in repos:
+        files = dict_total[keys]
+        for key, value in files.items():
+            num_files += 1
+
+    result += ('\nAnalyzed .py files: ' + str(num_files))
+
+    levels = dict_summary['Levels']
+    for key, value in levels.items():
+        result += ('\nElements of level ' + key + ': ' + str(value))
+    result += '\n====================================='
+    return result
+
 
 def read_Json():
     """ Read json file. """
+    #result = ''
     with open('data.json') as file:
         data = json.load(file)
         extract_Levels(data)
+        result = show_Results()
+        return result
+
+
 
 
 if __name__ == "__main__":
