@@ -1,28 +1,32 @@
-#-- MAIN PROGRAMME
+"""
+Main Program
+"""
 
 import ast
 import os
+import sys
+import shlex
+import subprocess
+import requests
 from ClassIterTree import IterTree
 from getjson import read_Json
 from getcsv import read_FileCsv
-import sys
-import shlex, subprocess
-import json
-import requests
 
-#-- Create lists of each attribute
+
+# Create lists of each attribute
 Literals = ['ast.List', 'ast.Tuple', 'ast.Dict']
 Variables = ['ast.Name']
 Expressions = ['ast.Call', 'ast.IfExp', 'ast.Attribute']
-Comprehensions = ['ast.ListComp','ast.GeneratorExp', 'ast.DictComp']
-Statements = ['ast.Assign', 'ast.AugAssign', 'ast.Raise', 'ast.Assert','ast.Pass']
+Comprehensions = ['ast.ListComp', 'ast.GeneratorExp', 'ast.DictComp']
+Statements = ['ast.Assign', 'ast.AugAssign', 'ast.Raise', 'ast.Assert',
+              'ast.Pass']
 Imports = ['ast.Import', 'ast.ImportFrom']
 ControlFlow = ['ast.If', 'ast.For', 'ast.While', 'ast.Break', 'ast.Continue',
-                'ast.Try', 'ast.With']
+               'ast.Try', 'ast.With']
 FunctionsClass = ['ast.FunctionDef', 'ast.Lambda', 'ast.Return', 'ast.Yield',
                   'ast.ClassDef']
 
-#-- Create list of attribute lists
+# Create list of attribute lists
 SetClass = [Literals, Variables, Expressions, Comprehensions, Statements,
             Imports, ControlFlow, FunctionsClass]
 
@@ -50,9 +54,9 @@ def request_url():
         repo = values[4][0:-4]
     except:
         sys.exit('ERROR --> Usage: http://TYPEGIT/USER/NAMEREPO.git')
-    #-- Check url
+    # Check url
     check_url(protocol, type_git)
-    #-- Check languaje
+    # Check languaje
     check_lenguage(option, protocol, type_git, user, repo)
 
 
@@ -69,27 +73,27 @@ def check_lenguage(url, protocol, type_git, user, repo):
     total_elem = 0
     python_leng = False
     python_quantity = 0
-    #-- Create the url of the api
+    # Create the url of the api
     repo_url = (protocol + "://api." + type_git + "/repos/" + user + "/" +
-                 repo + "/languages")
+                repo + "/languages")
     print("Analyzing repository languages...\n")
     # Get content
     r = requests.get(repo_url)
     # Decode JSON response into a Python dict:
     content = r.json()
-    #-- Get used languages and their quantity
+    # Get used languages and their quantity
     for key in content.keys():
         print(key + ": " + str(content[key]))
         if key == 'Python':
             python_leng = True
             python_quantity = content[key]
         total_elem += content[key]
-    #-- Check if python is 50%
-    if python_leng == True:
+    # Check if python is 50%
+    if python_leng:
         amount = total_elem/2
         if python_quantity >= amount:
             print('\nPython 50% OK\n')
-            #-- Clone the repository
+            # Clone the repository
             run_url(url)
         else:
             print('\nThe repository does not contain 50% of the Python.\n')
@@ -99,35 +103,35 @@ def run_url(url):
     """ Run url. """
     command_line = "git clone " + url
     print('Run url...')
-    #print(command_line)
-    #-- List everything and separate
+    # print(command_line)
+    # List everything and separate
     args = shlex.split(command_line)
-    #-- Run in the shell the command_line
+    # Run in the shell the command_line
     subprocess.call(args)
     get_directory(url)
 
 
 def run_user():
     """ Run user. """
-    #-- Create the url of the api
-    user_url = ("https://api.github.com/users/"  + option)
+    # Create the url of the api
+    user_url = ("https://api.github.com/users/" + option)
     print(user_url)
     print("Analyzing user...\n")
     try:
-        #-- Extract headers
+        # Extract headers
         headers = requests.get(user_url)
-        #-- Decode JSON response into a Python dict:
+        # Decode JSON response into a Python dict:
         content = headers.json()
-        #-- Get repository url
+        # Get repository url
         repo_url = content["repos_url"]
     except KeyError:
         sys.exit('An unavailable user has been entered')
     print("Analyzing repositories...\n")
-    #-- Extract repository names
+    # Extract repository names
     names = requests.get(repo_url)
-    #-- Decode JSON response into a Python dict:
+    # Decode JSON response into a Python dict:
     content = names.json()
-    #-- Show repository names
+    # Show repository names
     for repository in content:
         print('\nRepository: ' + str(repository["name"]))
         url = ("https://github.com/" + option + "/" + repository["name"])
@@ -136,12 +140,12 @@ def run_user():
 
 def get_directory(url):
     """ Get the name of the downloaded repository directory. """
-    #-- Get values rom the url
+    # Get values rom the url
     values = url.split('/')
-    #-- Last item in the list
+    # Last item in the list
     name_directory = values[-1]
-    #-- Remove extension .git
-    if ('.git' in str(name_directory)):
+    # Remove extension .git
+    if '.git' in str(name_directory):
         name_directory = name_directory[0:-4]
     print("The directory is: " + name_directory)
     get_path(name_directory)
@@ -150,10 +154,10 @@ def get_directory(url):
 def get_path(name_directory):
     """ Get the path to the directory. """
     absFilePath = os.path.abspath(name_directory)
-    #-- Check if the last element is a file.py
+    # Check if the last element is a file.py
     fichero = absFilePath.split('/')[-1]
     if fichero.endswith('.py'):
-        absFilePath = absFilePath.replace("/" + fichero,"" )
+        absFilePath = absFilePath.replace("/" + fichero, "")
     print("This script absolute path is ", absFilePath)
     read_Directory(absFilePath, name_directory)
 
@@ -170,9 +174,9 @@ def read_Directory(absFilePath, repo):
             print('Python File: ' + str(directory[i]))
             pos = path + "/" + directory[i]
             read_File(pos, repo)
-        elif not ('.') in directory[i]:
+        elif '.' not in directory[i]:
             print('\nOpening another directory...\n')
-            path2 =  absFilePath + '/' + directory[i]
+            path2 = absFilePath + '/' + directory[i]
             read_Directory(path2, directory[i])
 
 
@@ -181,7 +185,7 @@ def read_File(pos, repo):
     with open(pos) as fp:
         my_code = fp.read()
         tree = ast.parse(my_code)
-        #print (ast.dump(tree))
+        # print (ast.dump(tree))
         iterate_List(tree, pos, repo)
 
 
@@ -190,11 +194,11 @@ def iterate_List(tree, pos, repo):
     for i in range(0, len(SetClass)):
         for j in range(0, len(SetClass[i])):
             attrib = SetClass[i][j]
-            deepen(tree, attrib, pos,repo)
+            deepen(tree, attrib, pos, repo)
 
 
 def deepen(tree, attrib, pos, repo):
-    """ Create class object. """
+    """ Create class object """
     file = pos.split('/')[-1]
     object = IterTree(tree, attrib, file, repo)
 
