@@ -520,7 +520,7 @@ def Descriptors(self):
     """ Descriptor level."""
     for elem in self.node.body:
         if elem.name in listDescriptors:
-            self.level += dictLevel['Class'][3]['descriptors']
+            self.level = dictLevel['Class'][3]['descriptors']
             self.clase += (' with Descriptors ' + str(elem.name))
 
 
