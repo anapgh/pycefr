@@ -135,8 +135,7 @@ def read_Json():
         data = json.load(file)
         extract_Levels(data)
         result = show_Results()
-        # return result
-        print(result)
+        return result
 
 
 if __name__ == "__main__":
