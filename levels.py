@@ -145,14 +145,16 @@ def level_DictComp(self):
         numIfs += str(i.ifs).count('ast.Compare')
         if numIfs > 0:
             self.level = dictLevel['DictComp'][1]['with-if']
-            self.clase = ('Dictionary Comprehension with ' + str(numIfs) + ' If statements')
+            self.clase = ('Dictionary Comprehension with ' + str(numIfs) +
+                          ' If statements')
         else:
             self.level = dictLevel['DictComp'][0]['simple']
             self.clase = 'Simple Dictionary Comprehension'
     if 'ast.IfExp' in str(self.node.value):
         ifExp += str(self.node.value).count('ast.IfExp')
         self.level = dictLevel['DictComp'][2]['with-if-else']
-        self.clase = ('Dictionary Comprehension with ' + str(ifExp) + ' if expression (If-Else)')
+        self.clase = ('Dictionary Comprehension with ' + str(ifExp) +
+                      ' if expression (If-Else)')
     elif 'ast.DictComp' in str(self.node.value):
         numDictComp += str(self.node.value).count('ast.DictComp')
         self.level = dictLevel['DictComp'][3]['nested']
@@ -588,7 +590,8 @@ def specialClassAttributes(self):
             for k in keys:
                 if k == self.node.attr:
                     self.level = dictLevel['Attributes'][i][k]
-                    self.clase = ('Special Class Attribute ' + str(self.node.attr))
+                    self.clase = ('Special Class Attribute ' +
+                                  str(self.node.attr))
 
 
 def level_StaticClass(self, value):
@@ -631,18 +634,20 @@ def level_Metaclass(self, pos):
                 for argum in i.args.args:
                     if (argum.arg) == 'meta':
                         self.level = dictLevel['Metaclass'][0]['__new__']
-                        self.clase += (' Metaclass (3.X) created with --> __new__')
+                        self.clase += (' Metaclass (3.X) created with --> ' +
+                                       '__new__')
     # Class header
     elif pos == 'header':
         for i in self.node.keywords:
             if i.arg == 'metaclass':
                 self.level = dictLevel['Metaclass'][1]['metaclass']
-                self.clase += (" Metaclass created in the class header --> 'metaclass = '"
-                               + i.value.id)
+                self.clase += (" Metaclass created in the class header --> " +
+                               "'metaclass = '" + i.value.id)
     # As an attribute, 2.X
     elif pos == 'atrib':
         self.level = dictLevel['Metaclass'][2]['__metaclass__']
-        self.clase = ('Metaclass (2.X) created as attribute with --> __metaclass__')
+        self.clase = ('Metaclass (2.X) created as attribute with --> ' +
+                      '__metaclass__')
 
 
 def level_Slots(self):
