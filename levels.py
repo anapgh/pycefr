@@ -1,13 +1,16 @@
-#-- PROGRAM FOR THE LEVELS OF EACH ATTRIBUTE
+"""
+PROGRAM FOR THE LEVELS OF EACH ATTRIBUTE
+"""
 
 import ast
 
-#-- Level dictionary global variable
+# Level dictionary global variable
 dictLevel = ''
 
-#-- List of loop elements: break, continue, pass,for, while
-listElemLoop = ['ast.Break', 'ast.Continue', 'ast.Pass', 'ast.While', 'ast.For']
-#-- List of imports
+# List of loop elements: break, continue, pass,for, while
+listElemLoop = ['ast.Break', 'ast.Continue', 'ast.Pass', 'ast.While',
+                'ast.For']
+# List of imports
 listImport = ['ast.Import', 'ast.ImportFrom']
 
 
@@ -71,22 +74,21 @@ def levels(self):
         level_With(self)
 
 
-
 def level_List(self):
     """ List level. """
     numList = 0
     numDict = 0
-    #-- Check for lists
+    # Check for lists
     if 'ast.List' in str(self.node.elts):
         numList = str(self.node.elts).count('ast.List')
-        self.level= dictLevel['List'][1]['nested']
+        self.level = dictLevel['List'][1]['nested']
         self.clase = (str(numList) + ' Nested List')
     elif 'ast.Dict' in str(self.node.elts):
         numDict = str(self.node.elts).count('ast.Dict')
-        self.level= dictLevel['List'][2]['with-dict']
+        self.level = dictLevel['List'][2]['with-dict']
         self.clase = (str(numDict) + ' Dictionary List')
     else:
-        self.level= dictLevel['List'][0]['simple']
+        self.level = dictLevel['List'][0]['simple']
         self.clase = ('Simple List')
 
 
@@ -94,16 +96,17 @@ def level_ListComp(self):
     """ List comprehension level. """
     numComp = 0
     ifExp = 0
-    self.level= dictLevel['ListComp'][0]['simple']
+    self.level = dictLevel['ListComp'][0]['simple']
     self.clase = ('Simple List Comprehension')
     for i in range(0, len(self.node.generators)):
         numComp += 1
         ifExp += 1
         if (self.node.generators[i].ifs) != []:
-            self.level= dictLevel['ListComp'][2]['with-if']
-            self.clase = ('List Comprehension with ' + str(ifExp) + 'If statements')
+            self.level = dictLevel['ListComp'][2]['with-if']
+            self.clase = ('List Comprehension with ' + str(ifExp) +
+                          'If statements')
         if numComp > 1:
-            self.level= dictLevel['ListComp'][1]['nested']
+            self.level = dictLevel['ListComp'][1]['nested']
             self.clase = (str(numComp) + 'Nested List Comprehension with')
 
 
@@ -111,25 +114,25 @@ def level_Dict(self):
     """ Dictionary Level. """
     numList = 0
     numDict = 0
-    #-- Check for dictionaries
+    # Check for dictionaries
     if 'ast.Dict' in str(self.node.values):
         numDict = str(self.node.values).count('ast.Dict')
-        self.level= dictLevel['Dict'][1]['nested']
+        self.level = dictLevel['Dict'][1]['nested']
         self.clase = (str(numDict) + ' Nested Dictionary')
-        #-- Check for lists inside dictionary dictionaries
+        # Check for lists inside dictionary dictionaries
         for i in range(0, len(self.node.values)):
             if 'ast.List' in str(self.node.values[i].values):
                 numList += str(self.node.values[i].values).count('ast.List')
-                self.level= dictLevel['Dict'][3]['with-dict-list']
+                self.level = dictLevel['Dict'][3]['with-dict-list']
                 self.clase = (str(numList) + ' List in ' + str(numDict) +
-                            'Dictionary of Dictionary')
-    #-- Check for lists
+                              'Dictionary of Dictionary')
+    # Check for lists
     elif 'ast.List' in str(self.node.values):
         numList = str(self.node.values).count('ast.List')
-        self.level= dictLevel['Dict'][2]['with-list']
+        self.level = dictLevel['Dict'][2]['with-list']
         self.clase = str(numList) + ' List Dictionary'
     else:
-        self.level= dictLevel['Dict'][0]['simple']
+        self.level = dictLevel['Dict'][0]['simple']
         self.clase = 'Simple Dictionary'
 
 
@@ -141,18 +144,18 @@ def level_DictComp(self):
     for i in self.node.generators:
         numIfs += str(i.ifs).count('ast.Compare')
         if numIfs > 0:
-            self.level= dictLevel['DictComp'][1]['with-if']
+            self.level = dictLevel['DictComp'][1]['with-if']
             self.clase = ('Dictionary Comprehension with ' + str(numIfs) + ' If statements')
         else:
-            self.level= dictLevel['DictComp'][0]['simple']
+            self.level = dictLevel['DictComp'][0]['simple']
             self.clase = 'Simple Dictionary Comprehension'
     if 'ast.IfExp' in str(self.node.value):
         ifExp += str(self.node.value).count('ast.IfExp')
-        self.level= dictLevel['DictComp'][2]['with-if-else']
+        self.level = dictLevel['DictComp'][2]['with-if-else']
         self.clase = ('Dictionary Comprehension with ' + str(ifExp) + ' if expression (If-Else)')
     elif 'ast.DictComp' in str(self.node.value):
         numDictComp += str(self.node.value).count('ast.DictComp')
-        self.level= dictLevel['DictComp'][3]['nested']
+        self.level = dictLevel['DictComp'][3]['nested']
         self.clase = (str(numDictComp) + ' Nested Dictionary Comprehension')
 
 
@@ -162,17 +165,18 @@ def level_Tuple(self):
     for i in self.node.elts:
         numTuple += str(self.node.elts).count('ast.Tuple')
         if numTuple > 0:
-            self.level= dictLevel['Tuple'][1]['nested']
+            self.level = dictLevel['Tuple'][1]['nested']
             self.clase = (str(numTuple) + ' Nested Tuple')
         else:
-            self.level= dictLevel['Tuple'][0]['simple']
+            self.level = dictLevel['Tuple'][0]['simple']
             self.clase = ('Simple Tuple')
 
-#-- List of file attributes
+
+# List of file attributes
 list_File_Attr = ['write', 'read', 'readline', 'writelines']
-#-- List of tools loop coding
+# List of tools loop coding
 list_LoopCoding = ['range', 'zip', 'map', 'enumerate']
-#-- List of static class
+# List of static class
 listStaticClass = ['staticmethod', 'classmethod']
 
 
@@ -203,21 +207,21 @@ def type_Call(self):
 def level_Files(self, value):
     """ Files level. """
     if (value) == 'open':
-        self.level= dictLevel['File'][0]['open']
+        self.level = dictLevel['File'][0]['open']
         self.clase = ("Files --> 'open' call function")
     elif value in list_File_Attr:
-        level= dictLevel['File']
+        level = dictLevel['File']
         for i in range(1, len(level)):
             keys = dictLevel['File'][i].keys()
             for k in keys:
                 if k == value:
-                    self.level= dictLevel['File'][i][k]
+                    self.level = dictLevel['File'][i][k]
                     self.clase = ("Files --> '" + value + "' call function")
 
 
 def level_Print(self, value):
     """ Print level. """
-    self.level= dictLevel['Print'][0]['simple']
+    self.level = dictLevel['Print'][0]['simple']
     self.clase = ('Print')
 
 
@@ -225,13 +229,13 @@ def level_Assign(self):
     """ Level Assignments. """
     op = ''
     if self.attrib == 'ast.Assign':
-        self.level= dictLevel['Assign'][0]['simple']
-        self.clase = ('Simple Assignment' )
+        self.level = dictLevel['Assign'][0]['simple']
+        self.clase = ('Simple Assignment')
         if 'ast.BinOp' in str(self.node.value):
-            self.level= dictLevel['Assign'][1]['with-sum']
+            self.level = dictLevel['Assign'][1]['with-sum']
             self.clase = ('Assigment with sum (total = total + 1)')
     else:
-        self.level= dictLevel['Assign'][2]['increments']
+        self.level = dictLevel['Assign'][2]['increments']
         if 'ast.Add' in str(self.node.op):
             op = 'increase amount'
         elif 'ast.Sub' in str(self.node.op):
@@ -256,7 +260,7 @@ def level_NameMain(self):
             if 'ast.Constant' in str(i):
                 if i.value == '__main__':
                     constant = True
-        if (name and eq and constant) == True:
+        if (name and eq and constant):
             return True
 
 
@@ -264,15 +268,15 @@ def level_If(self):
     """ If statements level. """
     orelse = 0
     if self.attrib == 'ast.If':
-        self.level= dictLevel['If-Statements'][0]['simple']
+        self.level = dictLevel['If-Statements'][0]['simple']
         self.clase = ('Simple If statements')
-        #-- Check the if expression
+        # Check the if expression
         name = level_NameMain(self)
-        if name == True:
-            self.level= dictLevel['If-Statements'][2]['__name__']
+        if name:
+            self.level = dictLevel['If-Statements'][2]['__name__']
             self.clase = ("If statements using → __name__ == ‘__main__’")
     elif self.attrib == 'ast.IfExp':
-        self.level= dictLevel['If-Statements'][1]['expression']
+        self.level = dictLevel['If-Statements'][1]['expression']
         self.clase = ('If statements expression (else)')
 
 
@@ -294,15 +298,15 @@ def level_While(self):
     """ While level. """
     if self.node.orelse == []:
         self.clase = ('While with Else Loop')
-        self.level= dictLevel['Loop'][4]['while-else']
+        self.level = dictLevel['Loop'][4]['while-else']
     else:
         self.clase = ('Simple While Loop')
-        self.level= dictLevel['Loop'][3]['while-simple']
+        self.level = dictLevel['Loop'][3]['while-simple']
 
 
 def level_Break(self):
     """ Break level. """
-    self.level= dictLevel['Loop'][0]['break']
+    self.level = dictLevel['Loop'][0]['break']
     self.clase = ("'break' statement")
 
 
@@ -314,7 +318,7 @@ def level_Continue(self):
 
 def level_Pass(self):
     """ Pass level. """
-    self.level= dictLevel['Loop'][2]['pass']
+    self.level = dictLevel['Loop'][2]['pass']
     self.clase = ("'pass' statement")
 
 
@@ -324,84 +328,83 @@ def level_For(self):
     numList = 0
     numTupleI = 0
     numTupleT = 0
-    self.level= dictLevel['Loop'][5]['for-simple']
+    self.level = dictLevel['Loop'][5]['for-simple']
     self.clase = ('Simple For Loop')
     if 'ast.For' in str(self.node.body):
         numFor += (str(self.node.body)).count('ast.For')
-        self.level= dictLevel['Loop'][6]['for-nested']
+        self.level = dictLevel['Loop'][6]['for-nested']
         self.clase = (str(numFor) + ' Nested For Loop')
     if 'ast.Tuple' in str(self.node.target):
-        self.level= dictLevel['Loop'][7]['for-tuple-name']
+        self.level = dictLevel['Loop'][7]['for-tuple-name']
         numTupleT += (str(self.node.target)).count('ast.Tuple')
         self.clase = ('For Loop with Tuple as name')
     if 'ast.List' in str(self.node.iter):
-        self.level= dictLevel['Loop'][8]['for-list-iterate']
+        self.level = dictLevel['Loop'][8]['for-list-iterate']
         numList += (str(self.node.iter)).count('ast.List')
-        self.clase = ('For Loop with ' + str(numList) +' List to iterate')
+        self.clase = ('For Loop with ' + str(numList) + ' List to iterate')
     elif 'ast.Tuple' in str(self.node.iter):
         self.level = dictLevel['Loop'][9]['for-tuple-iterate']
         numTupleI += (str(self.node.iter)).count('ast.Tuple')
         self.clase = ('For Loop with ' + str(numTupleI) + ' Tuples to iterate')
 
 
-
 def level_LoopCoding(self, value):
     """ Loop coding tecniques levels. """
     if value == 'range':
-        self.level= dictLevel['Loop'][10]['range']
+        self.level = dictLevel['Loop'][10]['range']
     elif value == 'zip':
-        self.level= dictLevel['Loop'][11]['zip']
+        self.level = dictLevel['Loop'][11]['zip']
     elif value == 'map':
-        self.level= dictLevel['Loop'][12]['map']
+        self.level = dictLevel['Loop'][12]['map']
     elif value == 'enumerate':
-        self.level= dictLevel['Loop'][13]['enumerate']
+        self.level = dictLevel['Loop'][13]['enumerate']
     self.clase = ("'" + value + "' call function")
 
 
 def level_FunctionDef(self):
     """ Level functions. """
-    self.level= dictLevel['FunctionDef'][0]['simple']
-    self.clase = ('Function' )
-    #-- Classify according to the arguments passed
+    self.level = dictLevel['FunctionDef'][0]['simple']
+    self.clase = ('Function')
+    # Classify according to the arguments passed
     level_DefArguments(self)
-    #-- Check for recursive function
+    # Check for recursive function
     level_RecursiveFunction(self)
-    #-- Check for decorators
+    # Check for decorators
     level_Decorators(self, 'Function')
 
 
 def level_DefArguments(self):
     """ Level of arguments passed to functions. """
-    #-- simpleargument
+    # simpleargument
     if self.node.args.args != []:
         self.clase += (' with Simple argument')
-    #-- Default arguments
+    # Default arguments
     if self.node.args.defaults != []:
-        self.level= dictLevel['FunctionDef'][1]['argum-default']
+        self.level = dictLevel['FunctionDef'][1]['argum-default']
         self.clase += (' with Default argument')
-    #-- * Arguments
-    if self.node.args.vararg != None:
-        self.level= dictLevel['FunctionDef'][2]['argum-*']
+    # * Arguments
+    if self.node.args.vararg is not None:
+        self.level = dictLevel['FunctionDef'][2]['argum-*']
         self.clase += (' with * argument ')
-    #-- Keyword-only arguments
+    # Keyword-only arguments
     if self.node.args.kwonlyargs != []:
-        self.level= dictLevel['FunctionDef'][4]['argum-keyword-only']
+        self.level = dictLevel['FunctionDef'][4]['argum-keyword-only']
         self.clase += (' with Keyword-Only argument')
-    #-- ** arguments
-    if self.node.args.kwarg != None:
-        self.level= dictLevel['FunctionDef'][3]['argum-**']
+    # ** arguments
+    if self.node.args.kwarg is not None:
+        self.level = dictLevel['FunctionDef'][3]['argum-**']
         self.clase += (' with ** argument')
 
 
 def level_Return(self):
     """ Return level. """
-    self.level= dictLevel['Return'][0]['simple']
+    self.level = dictLevel['Return'][0]['simple']
     self.clase = ('Return')
 
 
 def level_Lambda(self):
     """ Lambda level. """
-    self.level= dictLevel['Lambda'][0]['simple']
+    self.level = dictLevel['Lambda'][0]['simple']
     self.clase = ('Lambda')
 
 
@@ -411,7 +414,7 @@ def level_RecursiveFunction(self):
         if 'ast.Call' in str(i):
             try:
                 if i.func.id == self.node.name:
-                    self.level= dictLevel['FunctionDef'][5]['recursive']
+                    self.level = dictLevel['FunctionDef'][5]['recursive']
                     self.clase = ('Recursive Functions')
             except:
                 pass
@@ -419,18 +422,17 @@ def level_RecursiveFunction(self):
 
 def level_GeneratorFunct(self):
     """ Generator function level (yield). """
-    self.level= dictLevel['Generators'][0]['function']
+    self.level = dictLevel['Generators'][0]['function']
     self.clase = ('Generator Function (yield)')
-
 
 
 def level_GeneratorExpr(self):
     """ Generator expression level. """
-    self.level= dictLevel['Generators'][1]['expression']
+    self.level = dictLevel['Generators'][1]['expression']
     self.clase = ('Generator Expression')
 
 
-#-- List of important modules
+# List of important modules
 listModules = ['struct', 'pickle', 'shelve', 'dbm', 're', 'importlib']
 
 
@@ -438,33 +440,33 @@ def nameModules(self, name):
     """ Important modules levels. """
     for i in range(0, len(name)):
         if name[i] in listModules:
-            level= dictLevel['Modules']
+            level = dictLevel['Modules']
             for j in range(0, len(level)):
                 keys = dictLevel['Modules'][j].keys()
                 for k in keys:
                     if k == name[i]:
-                        self.level= dictLevel['Modules'][j][k]
+                        self.level = dictLevel['Modules'][j][k]
                         self.clase += ("'" + k + "' module")
 
 
 def level_AsExtension(self):
     """ 'as' etension level """
     for i in self.node.names:
-        if i.asname != None:
-            self.level= dictLevel['Import'][4]['as-extension']
+        if i.asname is not None:
+            self.level = dictLevel['Import'][4]['as-extension']
             self.clase += (" with 'as' extension ")
 
 
 def level_From(self):
     """ From level. """
-    #-- Check whether it is relative or absolute import
+    # Check whether it is relative or absolute import
     if (self.node.level == 1) or (self.node.level == 2):
-        self.level= dictLevel['Import'][2]['from-relative']
+        self.level = dictLevel['Import'][2]['from-relative']
         self.clase = ('Relative From')
-    #-- Check if from *statements
+    # Check if from *statements
     for i in self.node.names:
         if i.name == '*':
-            self.level= dictLevel['Import'][3]['from-*statements']
+            self.level = dictLevel['Import'][3]['from-*statements']
             self.clase += (' with *statements ')
 
 
@@ -472,12 +474,12 @@ def level_Module(self):
     """ Modules level. """
     nameModule = []
     if self.attrib == 'ast.Import':
-        self.level= dictLevel['Import'][0]['import']
+        self.level = dictLevel['Import'][0]['import']
         self.clase = ('Import')
         for i in self.node.names:
             nameModule.append(i.name)
     else:
-        self.level= dictLevel['Import'][1]['from-simple']
+        self.level = dictLevel['Import'][1]['from-simple']
         self.clase = ('From')
         level_From(self)
         nameModule.append(self.node.module)
@@ -488,16 +490,16 @@ def level_Module(self):
 def PrivateClass(self):
     """ Private class function. """
     for funct in self.node.body:
-        #-- Check if the function is private
+        # Check if the function is private
         if(funct.name.startswith('__')) and (not funct.name.endswith('__')):
-            self.level= dictLevel['Class'][5]['private']
+            self.level = dictLevel['Class'][5]['private']
             self.clase += (' Private Methods ' + str(funct.name) +
                            ' of the class')
-    #-- Check for private attributes/methods
+    # Check for private attributes/methods
         for i in ast.walk(funct):
             if 'ast.Attribute' in str(i):
                 if (i.attr.startswith('__')) and (not i.attr.endswith('__')):
-                    self.level= dictLevel['Class'][5]['private']
+                    self.level = dictLevel['Class'][5]['private']
                     self.clase += (' Private Attributes ' + str(i.attr) +
                                    ' of the class')
 
@@ -509,7 +511,8 @@ def constrMethod(self):
             self.level = dictLevel['Class'][2]['__init__']
             self.clase += (' Using the constructor method --> ' + str(i.name))
 
-#-- List of descriptors
+
+# List of descriptors
 listDescriptors = ['__get__', '__set__', '__delete__']
 
 
@@ -517,7 +520,7 @@ def Descriptors(self):
     """ Descriptor level."""
     for elem in self.node.body:
         if elem.name in listDescriptors:
-            self.level+= dictLevel['Class'][3]['descriptors']
+            self.level += dictLevel['Class'][3]['descriptors']
             self.clase += (' with Descriptors ' + str(elem.name))
 
 
@@ -528,7 +531,7 @@ def level_Properties(self):
             if 'ast.Call' in str(elem):
                 try:
                     if elem.func.id == 'property':
-                        self.level= dictLevel['Class'][4]['properties']
+                        self.level = dictLevel['Class'][4]['properties']
                         self.clase += (' with Class Properties ')
                 except:
                     pass
@@ -538,77 +541,77 @@ def level_Class(self):
     """ Class level. """
     self.level = dictLevel['Class'][0]['simple']
     self.clase = ('Simple Class ')
-    #-- Check for inherited class
+    # Check for inherited class
     for i in self.node.bases:
         try:
-            self.level= dictLevel['Class'][1]['inherited']
+            self.level = dictLevel['Class'][1]['inherited']
             self.clase = ('Inherited Class from ' + str(i.id))
         except:
             pass
-    #-- Check for properties
+    # Check for properties
     level_Properties(self)
-    #-- Check the function name
+    # Check the function name
     if 'ast.FunctionDef' in str(self.node.body):
         try:
-            #-- Check for constructor method
+            # Check for constructor method
             constrMethod(self)
-            #-- Check for descriptors
+            # Check for descriptors
             Descriptors(self)
-            #-- Check for private functions and attributes
+            # Check for private functions and attributes
             PrivateClass(self)
-            #-- Check for metaclasses in functions
+            # Check for metaclasses in functions
             level_Metaclass(self, 'function')
         except:
             pass
-    #-- Check for class decorators
+    # Check for class decorators
     level_Decorators(self, 'Class')
-    #-- Check for metaclasses
+    # Check for metaclasses
     level_Metaclass(self, 'header')
 
 
-#-- List of special attributes of CLASSES
+# List of special attributes of CLASSES
 listClassAttr = ['__class__', '__dict__']
 
 
 def level_atributte(self):
     """ Simple attribute level."""
-    self.level= dictLevel['Attributes'][0]['simple']
+    self.level = dictLevel['Attributes'][0]['simple']
     self.clase = ('Simple Atributte')
 
 
 def specialClassAttributes(self):
     """ Special class attrbutes level. """
     if self.node.attr in listClassAttr:
-        level= dictLevel['Attributes']
+        level = dictLevel['Attributes']
         for i in range(1, len(level)):
             keys = dictLevel['Attributes'][i].keys()
             for k in keys:
                 if k == self.node.attr:
-                    self.level= dictLevel['Attributes'][i][k]
+                    self.level = dictLevel['Attributes'][i][k]
                     self.clase = ('Special Class Attribute ' + str(self.node.attr))
 
 
 def level_StaticClass(self, value):
     """ Static and class method level. """
-    level= dictLevel['Static']
+    level = dictLevel['Static']
     for i in range(0, len(level)):
         keys = dictLevel['Static'][i].keys()
         for k in keys:
             if k == value:
-                self.level= dictLevel['Static'][i][k]
+                self.level = dictLevel['Static'][i][k]
                 self.clase = (value)
 
 
 def level_Decorators(self, type):
     """ Functions and classes decorators level. """
     for i in self.node.decorator_list:
-        level= dictLevel['Decorators']
+        level = dictLevel['Decorators']
         for j in range(0, len(level)):
             keys = dictLevel['Decorators'][j].keys()
             for k in keys:
                 if k == type:
-                    self.level= dictLevel['Decorators'][j][k]
-                    self.clase = ('Decorator ' + type )
+                    self.level = dictLevel['Decorators'][j][k]
+                    self.clase = ('Decorator ' + type)
 
 
 def typeName(self):
@@ -621,40 +624,40 @@ def typeName(self):
 
 def level_Metaclass(self, pos):
     """ Metaclass level. """
-    #-- Creation method __new__
+    # Creation method __new__
     if pos == 'function':
         for i in self.node.body:
             if i.name == '__new__':
                 for argum in i.args.args:
                     if (argum.arg) == 'meta':
-                        self.level= dictLevel['Metaclass'][0]['__new__']
+                        self.level = dictLevel['Metaclass'][0]['__new__']
                         self.clase += (' Metaclass (3.X) created with --> __new__')
-    #-- Class header
+    # Class header
     elif pos == 'header':
         for i in self.node.keywords:
             if i.arg == 'metaclass':
-                self.level= dictLevel['Metaclass'][1]['metaclass']
+                self.level = dictLevel['Metaclass'][1]['metaclass']
                 self.clase += (" Metaclass created in the class header --> 'metaclass = '"
-                    + i.value.id)
-    #-- As an attribute, 2.X
+                               + i.value.id)
+    # As an attribute, 2.X
     elif pos == 'atrib':
-        self.level= dictLevel['Metaclass'][2]['__metaclass__']
+        self.level = dictLevel['Metaclass'][2]['__metaclass__']
         self.clase = ('Metaclass (2.X) created as attribute with --> __metaclass__')
 
 
 def level_Slots(self):
     """ __slots__ level. """
-    self.level= dictLevel['Slots'][0]['__slots__']
+    self.level = dictLevel['Slots'][0]['__slots__']
     self.clase = ('Attribute  statements __slots__')
 
 
 def level_SuperFunction(self):
     """ Super built-in function level. """
-    self.level= dictLevel['SuperFunction'][0]['simple']
+    self.level = dictLevel['SuperFunction'][0]['simple']
     self.clase = ('Super Function')
 
 
-#-- Exception levels
+# Exception levels
 def level_Try(self):
     """ try level. """
     self.clase = ('Exception --> try')
@@ -662,29 +665,29 @@ def level_Try(self):
         self.level = dictLevel['Exception'][2]['try/try']
         self.clase += ('/try')
     if (self.node.handlers) != []:
-        self.level= dictLevel['Exception'][0]['try/except']
+        self.level = dictLevel['Exception'][0]['try/except']
         self.clase += ('/except')
     if (self.node.orelse) != []:
-        self.level= dictLevel['Exception'][1]['try/else/except']
+        self.level = dictLevel['Exception'][1]['try/else/except']
         self.clase += ('/else')
     if (self.node.finalbody) != []:
-        self.level= dictLevel['Exception'][4]['try/except/finally']
+        self.level = dictLevel['Exception'][4]['try/except/finally']
         self.clase += ('/finally')
 
 
 def level_Raise(self):
     """ raise level. """
-    self.level= dictLevel['Exception'][6]['raise']
+    self.level = dictLevel['Exception'][6]['raise']
     self.clase = ("'raise' exception")
 
 
 def level_Assert(self):
     """ assert level. """
-    self.level= dictLevel['Exception'][7]['assert']
+    self.level = dictLevel['Exception'][7]['assert']
     self.clase = ("'assert' exception")
 
 
 def level_With(self):
     """ with level. """
-    self.level= dictLevel['With'][0]['simple']
+    self.level = dictLevel['With'][0]['simple']
     self.clase = ('With')
