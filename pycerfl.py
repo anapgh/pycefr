@@ -215,6 +215,7 @@ if __name__ == "__main__":
         type_option = sys.argv[1]
         option = sys.argv[2]
     except:
-        sys.exit("Usage: python3 file.py type-option('directory', 'repo-url', 'user') option(directory, url, user)")
+        sys.exit("Usage: python3 file.py type-option('directory', " +
+                 "'repo-url', 'user') option(directory, url, user)")
     choose_option()
     summary_Levels()
