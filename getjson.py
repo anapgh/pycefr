@@ -6,7 +6,6 @@ import json
 import os
 import re
 
-
 # Dictionary of all repositories and files
 dict_total = {}
 # Dictionary of all repositories
@@ -57,7 +56,7 @@ def extract_Levels(data):
 def ini_total(type, key):
     """ Initialize or increment values. """
     if key not in dict_summary[type]:
-        if not key:
+        if key != "":
             dict_summary[type][key] = 1
     else:
         dict_summary[type][key] += 1
@@ -66,7 +65,7 @@ def ini_total(type, key):
 def ini_repo(repo, type, key):
     """ Initialize or increment values. """
     if key not in dict_repo[repo][type]:
-        if not key:
+        if key != "":
             dict_repo[repo][type][key] = 1
     else:
         dict_repo[repo][type][key] += 1
@@ -75,7 +74,7 @@ def ini_repo(repo, type, key):
 def ini_values(repo, file, type, key):
     """ Initialize or increment values. """
     if key not in dict_total[repo][file][type]:
-        if not key:
+        if key != "":
             dict_total[repo][file][type][key] = 1
     else:
         dict_total[repo][file][type][key] += 1
@@ -83,9 +82,9 @@ def ini_values(repo, file, type, key):
 
 def write_Results(repo):
     """ Create a .txt file with a summary of results. """
-    # get current path
+    # Get current path
     wd = os.getcwd()
-    # create new folder
+    # Create new folder
     try:
         os.mkdir(wd + "/DATA_JSON")
     except FileExistsError:
@@ -132,12 +131,12 @@ def show_Results():
 
 def read_Json():
     """ Read json file. """
-    # result = ''
     with open('data.json') as file:
         data = json.load(file)
         extract_Levels(data)
         result = show_Results()
-        return result
+        # return result
+        print(result)
 
 
 if __name__ == "__main__":
