@@ -1,11 +1,15 @@
+"""
+FILE TO TEST ELEMENTS AND THEIR LEVELS
+"""
+
 # LISTA NORMAL
-L = ['PEPE', 1,2]
+L = ['PEPE', 1, 2]
 
 # LISTA ANIDADA
-L = ['Bob', 40,0, ['dev', 'mgr']]
+L = ['Bob', 40, 0, ['dev', 'mgr']]
 
 # LISTA DE DICCIONARIO
-L = ['Bob',{'pepe': 1}, 'Martin']
+L = ['Bob', {'pepe': 1}, 'Martin']
 
 
 # LIST COMPREHENSION normal
@@ -22,20 +26,20 @@ L3 = [num for elem in vec for num in elem]
 d1 = {'pepe': 1, 'juan': 2}
 
 # DICCIONARIO DE LISTAS
-d2 = {'manzana': ['rojas', 'verde', 'amarilla'], 'limon': ['amarillo', 'verde'],'pera': 'verde'}
+d2 = {'manzana': ['rojas', 'verde', 'amarilla'],
+      'limon': ['amarillo', 'verde'],
+      'pera': 'verde'}
 # DICCIONARIO DENTRO DE DICCIONARIO (DE LISTAS)
 
 d3 = {
   'frutas': {
-     ' manzanas': [' verdes', ' 7', ' rojas', ' 5'],
-      'uvas': [' negras', ' 5', ' verdes', ' 3']
-   },
-   ' verduras': {
-      'papa': ['negras', ' 50', ' blancas', ' 20'],
+      'manzanas': ['verdes', '7', ' rojas', '5'],
+      'uvas': ['negras', '5', ' verdes', '3']
+   }, 'verduras': {
+      'papa': ['negras', '50', 'blancas', '20'],
       'cebolla': [' blancas', ' 30']
-   },
-   'cereales': {
-      ' arroz': [' fino',' 600', ' largo', ' 800']
+   }, 'cereales': {
+      'arroz': ['fino', '600', ' largo', '800']
    }
 }
 
@@ -44,11 +48,11 @@ d3 = {
 D1 = {x: x*2 for x in range(10)}
 
 # 2- DICT COMPREHENSION
-#item price in dollars
+# item price in dollars
 old_price = {'milk': 1.02, 'coffee': 2.5, 'bread': 2.5}
 dollar_to_pound = 0.76
-new_price = {item: value*dollar_to_pound for (item, value) in old_price.items()}
-print(new_price)
+new_pri = {item: value*dollar_to_pound for (item, value) in old_price.items()}
+print(new_pri)
 
 # 3- DICT COMPREHENSION --> CONDICIONALS: IF
 original_dict = {'jack': 38, 'michael': 48, 'guido': 57, 'john': 33}
@@ -62,8 +66,8 @@ print(new_dict)
 
 # 5- DICT COMPREHENSION --> CONDICIONALS: IF-ELSE
 original_dict = {'jack': 38, 'michael': 48, 'guido': 57, 'john': 33}
-new_dict_1 = {k: ('old' if v > 40 else 'young')for (k, v) in original_dict.items()}
-print(new_dict_1)
+dict_1 = {k: ('old' if v > 40 else 'young')for (k, v) in original_dict.items()}
+print(dict_1)
 
 # 6- DICT COMPREHENSION --> ANIDADO
 D2 = {k1: {k2: k1 * k2 for k2 in range(1, 6)} for k1 in range(2, 5)}
@@ -75,37 +79,40 @@ T1 = ()
 # Tuplas aninadadas
 T2 = ('Bob', ('dev', 'mgr'))
 
-#--------------------------NO DETECTA--------------------------
+# --------------------------NO DETECTA--------------------------
 # Conversión de tupla
 T = tuple('spam')
 
 # Concatenación de Tuplas
 T3 = T2 * 3
 
-#--Indexacion
+# Indexacion
 # Accediendo a tupla mediante clave (Access by Key)
-Bob = dict(name='Bob', age = 40.5, jobs = ['dev', 'mgr'])
+Bob = dict(name='Bob', age=40.5, jobs=['dev', 'mgr'])
 # Accediendo by position
 t = T2[1]
 
 # Métodos: index() y count()
 valores = ("Python", True, "Zope", 5)
-print ("True ->", valores.count(True))
-print ("'Zope' ->", valores.count('Zope'))
-print ("5 ->", valores.count(5))
+print("True ->", valores.count(True))
+print("'Zope' ->", valores.count('Zope'))
+print("5 ->", valores.count(5))
 
-print (valores.index(True))
-print (valores.index(5))
+print(valores.index(True))
+print(valores.index(5))
 
 # Modulo 'namedtuple':
-# Modulo que permite que los componentes sean accesibles por posicion y por atributo(key).
+# Modulo que permite que los componentes sean accesibles por posicion
+# y por atributo(key).
 from collections import namedtuple
-Rec = namedtuple('rec', ['name', 'age', 'jobs']) # namedtuple: ast.Call
-#---------------------------------------------------------------------------------
+# namedtuple: ast.Call
+Rec = namedtuple('rec', ['name', 'age', 'jobs'])
+
 
 # STRINGS
 # Crear un string NORMAL
-S = 'spam' # Name y Constant
+# Name y Constant
+S = 'spam'
 
 # Concatenacion y repeticion
 S = S + 'xyz'
@@ -117,7 +124,7 @@ s = S[0]
 # Metodos--> pag 261
 
 # Formas de iterar
-#- Tradicional
+# Tradicional
 for x in S:
     print(x)
 # Otra forma
@@ -126,23 +133,27 @@ if 'spam' in S:
 
 # Strings comprehension
 S = 'spam'
-s = [c * 2 for c in S] # dict comprehension
+# dict comprehension
+s = [c * 2 for c in S]
 
 # Con 'map':
 ord = 'hola'
 S = 'spam'
-s = map(ord, S) # map: ast.Call
+# map: ast.Call
+s = map(ord, S)
 
 
 # FILES
 # Abrir y crear fichero
 # Write:
-output = open(' fichero ', 'w') # ast.Call
+# ast.Call
+output = open(' fichero ', 'w')
 # Read
 open(' fichero ', 'r')
-input = open('fichero') # 'r' por defecto
+# 'r' por defecto
+input = open('fichero')
 
-#--Leer un fichero
+# Leer un fichero
 lectura = input.read()
 lectura = input.readline()
 
@@ -155,7 +166,7 @@ output.close()
 
 # JSON file:
 # Devuelve estructura JSON
-json.dump(rec, fp= open('testjson.txt', 'w'), indent = 4)
+json.dump(rec, fp=open('testjson.txt', 'w'), indent=4)
 print(open('testjson.text').read())
 # Devuelve diccionario de Listas
 P = json.load(open('testjson'))
@@ -170,12 +181,12 @@ objects = [eval(P) for P in parts]
 F = open('data.bin', 'rb')
 data = F.read()
 import struct
-values= struct.unpack('>i4sh', data)
+values = struct.unpack('>i4sh', data)
 
 # Modulo pickle
 F = open('datafile.pkl', 'rb')
 import pickle
-E = pickle.load( F)
+E = pickle.load(F)
 
 # ASIGNACIONES
 spam = 'Spam'
@@ -184,7 +195,7 @@ spam = spam + 42
 spam += 42
 spam -= 42
 spam *= 42
-#--Tuple assigment
+# Tuple assigment
 spam, ham = 'yum', 'YUM'
 # List assigment
 [spam, ham] = ['yum', 'YUM']
@@ -194,8 +205,6 @@ spam = ham = 'lunch'
 ((a, b), c) = ('SP', 'AM')
 # Extended sequence unpacking
 a, *b = 'spam'
-
-
 
 # IF STATEMENTS
 # general format
@@ -237,9 +246,9 @@ else:
     A = Z
 # En 1 linea.
 A = Y if X else Z
-#En 1 linea con operadores
+# En 1 linea con operadores
 A = ((X and Y) or Z)
-#--Con listas
+# Con listas
 A = [Z, Y][bool(X)]
 
 # WHILE LOOPS
@@ -264,9 +273,9 @@ while x:
     x = x-1
     if x % 2 != 0:
         continue
-        print(x, end= ' ' )
+        print(x, end=' ')
 
-#--Break
+# Break
 while True:
     name = input('Enter name: ')
     if name == 'stop':
@@ -276,7 +285,7 @@ while True:
 
 # Loop else
 x = y // 2
-while x > 1 :
+while x > 1:
     if y % x == 0:
         print(y, 'has factor', x)
         break
@@ -298,17 +307,17 @@ for key in tests:
             print(key, "not found!")
 # Lista
 for x in ["spam", "eggs", "ham"]:
-    print(x, end = '   ')
+    print(x, end='   ')
 # Strings Es una herramienta más generica
 S = "lumberjack"
 for x in S:
-    print(x, end = '   ')
+    print(x, end='   ')
 # Tuplas.
 T = ("and", "I'am", "okay")
 for x in T:
-    print(x, end = '   ')
+    print(x, end='   ')
 # Tuplas anidadas
-for ((a,b), c) in [((1, 2), 3), ((4, 5), 6)]:
+for ((a, b), c) in [((1, 2), 3), ((4, 5), 6)]:
     print(a, b, c)
 # Extended sequence assigment in for loops
 for (a, *b, c) in [(1, 2, 3, 4), (5, 6, 7, 8)]:
@@ -332,24 +341,32 @@ for (offset, item) in enumerate(S):
 for (i, l) in enumerate(open('test.txt')):
     print('%s) %s' % (i, l.rstrip()))
 
+
 # FUNCTIONS
 # Con print
 def printer(message):
     print('Hello' + mssage)
+
+
 # Con return
 def adder(a, b=1, *c):
     return a + b + c[0]
+
+
 # Con yield
 def squares(x):
     for i in range(x):
         yield i ** 2
 # Con Lambda
-Funcs = [lambda x: x **2, lambda x: x **3]
+Funcs = [lambda x: x ** 2, lambda x: x ** 3]
 # lambda en listas
-L = [lambda x: x ** 2, lambda x: x ** 3,lambda x: x ** 4]
+L = [lambda x: x ** 2, lambda x: x ** 3, lambda x: x ** 4]
 for f in L:
-    print(f(2)) # Prints 4, 8, 16
-    print(L[0](3)) # Prints 9
+    # Prints 4, 8, 16
+    print(f(2))
+    # Prints 9
+    print(L[0](3))
+
 
 # ARGUMENTOS
 # Normal argument: Pasar argumentos por posicion.
@@ -357,25 +374,40 @@ def func(name):
     print(name)
 # Keyword argument: Pasar arguemnto por el nombre (valor)
 func(name=value)
+
+
 # Defaults: especifica valores para los argumentos opcionales que no se pasan.
 def func(name=value):
     print(name)
+
+
 # Varargs collecting or unpacking:
 def func(*name):
     print(name)
+
+
 def func(**name):
     print(name)
+
+
 # Keyword-only arguments:
 def func(*other, name):
     print('hola')
+
+
 def func(*, name=value):
     print('hola')
+
+
 # Con todo
 def f(a: 'annotation', b=1, c=2, *d, e, f=3, **g):
     print('toodo')
+
+
 # Sin argumentos
 def func():
     print('pepe')
+
 
 # FUNCIONES RECURSIVAS
 def mysum(L):
@@ -383,9 +415,12 @@ def mysum(L):
         return 0
     else:
         return L[0] + mysum(L[1:])
+
+
 # con if-else
 def mysum(L):
     return 0 if not L else L[0] + mysum(L[1:])
+
 
 # GENERATOR FUNCTION
 def gensquares(N):
@@ -425,6 +460,8 @@ from .. import string
 # Declaraciones
 # __future__
 from __future__ import featurename
+
+
 # __name__
 def tester():
     print("It's Christmas in Heaven...")
@@ -451,14 +488,16 @@ import shelve
 import dbm
 import re
 import importlib
-import struct, pickle
 from struct import *
+
 
 # CLASES
 # Crear clase
 class FirstClass:
+
     def setdata(self, value):
         self.data = value
+
     def display(self):
         print(self.data)
 # Instancias de objetos
@@ -467,17 +506,25 @@ y = FirstClass()
 # Llamar a metodos, haciendo ref a atributos
 x.setdata("King Arthur")
 y.setdata(3.14159)
+
+
 # Clase heredada
 class SecondClass(FirstClass):
+
     def display(self):
         print('Current value = "%s"' % self.data)
+
+
 # Funciones de sobrecarga
 # Metodo constructor __init__, __add__, __str__
 class ThirdClass(SecondClass):
+
     def __init__(self, value):
         self.data = value
+
     def __add__(self, other):
         return ThirdClass(self.data + other)
+
     def __str__(self):
         return '[ThirdClass: %s]' % self.data
 # Special class Attributes
@@ -492,6 +539,7 @@ list(bob.__dict__.keys())
 for key in bob.__dict__:
     print(key, '=>', bob.__dict__[key])
 
+
 # Pseudoprivate class attributes:
 class Demo:
     def __secret(self):
@@ -500,14 +548,17 @@ class Demo:
     def public(self):
         self.__secret()
 
+
 class Child(Demo):
     def __secret(self):
         print('No puedo contarte!')
+
 
 # Slots: attribute declarations
 class limiter(object):
     __slots__ = ['age', 'name', 'job']
 x = limiter()
+
 
 # Properties: Attribute Accesors
 class properties(object):
@@ -518,14 +569,19 @@ x = properties()
 x.age
 x.name
 
+
 # Descriptores
 class AgeDesc(object):
+
     def __get__(self, instance, owner):
         return 40
+
     def __set__(self, instance, value):
         instance._age = value
+
     def __delete__(self, instance, value):
         print('hola')
+
 
 class descriptors(object):
     age = AgeDesc()
@@ -534,12 +590,16 @@ x.age
 x.age = 42
 x._age
 
+
 # Static and Class Method
 class Methods:
+
     def imeth(self, x): print([self, x])
     # Normal instance method: passed a self
+
     def smeth(x):
         print([x])
+
     # Static: no instance passed
     def cmeth(cls, x):
         print([cls, x])
@@ -549,50 +609,58 @@ class Methods:
         # Make smeth a static method (or @: ahead)
         # Make cmeth a class method (or @: ahead)
 
+
 # DECORATORS
 # FUNCTION DECORATOR(funcion evuelve otra funcion)
 def decorator(func):
-  print("Decorator")
-  return func
+    print("Decorator")
+    return func
+
 
 @decorator
 def Hello():
-  print("Hello World")
+    print("Hello World")
+
 
 # CLASS DECORATOR (Clase envolviendo una funcion)
 class Decorator(object):
-  """Clase de decorador simple."""
-  def __init__(self, func):
-    self.func = func
+    """Clase de decorador simple."""
 
-  def __call__(self, *args, **kwargs):
-    print('Antes de ser llamada la función.')
-    retorno = self.func(*args, **kwargs)
-    print('Despues de ser llamada la función.')
-    print(retorno)
-    return retorno
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        print('Antes de ser llamada la función.')
+        retorno = self.func(*args, **kwargs)
+        print('Despues de ser llamada la función.')
+        print(retorno)
+        return retorno
+
 
 @Decorator
 def function():
-  print('Dentro de la función.')
-  return "Retorno"
+    print('Dentro de la función.')
+    return "Retorno"
 
 
 # CLASS DECORATOR (clase envuelve otra clase)
 class Decorator(object):
     def __init__(self, func):
         self.func = func
+
     def __call__(self, *args, **kwargs):
         print('Dentro del decorador.')
         return self.func(*args, **kwargs)
+
     def __get__(self, instance, cls):
         # Retorna un método si se llama en una instancia
         return self if instance is None else MethodType(self, instance)
 
+
 @Decorator
 class Test(object):
-  def __init__(self):
-    print("Dentro de la función decorada")
+    def __init__(self):
+        print("Dentro de la función decorada")
 
 
 # METACLASES
@@ -600,18 +668,28 @@ class Test(object):
 class Meta(type):
     def __new__(meta, classname, supers, classdict):
         pass
+
+
 # Enumerada en la cabecera 'metaclass'
 class C(metaclass=Meta):
     pass
+
+
 # En 2.X se usa el atributo '__metaclass__'
 class C:
+
     __metaclass__ = Meta
+
 
 # SUPER BUILT-IN FUNCTION
 class C:
+
     def act(self):
         print('spam')
+
+
 class D(C):
+
     def act(self):
         super().act()
         print('eggs')
@@ -662,6 +740,7 @@ try:
     raise IndexError
 except IndexError:
     print('got exception')
+
 
 # Assert
 def f(x):
