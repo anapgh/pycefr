@@ -177,7 +177,10 @@ def read_Directory(absFilePath, repo):
         elif '.' not in directory[i]:
             print('\nOpening another directory...\n')
             path2 = absFilePath + '/' + directory[i]
-            read_Directory(path2, directory[i])
+            try:
+                read_Directory(path2, directory[i])
+            except NotADirectoryError:
+                pass
 
 
 def read_File(pos, repo):
