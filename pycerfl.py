@@ -167,29 +167,37 @@ def read_Directory(absFilePath, repo):
     pos = ''
     print('Directory: ')
     path = absFilePath
-    directory = os.listdir(path)
-    print(directory)
-    for i in range(0, len(directory)):
-        if directory[i].endswith('.py'):
-            print('Python File: ' + str(directory[i]))
-            pos = path + "/" + directory[i]
-            read_File(pos, repo)
-        elif '.' not in directory[i]:
-            print('\nOpening another directory...\n')
-            path2 = absFilePath + '/' + directory[i]
-            try:
-                read_Directory(path2, directory[i])
-            except NotADirectoryError:
-                pass
+    try:
+        directory = os.listdir(path)
+        print(directory)
+        for i in range(0, len(directory)):
+            if directory[i].endswith('.py'):
+                print('Python File: ' + str(directory[i]))
+                pos = path + "/" + directory[i]
+                read_File(pos, repo)
+            elif '.' not in directory[i]:
+                print('\nOpening another directory...\n')
+                path2 = absFilePath + '/' + directory[i]
+                try:
+                    read_Directory(path2, directory[i])
+                except NotADirectoryError:
+                    pass
+    except FileNotFoundError:
+        pass
+
 
 
 def read_File(pos, repo):
     """ Read the file and return the tree. """
     with open(pos) as fp:
         my_code = fp.read()
-        tree = ast.parse(my_code)
-        # print (ast.dump(tree))
-        iterate_List(tree, pos, repo)
+        try:
+            tree = ast.parse(my_code)
+            # print (ast.dump(tree))
+            iterate_List(tree, pos, repo)
+        except SyntaxError:
+            print('There is a misspelled code')
+            pass
 
 
 def iterate_List(tree, pos, repo):
