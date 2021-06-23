@@ -1,11 +1,10 @@
+import sys
+import os
 #-- PROGRAMME FOR CALCULATING THE KAPPA COEFFICIENT
 
 import csv
 from sklearn.metrics import cohen_kappa_score
-import numpy as np
 import matplotlib.pyplot as plt
-import os
-import sys
 
 #-- List of annex levels
 annex1Level = []

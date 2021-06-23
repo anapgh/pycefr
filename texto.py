@@ -1,3 +1,18 @@
+from person import Person
+from struct import *
+import importlib
+from modulename import attrname as name
+import modulename as name
+from __future__ import featurename
+from .. import string
+from .string import name1, name2
+import mod2
+from module1 import *
+from module1 import printer
+import b.py
+import pickle
+import struct
+from collections import namedtuple
 """
 FILE TO TEST ELEMENTS AND THEIR LEVELS
 """
@@ -104,7 +119,6 @@ print(valores.index(5))
 # Modulo 'namedtuple':
 # Modulo que permite que los componentes sean accesibles por posicion
 # y por atributo(key).
-from collections import namedtuple
 # namedtuple: ast.Call
 Rec = namedtuple('rec', ['name', 'age', 'jobs'])
 
@@ -180,12 +194,10 @@ objects = [eval(P) for P in parts]
 # Modulo Binary Data: Struct
 F = open('data.bin', 'rb')
 data = F.read()
-import struct
 values = struct.unpack('>i4sh', data)
 
 # Modulo pickle
 F = open('datafile.pkl', 'rb')
-import pickle
 E = pickle.load(F)
 
 # ASIGNACIONES
@@ -433,33 +445,25 @@ def gensquares(N):
 # MODULOS
 # Formas de importar:
 # The import statements
-import b.py
 b.printer('hello')
 # The from statements
-from module1 import printer
 module1.printer('hello')
 # The from *statements: obtenemos copias de todos los nombres
-from module1 import *
 printer('hello')
 
 # Namespace Nesting
 X = 1
-import mod2
 print(X, end=' ')
 print(mod2.X, end=' ')
 print(mod2.mod3.X)
 
 # Relative import
 # Imports mypkg.string(Searches this package only):
-from . import string
 # Imports names from mypkg.string:
-from .string import name1, name2
 # Imports string sibling of mypkg :
-from .. import string
 
 # Declaraciones
 # __future__
-from __future__ import featurename
 
 
 # __name__
@@ -469,26 +473,16 @@ if __name__ == '__main__':
     tester()
 
 # The 'as' extension for import and from
-import modulename as name
-from modulename import attrname as name
 
 # Importing modules by name string
 # Usando __import__
 modname = 'string'
 string = __import__(modname)
 # Usando la llamada importlib.import_module’
-import importlib
 modname = 'string'
 string = importlib.import_module(modname)
 
 # Modulos importantes
-import struct
-import pickle
-import shelve
-import dbm
-import re
-import importlib
-from struct import *
 
 
 # CLASES
@@ -529,7 +523,6 @@ class ThirdClass(SecondClass):
         return '[ThirdClass: %s]' % self.data
 # Special class Attributes
 # Atributo incorporado .__class__
-from person import Person
 bob = Person('Bob Smith')
 print(bob)
 bob.__class__
