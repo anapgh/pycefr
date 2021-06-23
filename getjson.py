@@ -123,7 +123,8 @@ def show_Results():
     result += ('\nAnalyzed .py files: ' + str(num_files))
 
     levels = dict_summary['Levels']
-    for key, value in levels.items():
+    levels = sorted(levels.items())
+    for key, value in levels:
         result += ('\nElements of level ' + key + ': ' + str(value))
     result += '\n====================================='
     return result
