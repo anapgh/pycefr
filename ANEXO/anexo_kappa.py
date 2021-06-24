@@ -3,11 +3,10 @@ PROGRAMME FOR CALCULATING THE KAPPA COEFFICIENT.
 """
 
 import csv
-from sklearn.metrics import cohen_kappa_score
-import numpy as np
-import matplotlib.pyplot as plt
 import os
 import sys
+from sklearn.metrics import cohen_kappa_score
+import matplotlib.pyplot as plt
 
 # List of annex levels
 annex1Level = []
