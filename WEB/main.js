@@ -88,11 +88,10 @@ for (repo=0; repo<repository.length; repo++){
 }
 
 
-
 //-- Obtain repository summary information
 function repo_summary(){
   //-- Variable with the summary of each repository
-  let total_repo ='';
+  let total_repo = ('<h3>Summary of file analysis: <h3>' + '\n');
   repos = Object.keys(data_repo);
   //-- Get repository name
   repo_name = repos[repo]
@@ -113,7 +112,9 @@ function repo_summary(){
                      '</p>' + '\n');
     }
   }
+  console.log(total_repo)
   return(total_repo);
+
 }
 
 
