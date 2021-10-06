@@ -24,7 +24,7 @@ To put it into operation you have to follow the steps below:
       ```
     * Analyze a GitHub repository.
       ```
-      python3 pycerfl.py repo <name_urlclone>
+      python3 pycerfl.py repo-url <name_urlclone>
       ```
     * Analyze a GitHub user.
       ```
