@@ -1,4 +1,4 @@
-# **pycefrl**
+# **pycefr**
 ## *Identifying Python3 Code Level Using the CERFL Framework as Inspiration*
 
 ### What is this project about?
