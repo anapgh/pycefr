@@ -12,7 +12,7 @@ dict_total = {}
 dict_summary = {}
 # Dictionary of all files
 dict_repo = {}
-
+dict_summary['Levels'] = {}
 
 def extract_Levels(data):
     """ Extract repository levels. """
@@ -24,8 +24,6 @@ def extract_Levels(data):
             dict_total[repo][file] = {}
             for i in data[repo][file]:
                 level = i['Level']
-                if 'Levels' not in dict_summary:
-                    dict_summary['Levels'] = {}
                 ini_total('Levels', level)
                 if 'Levels' not in dict_repo[repo]:
                     dict_repo[repo]['Levels'] = {}
