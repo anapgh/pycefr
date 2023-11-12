@@ -61,12 +61,12 @@ class IterTree():
     def read_FileCsv(self, file_csv=""):
         """ Create and add data in the .csv file. """
         if not file_csv:
-            file_csv = open('data.csv', 'w')
+            file_csv = open('d.csv', 'w')
             with file_csv:
                 writer = csv.writer(file_csv)
                 writer.writerows(self.myDataCsv)
         else:
-            with open(r'data.csv', 'a') as f:
+            with open(r'd.csv', 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow(self.myDataCsv)
 

@@ -199,6 +199,22 @@ def read_File(pos, repo):
             print('There is a misspelled code')
             pass
 
+def read_FileContents(pos, code, repo):
+    """ Read the chunk, file and return the tree. """
+    try:
+        tree = ast.parse(code)
+        # print (ast.dump(tree))
+        iterate_ListContents(tree, pos, repo)
+    except SyntaxError:
+        print('There is a misspelled code')
+        pass
+
+def iterate_ListContents(tree, pos, repo):
+    """ Iterate list and assign attributes."""
+    for i in range(0, len(SetClass)):
+        for j in range(0, len(SetClass[i])):
+            attrib = SetClass[i][j]
+            object = IterTree(tree, attrib, pos, repo)
 
 def iterate_List(tree, pos, repo):
     """ Iterate list and assign attributes."""
